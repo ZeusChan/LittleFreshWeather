@@ -10,12 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
-import rx.Subscriber;
+import rx.observers.TestSubscriber;
 
 /**
  * Created by chenxiong on 2016/6/1.
@@ -23,9 +21,9 @@ import rx.Subscriber;
 public class ServicesManagerTest {
     public static final String TAG = ServicesManagerTest.class.getSimpleName();
     private ServicesManager mServicesManger = null;
-    private List<CityEntity> mCitys = null;
-    private List<WeatherConditionEntity> mWeatherConditions = null;
-    private WeatherEntity mWeatherEntity = null;
+    //private List<CityEntity> mCitys = null;
+    //private List<WeatherConditionEntity> mWeatherConditions = null;
+    //private WeatherEntity mWeatherEntity = null;
 
     @Before
     public void createServicesManager() {
@@ -34,7 +32,13 @@ public class ServicesManagerTest {
 
     @Test
     public void testServicesManagerGetCitys() throws Exception {
-        final Logger logger = Logger.getLogger("testServicesManagerGetCitys");
+        assertNotNull(mServicesManger);
+        TestSubscriber<List<CityEntity>> testSubscriber = TestSubscriber.create(new GetCitysDelegate());
+        mServicesManger.getCitys().subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
+        testSubscriber.assertNoErrors();
+
+        /*final Logger logger = Logger.getLogger("testServicesManagerGetCitys");
         assertNotNull(mServicesManger);
         mServicesManger.getCitys()
                 .subscribe(new Subscriber<List<CityEntity>>() {
@@ -59,12 +63,18 @@ public class ServicesManagerTest {
                     }
                 });
         assertNotNull(mCitys);
-        assertFalse(mCitys.isEmpty());
+        assertFalse(mCitys.isEmpty());*/
     }
 
     @Test
     public void testServicesManagerGetWeatherConditions() throws Exception {
-        final Logger logger = Logger.getLogger("testServicesManagerGetWeatherConditions");
+        assertNotNull(mServicesManger);
+        TestSubscriber<List<WeatherConditionEntity>> testSubscriber = TestSubscriber.create(new GetWeatherConditionsDelegate());
+        mServicesManger.getWeatherConditions().subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
+        testSubscriber.assertNoErrors();
+
+        /*final Logger logger = Logger.getLogger("testServicesManagerGetWeatherConditions");
         assertNotNull(mServicesManger);
         mServicesManger.getWeatherConditions()
                 .subscribe(new Subscriber<List<WeatherConditionEntity>>() {
@@ -89,12 +99,18 @@ public class ServicesManagerTest {
                     }
                 });
         assertNotNull(mWeatherConditions);
-        assertFalse(mWeatherConditions.isEmpty());
+        assertFalse(mWeatherConditions.isEmpty());*/
     }
 
     @Test
     public void testServicesManagerGetCityWeather() throws Exception {
-        final Logger logger = Logger.getLogger("testServicesManagerGetCityWeather");
+        assertNotNull(mServicesManger);
+        TestSubscriber<WeatherEntity> testSubscriber = TestSubscriber.create(new GetCityWeatherDelegate());
+        mServicesManger.getCityWeather("CN101010300").subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
+        testSubscriber.assertNoErrors();
+
+        /*final Logger logger = Logger.getLogger("testServicesManagerGetCityWeather");
         assertNotNull(mServicesManger);
         mServicesManger.getCityWeather("CN101010300")
                 .subscribe(new Subscriber<WeatherEntity>() {
@@ -116,6 +132,6 @@ public class ServicesManagerTest {
                         logger.info(mWeatherEntity.toString());
                     }
                 });
-        assertNotNull(mWeatherEntity);
+        assertNotNull(mWeatherEntity);*/
     }
 }
