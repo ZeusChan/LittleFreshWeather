@@ -1,2 +1,2 @@
 # LittleFreshWeather
-A little weather app.
+A little android weather app.
