@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/material_4dp"
+    android:layout_marginRight="@dimen/material_4dp"
+    android:layout_marginTop="@dimen/material_2dp"
+    android:layout_marginBottom="@dimen/material_2dp"
+    app:cardCornerRadius="@dimen/material_corners"
+    app:cardElevation="@dimen/material_elevation_2dp">
+
+    <TextView
+        android:id="@+id/tv_city_weather_main_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="@dimen/material_4dp"/>
+
+    <TextView
+        android:id="@+id/tv_city_weather_main_air_quality_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_margin="@dimen/material_4dp"/>
+
+    <TextView
+        android:id="@+id/tv_city_weather_main_cur_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/material_4dp"/>
+
+</android.support.v7.widget.CardView>
