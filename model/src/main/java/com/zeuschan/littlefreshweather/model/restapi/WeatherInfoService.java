@@ -25,7 +25,7 @@ public interface WeatherInfoService {
     @GET("x3/condition")
     Observable<ConditionsResponse> getConditionInfos(@QueryMap Map<String, String> params);
 
-    /*https://api.heweather.com/x3/weather?cityid=CN101010100ID&key=035591c2b70c45fa9b4dd2bcabce13fe*/
+    /*https://api.heweather.com/x3/weather?cityid=CN101010300&key=035591c2b70c45fa9b4dd2bcabce13fe*/
     @Headers("Accept-Encoding: application/json")
     @GET("x3/weather")
     Observable<CityWeatherResponse> getCityWeatherInfo(@QueryMap Map<String, String> params);

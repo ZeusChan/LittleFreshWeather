@@ -4,7 +4,7 @@ package com.zeuschan.littlefreshweather.model.entities;
  * Created by chenxiong on 2016/5/31.
  */
 public class WeatherConditionEntity {
-    private int weatherCode;
+    private String weatherCode;
     private String weatherDescription;
     private String weatherIconUrl;
 
@@ -17,11 +17,11 @@ public class WeatherConditionEntity {
                 '}';
     }
 
-    public int getWeatherCode() {
+    public String getWeatherCode() {
         return weatherCode;
     }
 
-    public void setWeatherCode(int weatherCode) {
+    public void setWeatherCode(String weatherCode) {
         this.weatherCode = weatherCode;
     }
 

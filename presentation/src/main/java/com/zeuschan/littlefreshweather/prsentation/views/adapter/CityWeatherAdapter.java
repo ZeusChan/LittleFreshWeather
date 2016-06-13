@@ -39,8 +39,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (weatherEntity != null) {
             MainViewHolder mainViewHolder = (MainViewHolder)holder;
             mainViewHolder.tvCityName.setText(weatherEntity.getCityName());
-            mainViewHolder.tvAirQualityIndex.setText(weatherEntity.getAirQulityIndex() + "");
-            mainViewHolder.tvCurTemp.setText(weatherEntity.getCurrentTemperature() + "");
+            mainViewHolder.tvAirQualityIndex.setText(weatherEntity.getAirQulityIndex());
+            mainViewHolder.tvCurTemp.setText(weatherEntity.getCurrentTemperature());
         }
     }
 

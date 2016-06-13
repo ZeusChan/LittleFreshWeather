@@ -27,15 +27,15 @@ public class ConditionsResponse extends BaseResponse {
     }
 
     public class ConditionInfo {
-        @Expose @SerializedName("code") private int conditionCode;
+        @Expose @SerializedName("code") private String conditionCode;
         @Expose @SerializedName("txt") private String weatherDescription;
         @Expose @SerializedName("icon") private String weatherIconUrl;
 
-        public int getConditionCode() {
+        public String getConditionCode() {
             return conditionCode;
         }
 
-        public void setConditionCode(int conditionCode) {
+        public void setConditionCode(String conditionCode) {
             this.conditionCode = conditionCode;
         }
 

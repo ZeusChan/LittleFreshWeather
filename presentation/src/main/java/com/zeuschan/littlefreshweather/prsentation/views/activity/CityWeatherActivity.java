@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
@@ -16,7 +17,7 @@ import com.zeuschan.littlefreshweather.prsentation.views.adapter.CityWeatherAdap
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CityWeatherActivity extends BaseActivity implements CityWeatherView {
+public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener {
 
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
     private CityWeatherPresenter mPresenter;
@@ -25,6 +26,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
     @BindView(R.id.rv_city_weather) RecyclerView rvCityWeather;
+    @BindView(R.id.bt_failed_retry) Button btFailedRetry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mCityWeatherAdapter = new CityWeatherAdapter();
         rvCityWeather.setAdapter(mCityWeatherAdapter);
 
-        mPresenter.start();
+        btFailedRetry.setOnClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        mPresenter.start();
     }
 
     @Override
@@ -90,8 +93,28 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    public void showContent() {
+        rvCityWeather.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideContent() {
+        rvCityWeather.setVisibility(View.GONE);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         mPresenter.stop();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.bt_failed_retry: {
+                mPresenter.loadData();
+            } break;
+        }
     }
 }

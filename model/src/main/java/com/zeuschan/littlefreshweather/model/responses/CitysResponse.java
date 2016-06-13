@@ -31,8 +31,8 @@ public class CitysResponse extends BaseResponse {
         @Expose @SerializedName("cnty") private String country;
         @Expose @SerializedName("prov") private String province;
         @Expose @SerializedName("city") private String city;
-        @Expose @SerializedName("lat") private double latitude;
-        @Expose @SerializedName("long") private double longitude;
+        @Expose @SerializedName("lat") private String latitude;
+        @Expose @SerializedName("long") private String longitude;
 
         public String getCity() {
             return city;
@@ -58,19 +58,19 @@ public class CitysResponse extends BaseResponse {
             this.id = id;
         }
 
-        public double getLatitude() {
+        public String getLatitude() {
             return latitude;
         }
 
-        public void setLatitude(double latitude) {
+        public void setLatitude(String latitude) {
             this.latitude = latitude;
         }
 
-        public double getLongitude() {
+        public String getLongitude() {
             return longitude;
         }
 
-        public void setLongitude(double longitude) {
+        public void setLongitude(String longitude) {
             this.longitude = longitude;
         }
 

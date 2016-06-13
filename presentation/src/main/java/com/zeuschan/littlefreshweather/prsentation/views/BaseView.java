@@ -38,6 +38,16 @@ public interface BaseView {
     void hideRetry();
 
     /**
+     * Show the content of the view.
+     */
+    void showContent();
+
+    /**
+     * Hide the content of the view.
+     */
+    void hideContent();
+
+    /**
      * Get a {@link android.content.Context}.
      */
     Context getContext();

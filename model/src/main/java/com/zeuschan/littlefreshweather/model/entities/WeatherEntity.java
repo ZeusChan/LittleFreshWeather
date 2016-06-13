@@ -20,19 +20,19 @@ public class WeatherEntity {
      * 空气质量
      */
     // 空气质量指数
-    private int airQulityIndex;
+    private String airQulityIndex;
     // PM2.5一小时均值（ug/m3）
-    private int pm25;
+    private String pm25;
     // PM10一小时均值（ug/m3）
-    private int pm10;
+    private String pm10;
     // 二氧化硫一小时均值（ug/m3）
-    private int so2;
+    private String so2;
     // 二氧化氮一小时均值（ug/m3）
-    private int no2;
+    private String no2;
     // 一氧化碳一小时均值（ug/m3）
-    private int co;
+    private String co;
     // 臭氧一小时均值（ug/m3）
-    private int o3;
+    private String o3;
     // 空气质量类别
     private String airQulityType;
 
@@ -40,23 +40,23 @@ public class WeatherEntity {
      * 实况天气
      */
     // 天气代码
-    private int weatherCode;
+    private String weatherCode;
     // 天气描述
     private String weatherDescription;
     // 当前温度
-    private int currentTemperature;
+    private String currentTemperature;
     // 体感温度
-    private int feltTemperature;
+    private String feltTemperature;
     // 降雨量（mm）
-    private int rainfall;
+    private String rainfall;
     // 湿度（%）
-    private int humidity;
+    private String humidity;
     // 气压
-    private int airPressure;
+    private String airPressure;
     // 能见度（km）
-    private int visibility;
+    private String visibility;
     // 风速（kmph）
-    private int windSpeed;
+    private String windSpeed;
     // 风力等级
     private String windScale;
     // 风向
@@ -130,19 +130,19 @@ public class WeatherEntity {
                 '}';
     }
 
-    public int getAirPressure() {
+    public String getAirPressure() {
         return airPressure;
     }
 
-    public void setAirPressure(int airPressure) {
+    public void setAirPressure(String airPressure) {
         this.airPressure = airPressure;
     }
 
-    public int getAirQulityIndex() {
+    public String getAirQulityIndex() {
         return airQulityIndex;
     }
 
-    public void setAirQulityIndex(int airQulityIndex) {
+    public void setAirQulityIndex(String airQulityIndex) {
         this.airQulityIndex = airQulityIndex;
     }
 
@@ -186,19 +186,19 @@ public class WeatherEntity {
         this.cityName = cityName;
     }
 
-    public int getCo() {
+    public String getCo() {
         return co;
     }
 
-    public void setCo(int co) {
+    public void setCo(String co) {
         this.co = co;
     }
 
-    public int getCurrentTemperature() {
+    public String getCurrentTemperature() {
         return currentTemperature;
     }
 
-    public void setCurrentTemperature(int currentTemperature) {
+    public void setCurrentTemperature(String currentTemperature) {
         this.currentTemperature = currentTemperature;
     }
 
@@ -226,11 +226,11 @@ public class WeatherEntity {
         this.dressDescription = dressDescription;
     }
 
-    public int getFeltTemperature() {
+    public String getFeltTemperature() {
         return feltTemperature;
     }
 
-    public void setFeltTemperature(int feltTemperature) {
+    public void setFeltTemperature(String feltTemperature) {
         this.feltTemperature = feltTemperature;
     }
 
@@ -258,59 +258,59 @@ public class WeatherEntity {
         this.forecasts = forecasts;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public int getNo2() {
+    public String getNo2() {
         return no2;
     }
 
-    public void setNo2(int no2) {
+    public void setNo2(String no2) {
         this.no2 = no2;
     }
 
-    public int getO3() {
+    public String getO3() {
         return o3;
     }
 
-    public void setO3(int o3) {
+    public void setO3(String o3) {
         this.o3 = o3;
     }
 
-    public int getPm10() {
+    public String getPm10() {
         return pm10;
     }
 
-    public void setPm10(int pm10) {
+    public void setPm10(String pm10) {
         this.pm10 = pm10;
     }
 
-    public int getPm25() {
+    public String getPm25() {
         return pm25;
     }
 
-    public void setPm25(int pm25) {
+    public void setPm25(String pm25) {
         this.pm25 = pm25;
     }
 
-    public int getRainfall() {
+    public String getRainfall() {
         return rainfall;
     }
 
-    public void setRainfall(int rainfall) {
+    public void setRainfall(String rainfall) {
         this.rainfall = rainfall;
     }
 
-    public int getSo2() {
+    public String getSo2() {
         return so2;
     }
 
-    public void setSo2(int so2) {
+    public void setSo2(String so2) {
         this.so2 = so2;
     }
 
@@ -362,19 +362,19 @@ public class WeatherEntity {
         this.uvDescription = uvDescription;
     }
 
-    public int getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(int visibility) {
+    public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
 
-    public int getWeatherCode() {
+    public String getWeatherCode() {
         return weatherCode;
     }
 
-    public void setWeatherCode(int weatherCode) {
+    public void setWeatherCode(String weatherCode) {
         this.weatherCode = weatherCode;
     }
 
@@ -402,11 +402,11 @@ public class WeatherEntity {
         this.windScale = windScale;
     }
 
-    public int getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -420,36 +420,36 @@ public class WeatherEntity {
         private String sunsetTime;
 
         // 最高温度（摄氏度）
-        private int maxTemperature;
+        private String maxTemperature;
         // 最低温度（摄氏度）
-        private int minTemperature;
+        private String minTemperature;
 
         // 风速（kmph）
-        private int windSpeed;
+        private String windSpeed;
         // 风力等级
         private String windScale;
         // 风向
         private String windDirection;
 
         // 白天天气代码
-        private int weatherCodeDaytime;
+        private String weatherCodeDaytime;
         // 白天天气描述
         private String weatherDescriptionDaytime;
         // 夜间天气代码
-        private int weatherCodeNight;
+        private String weatherCodeNight;
         // 夜间天气描述
         private String weatherDescriptionNight;
 
         // 降雨量（mm）
         private double rainfall;
         // 降水概率
-        private int rainProbability;
+        private String rainProbability;
         // 湿度（%）
-        private int humidity;
+        private String humidity;
         // 气压
-        private int airPressure;
+        private String airPressure;
         // 能见度（km）
-        private int visibility;
+        private String visibility;
 
         @Override
         public String toString() {
@@ -474,11 +474,11 @@ public class WeatherEntity {
                     '}';
         }
 
-        public int getAirPressure() {
+        public String getAirPressure() {
             return airPressure;
         }
 
-        public void setAirPressure(int airPressure) {
+        public void setAirPressure(String airPressure) {
             this.airPressure = airPressure;
         }
 
@@ -490,27 +490,27 @@ public class WeatherEntity {
             this.date = date;
         }
 
-        public int getHumidity() {
+        public String getHumidity() {
             return humidity;
         }
 
-        public void setHumidity(int humidity) {
+        public void setHumidity(String humidity) {
             this.humidity = humidity;
         }
 
-        public int getMaxTemperature() {
+        public String getMaxTemperature() {
             return maxTemperature;
         }
 
-        public void setMaxTemperature(int maxTemperature) {
+        public void setMaxTemperature(String maxTemperature) {
             this.maxTemperature = maxTemperature;
         }
 
-        public int getMinTemperature() {
+        public String getMinTemperature() {
             return minTemperature;
         }
 
-        public void setMinTemperature(int minTemperature) {
+        public void setMinTemperature(String minTemperature) {
             this.minTemperature = minTemperature;
         }
 
@@ -522,11 +522,11 @@ public class WeatherEntity {
             this.rainfall = rainfall;
         }
 
-        public int getRainProbability() {
+        public String getRainProbability() {
             return rainProbability;
         }
 
-        public void setRainProbability(int rainProbability) {
+        public void setRainProbability(String rainProbability) {
             this.rainProbability = rainProbability;
         }
 
@@ -546,27 +546,27 @@ public class WeatherEntity {
             this.sunsetTime = sunsetTime;
         }
 
-        public int getVisibility() {
+        public String getVisibility() {
             return visibility;
         }
 
-        public void setVisibility(int visibility) {
+        public void setVisibility(String visibility) {
             this.visibility = visibility;
         }
 
-        public int getWeatherCodeDaytime() {
+        public String getWeatherCodeDaytime() {
             return weatherCodeDaytime;
         }
 
-        public void setWeatherCodeDaytime(int weatherCodeDaytime) {
+        public void setWeatherCodeDaytime(String weatherCodeDaytime) {
             this.weatherCodeDaytime = weatherCodeDaytime;
         }
 
-        public int getWeatherCodeNight() {
+        public String getWeatherCodeNight() {
             return weatherCodeNight;
         }
 
-        public void setWeatherCodeNight(int weatherCodeNight) {
+        public void setWeatherCodeNight(String weatherCodeNight) {
             this.weatherCodeNight = weatherCodeNight;
         }
 
@@ -602,11 +602,11 @@ public class WeatherEntity {
             this.windScale = windScale;
         }
 
-        public int getWindSpeed() {
+        public String getWindSpeed() {
             return windSpeed;
         }
 
-        public void setWindSpeed(int windSpeed) {
+        public void setWindSpeed(String windSpeed) {
             this.windSpeed = windSpeed;
         }
     }

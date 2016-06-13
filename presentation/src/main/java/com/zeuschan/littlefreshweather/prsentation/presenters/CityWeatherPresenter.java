@@ -20,13 +20,18 @@ public class CityWeatherPresenter implements Presenter {
 
     @Override
     public void start() {
-        mView.showLoading();
-        mUseCase.execute(new CityWeatherSubscriber());
+        loadData();
     }
 
     @Override
     public void stop() {
         mUseCase.unsubscribe();
+    }
+
+    public void loadData() {
+        mView.hideRetry();
+        mView.showLoading();
+        mUseCase.execute(new CityWeatherSubscriber());
     }
 
     private final class CityWeatherSubscriber extends Subscriber<WeatherEntity> {
@@ -43,6 +48,7 @@ public class CityWeatherPresenter implements Presenter {
 
         @Override
         public void onNext(WeatherEntity weatherEntity) {
+            CityWeatherPresenter.this.mView.showContent();
             CityWeatherPresenter.this.mView.renderCityWeather(weatherEntity);
         }
     }

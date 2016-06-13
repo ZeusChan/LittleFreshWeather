@@ -165,12 +165,12 @@ public class CityWeatherResponse {
         public class Now {
             @Expose @SerializedName("cond") private Cond cond;
             @Expose @SerializedName("wind") private Wind wind;
-            @Expose @SerializedName("fl") private int fl;
-            @Expose @SerializedName("hum") private int hum;
-            @Expose @SerializedName("pcpn") private int pcpn;
-            @Expose @SerializedName("pres") private int pres;
-            @Expose @SerializedName("tmp") private int tmp;
-            @Expose @SerializedName("vis") private int vis;
+            @Expose @SerializedName("fl") private String fl;
+            @Expose @SerializedName("hum") private String hum;
+            @Expose @SerializedName("pcpn") private String pcpn;
+            @Expose @SerializedName("pres") private String pres;
+            @Expose @SerializedName("tmp") private String tmp;
+            @Expose @SerializedName("vis") private String vis;
 
             public Cond getCond() {
                 return cond;
@@ -180,51 +180,51 @@ public class CityWeatherResponse {
                 this.cond = cond;
             }
 
-            public int getFl() {
+            public String getFl() {
                 return fl;
             }
 
-            public void setFl(int fl) {
+            public void setFl(String fl) {
                 this.fl = fl;
             }
 
-            public int getHum() {
+            public String getHum() {
                 return hum;
             }
 
-            public void setHum(int hum) {
+            public void setHum(String hum) {
                 this.hum = hum;
             }
 
-            public int getPcpn() {
+            public String getPcpn() {
                 return pcpn;
             }
 
-            public void setPcpn(int pcpn) {
+            public void setPcpn(String pcpn) {
                 this.pcpn = pcpn;
             }
 
-            public int getPres() {
+            public String getPres() {
                 return pres;
             }
 
-            public void setPres(int pres) {
+            public void setPres(String pres) {
                 this.pres = pres;
             }
 
-            public int getTmp() {
+            public String getTmp() {
                 return tmp;
             }
 
-            public void setTmp(int tmp) {
+            public void setTmp(String tmp) {
                 this.tmp = tmp;
             }
 
-            public int getVis() {
+            public String getVis() {
                 return vis;
             }
 
-            public void setVis(int vis) {
+            public void setVis(String vis) {
                 this.vis = vis;
             }
 
@@ -251,14 +251,14 @@ public class CityWeatherResponse {
             }
 
             public class Cond {
-                @Expose @SerializedName("code") private int code;
+                @Expose @SerializedName("code") private String code;
                 @Expose @SerializedName("txt") private String txt;
 
-                public int getCode() {
+                public String getCode() {
                     return code;
                 }
 
-                public void setCode(int code) {
+                public void setCode(String code) {
                     this.code = code;
                 }
 
@@ -280,16 +280,16 @@ public class CityWeatherResponse {
             }
 
             public class Wind {
-                @Expose @SerializedName("deg") private int deg;
+                @Expose @SerializedName("deg") private String deg;
                 @Expose @SerializedName("dir") private String dir;
                 @Expose @SerializedName("sc") private String sc;
-                @Expose @SerializedName("spd") private int spd;
+                @Expose @SerializedName("spd") private String spd;
 
-                public int getDeg() {
+                public String getDeg() {
                     return deg;
                 }
 
-                public void setDeg(int deg) {
+                public void setDeg(String deg) {
                     this.deg = deg;
                 }
 
@@ -309,11 +309,11 @@ public class CityWeatherResponse {
                     this.sc = sc;
                 }
 
-                public int getSpd() {
+                public String getSpd() {
                     return spd;
                 }
 
-                public void setSpd(int spd) {
+                public void setSpd(String spd) {
                     this.spd = spd;
                 }
 
@@ -335,11 +335,11 @@ public class CityWeatherResponse {
             @Expose @SerializedName("tmp") private Tmp tmp;
             @Expose @SerializedName("wind") private Wind wind;
             @Expose @SerializedName("date") private String date;
-            @Expose @SerializedName("hum") private int hum;
+            @Expose @SerializedName("hum") private String hum;
             @Expose @SerializedName("pcpn") private double pcpn;
-            @Expose @SerializedName("pop") private int pop;
-            @Expose @SerializedName("pres") private int pres;
-            @Expose @SerializedName("vis") private int vis;
+            @Expose @SerializedName("pop") private String pop;
+            @Expose @SerializedName("pres") private String pres;
+            @Expose @SerializedName("vis") private String vis;
 
             public Astro getAstro() {
                 return astro;
@@ -365,11 +365,11 @@ public class CityWeatherResponse {
                 this.date = date;
             }
 
-            public int getHum() {
+            public String getHum() {
                 return hum;
             }
 
-            public void setHum(int hum) {
+            public void setHum(String hum) {
                 this.hum = hum;
             }
 
@@ -381,19 +381,19 @@ public class CityWeatherResponse {
                 this.pcpn = pcpn;
             }
 
-            public int getPop() {
+            public String getPop() {
                 return pop;
             }
 
-            public void setPop(int pop) {
+            public void setPop(String pop) {
                 this.pop = pop;
             }
 
-            public int getPres() {
+            public String getPres() {
                 return pres;
             }
 
-            public void setPres(int pres) {
+            public void setPres(String pres) {
                 this.pres = pres;
             }
 
@@ -405,11 +405,11 @@ public class CityWeatherResponse {
                 this.tmp = tmp;
             }
 
-            public int getVis() {
+            public String getVis() {
                 return vis;
             }
 
-            public void setVis(int vis) {
+            public void setVis(String vis) {
                 this.vis = vis;
             }
 
@@ -467,8 +467,8 @@ public class CityWeatherResponse {
             }
 
             public class Cond {
-                @Expose @SerializedName("code_d") private int code_d;
-                @Expose @SerializedName("code_n") private int code_n;
+                @Expose @SerializedName("code_d") private String code_d;
+                @Expose @SerializedName("code_n") private String code_n;
                 @Expose @SerializedName("txt_d") private String txt_d;
                 @Expose @SerializedName("txt_n") private String txt_n;
 
@@ -482,19 +482,19 @@ public class CityWeatherResponse {
                             '}';
                 }
 
-                public int getCode_d() {
+                public String getCode_d() {
                     return code_d;
                 }
 
-                public void setCode_d(int code_d) {
+                public void setCode_d(String code_d) {
                     this.code_d = code_d;
                 }
 
-                public int getCode_n() {
+                public String getCode_n() {
                     return code_n;
                 }
 
-                public void setCode_n(int code_n) {
+                public void setCode_n(String code_n) {
                     this.code_n = code_n;
                 }
 
@@ -516,8 +516,8 @@ public class CityWeatherResponse {
             }
 
             public class Tmp {
-                @Expose @SerializedName("max") private int max;
-                @Expose @SerializedName("min") private int min;
+                @Expose @SerializedName("max") private String max;
+                @Expose @SerializedName("min") private String min;
 
                 @Override
                 public String toString() {
@@ -527,28 +527,28 @@ public class CityWeatherResponse {
                             '}';
                 }
 
-                public int getMax() {
+                public String getMax() {
                     return max;
                 }
 
-                public void setMax(int max) {
+                public void setMax(String max) {
                     this.max = max;
                 }
 
-                public int getMin() {
+                public String getMin() {
                     return min;
                 }
 
-                public void setMin(int min) {
+                public void setMin(String min) {
                     this.min = min;
                 }
             }
 
             public class Wind {
-                @Expose @SerializedName("deg") private int deg;
+                @Expose @SerializedName("deg") private String deg;
                 @Expose @SerializedName("dir") private String dir;
                 @Expose @SerializedName("sc") private String sc;
-                @Expose @SerializedName("spd") private int spd;
+                @Expose @SerializedName("spd") private String spd;
 
                 @Override
                 public String toString() {
@@ -560,11 +560,11 @@ public class CityWeatherResponse {
                             '}';
                 }
 
-                public int getDeg() {
+                public String getDeg() {
                     return deg;
                 }
 
-                public void setDeg(int deg) {
+                public void setDeg(String deg) {
                     this.deg = deg;
                 }
 
@@ -584,11 +584,11 @@ public class CityWeatherResponse {
                     this.sc = sc;
                 }
 
-                public int getSpd() {
+                public String getSpd() {
                     return spd;
                 }
 
-                public void setSpd(int spd) {
+                public void setSpd(String spd) {
                     this.spd = spd;
                 }
             }
@@ -895,14 +895,14 @@ public class CityWeatherResponse {
             }
 
             public class City {
-                @Expose @SerializedName("aqi") private int aqi;
-                @Expose @SerializedName("co") private int co;
-                @Expose @SerializedName("no2") private int no2;
-                @Expose @SerializedName("o3") private int o3;
-                @Expose @SerializedName("pm10") private int pm10;
-                @Expose @SerializedName("pm25") private int pm25;
+                @Expose @SerializedName("aqi") private String aqi;
+                @Expose @SerializedName("co") private String co;
+                @Expose @SerializedName("no2") private String no2;
+                @Expose @SerializedName("o3") private String o3;
+                @Expose @SerializedName("pm10") private String pm10;
+                @Expose @SerializedName("pm25") private String pm25;
                 @Expose @SerializedName("qlty") private String qlty;
-                @Expose @SerializedName("so2") private int so2;
+                @Expose @SerializedName("so2") private String so2;
 
                 @Override
                 public String toString() {
@@ -918,51 +918,51 @@ public class CityWeatherResponse {
                             '}';
                 }
 
-                public int getAqi() {
+                public String getAqi() {
                     return aqi;
                 }
 
-                public void setAqi(int aqi) {
+                public void setAqi(String aqi) {
                     this.aqi = aqi;
                 }
 
-                public int getCo() {
+                public String getCo() {
                     return co;
                 }
 
-                public void setCo(int co) {
+                public void setCo(String co) {
                     this.co = co;
                 }
 
-                public int getNo2() {
+                public String getNo2() {
                     return no2;
                 }
 
-                public void setNo2(int no2) {
+                public void setNo2(String no2) {
                     this.no2 = no2;
                 }
 
-                public int getO3() {
+                public String getO3() {
                     return o3;
                 }
 
-                public void setO3(int o3) {
+                public void setO3(String o3) {
                     this.o3 = o3;
                 }
 
-                public int getPm10() {
+                public String getPm10() {
                     return pm10;
                 }
 
-                public void setPm10(int pm10) {
+                public void setPm10(String pm10) {
                     this.pm10 = pm10;
                 }
 
-                public int getPm25() {
+                public String getPm25() {
                     return pm25;
                 }
 
-                public void setPm25(int pm25) {
+                public void setPm25(String pm25) {
                     this.pm25 = pm25;
                 }
 
@@ -974,11 +974,11 @@ public class CityWeatherResponse {
                     this.qlty = qlty;
                 }
 
-                public int getSo2() {
+                public String getSo2() {
                     return so2;
                 }
 
-                public void setSo2(int so2) {
+                public void setSo2(String so2) {
                     this.so2 = so2;
                 }
             }

@@ -12,7 +12,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_city_weather"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <include layout="@layout/loading_progress_view"/>
     <include layout="@layout/failed_retry_view"/>
