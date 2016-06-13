@@ -38,7 +38,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mPresenter.attachView(this);
 
         rvCityWeather.setLayoutManager(new LinearLayoutManager(this));
-        mCityWeatherAdapter = new CityWeatherAdapter();
+        mCityWeatherAdapter = new CityWeatherAdapter(this);
         rvCityWeather.setAdapter(mCityWeatherAdapter);
 
         btFailedRetry.setOnClickListener(this);

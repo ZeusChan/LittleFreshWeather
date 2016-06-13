@@ -15,7 +15,7 @@ public class CityWeatherPresenter implements Presenter {
 
     public void attachView(CityWeatherView view) {
         mView = view;
-        mUseCase = new GetCityWeatherUseCase("CN101010300");
+        mUseCase = new GetCityWeatherUseCase("CN101010100");
     }
 
     @Override

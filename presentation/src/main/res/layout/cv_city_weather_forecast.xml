@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/material_128dp"
+    android:layout_marginLeft="@dimen/material_4dp"
+    android:layout_marginRight="@dimen/material_4dp"
+    android:layout_marginTop="@dimen/material_8dp"
+    android:layout_marginBottom="@dimen/material_8dp"
+    app:cardCornerRadius="@dimen/material_corners_2dp"
+    app:cardElevation="@dimen/material_elevation_4dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_cv_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/material_2dp"
+            android:layout_gravity="center_vertical|left"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/material_1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/material_2dp"
+            android:layout_marginBottom="@dimen/material_2dp"
+            android:layout_marginRight="@dimen/material_0dp"
+            android:layout_marginLeft="@dimen/material_0dp"/>
+
+        <ListView
+            android:id="@+id/lv_city_weather_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/material_2dp"
+            android:layout_marginRight="@dimen/material_2dp"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

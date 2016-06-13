@@ -3,4 +3,6 @@
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>
     <string name="retry">重试</string>
+    <string name="centigrade">℃</string>
+    <string name="forecast_title">天气预报</string>
 </resources>

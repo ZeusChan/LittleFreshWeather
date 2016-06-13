@@ -49,7 +49,9 @@
     <dimen name="material_40sp">40sp</dimen>
 
 
-    <dimen name="material_corners">2dip</dimen>
+    <dimen name="material_corners_0dp">0dip</dimen>
+    <dimen name="material_corners_2dp">2dip</dimen>
+    <dimen name="material_elevation_0dp">0dip</dimen>
     <dimen name="material_elevation_2dp">2dip</dimen>
     <dimen name="material_elevation_4dp">4dip</dimen>
     <dimen name="material_elevation_6dp">6dip</dimen>
