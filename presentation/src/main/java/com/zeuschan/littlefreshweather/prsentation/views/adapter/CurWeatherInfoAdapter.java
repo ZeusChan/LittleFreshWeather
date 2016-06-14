@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
+import com.zeuschan.littlefreshweather.prsentation.wrappers.CurWeatherInfoWrapper;
 
 import java.util.List;
 
@@ -18,18 +18,17 @@ import butterknife.ButterKnife;
 /**
  * Created by chenxiong on 2016/6/13.
  */
-public class ForecastAdapter extends ArrayAdapter<WeatherEntity.Forecast> {
-
+public class CurWeatherInfoAdapter extends ArrayAdapter<CurWeatherInfoWrapper> {
     int mResourceId;
 
-    public ForecastAdapter(Context context, int resource, List<WeatherEntity.Forecast> objects) {
+    public CurWeatherInfoAdapter(Context context, int resource, List<CurWeatherInfoWrapper> objects) {
         super(context, resource, objects);
         this.mResourceId = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        WeatherEntity.Forecast forecast = getItem(position);
+        CurWeatherInfoWrapper weatherInfo = getItem(position);
         View view = null;
         ViewHolder viewHolder = null;
         if (null == convertView) {
@@ -41,20 +40,19 @@ public class ForecastAdapter extends ArrayAdapter<WeatherEntity.Forecast> {
             viewHolder = (ViewHolder)view.getTag();
         }
 
-        viewHolder.tvDate.setText(forecast.getDate());
-        viewHolder.tvCentigrade.setText(forecast.getMinTemperature() + "℃ ~ " + forecast.getMaxTemperature() + "℃");
-        viewHolder.tvWeatherDesc.setText(forecast.getWeatherDescriptionDaytime());
+        viewHolder.tvName.setText(weatherInfo.getWeatherInfoName());
+        viewHolder.tvValue.setText(weatherInfo.getWeatherInfoValue());
 
         return view;
     }
 
     public static class ViewHolder {
-        @BindView(R.id.tv_city_weather_forecast_item_date) TextView tvDate;
-        @BindView(R.id.tv_city_weather_forecast_item_centigrade) TextView tvCentigrade;
-        @BindView(R.id.tv_city_weather_forecast_item_weather_desc) TextView tvWeatherDesc;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name) TextView tvName;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value) TextView tvValue;
 
         public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

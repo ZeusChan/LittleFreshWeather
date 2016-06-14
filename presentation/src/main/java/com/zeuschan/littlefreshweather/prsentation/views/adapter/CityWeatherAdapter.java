@@ -5,11 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
+import com.zeuschan.littlefreshweather.prsentation.wrappers.CurWeatherInfoWrapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +25,7 @@ import butterknife.ButterKnife;
 public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public static final int VIEW_MAIN = 0;
     public static final int VIEW_FORECAST = 1;
+    public static final int VIEW_CURRENT_WEATHER_INFO = 2;
 
     private WeatherEntity mWeatherEntity = null;
     private Context mContext = null;
@@ -37,22 +43,26 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemViewType(int position) {
         if (0 == position) {
             return VIEW_MAIN;
-        } else {
+        } else if (1 == position) {
             return VIEW_FORECAST;
+        } else {
+            return VIEW_CURRENT_WEATHER_INFO;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mWeatherEntity != null ? 2 : 0;
+        return mWeatherEntity != null ? 3 : 0;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (VIEW_MAIN == viewType) {
             return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_main, parent, false));
-        } else {
+        } else if (VIEW_FORECAST == viewType) {
             return new ForecastViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_forecast, parent, false));
+        } else {
+            return new CurWeatherInfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_cur_weather_info, parent, false));
         }
     }
 
@@ -68,10 +78,30 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mainViewHolder.tvAirQualityType.setText(mWeatherEntity.getAirQulityType());
             mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
             mainViewHolder.tvCurTemp.setText(mWeatherEntity.getCurrentTemperature());
-        } else {
+        } else if (1 == position) {
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
             forecastViewHolder.lvCityWeatherForecast.setAdapter(new ForecastAdapter(mContext, R.layout.cv_city_weather_forecast_item, mWeatherEntity.getForecasts()));
+        } else {
+            CurWeatherInfoViewHolder curWeatherInfoViewHolder = (CurWeatherInfoViewHolder)holder;
+            curWeatherInfoViewHolder.tvTitleName.setText(R.string.current_weather_info);
+            List<CurWeatherInfoWrapper> listWeatherInfo = new ArrayList<>();
+            listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.wind_dirction), mWeatherEntity.getWindDirection()));
+            listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.wind_scale), mWeatherEntity.getWindScale() + "级"));
+            listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.felt_temp), mWeatherEntity.getFeltTemperature() + "℃"));
+            listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.humidity), mWeatherEntity.getHumidity() + "%"));
+            listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.air_pressure), mWeatherEntity.getAirPressure() + "hpa"));
+            curWeatherInfoViewHolder.gvCurWeatherInfo.setAdapter(new CurWeatherInfoAdapter(mContext, R.layout.cv_city_weather_cur_weather_info_item, listWeatherInfo));
+        }
+    }
+
+    public static class CurWeatherInfoViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
+        @BindView(R.id.gv_city_weather_cur_weather_info) GridView gvCurWeatherInfo;
+
+        public CurWeatherInfoViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

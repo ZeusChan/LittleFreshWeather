@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/material_16dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_city_weather_forecast_item_date"

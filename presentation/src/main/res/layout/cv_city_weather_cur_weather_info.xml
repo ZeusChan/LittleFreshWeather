@@ -32,12 +32,13 @@
             android:layout_marginRight="@dimen/material_0dp"
             android:layout_marginLeft="@dimen/material_0dp"/>
 
-        <ListView
-            android:id="@+id/lv_city_weather_forecast"
+        <GridView
+            android:id="@+id/gv_city_weather_cur_weather_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/material_2dp"
-            android:layout_marginRight="@dimen/material_2dp"/>
+            android:layout_marginRight="@dimen/material_2dp"
+            android:numColumns="2"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

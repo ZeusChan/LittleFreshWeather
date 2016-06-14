@@ -5,4 +5,10 @@
     <string name="retry">重试</string>
     <string name="centigrade">℃</string>
     <string name="forecast_title">天气预报</string>
+    <string name="current_weather_info">实时气象信息</string>
+    <string name="wind_dirction">风向</string>
+    <string name="wind_scale">风力等级</string>
+    <string name="felt_temp">体感温度</string>
+    <string name="humidity">湿度</string>
+    <string name="air_pressure">气压</string>
 </resources>
