@@ -32,7 +32,10 @@
     <dimen name="material_248dp">248dip</dimen>
     <dimen name="material_256dp">256dip</dimen>
     <dimen name="material_320dp">320dip</dimen>
+    <dimen name="material_360dp">360dip</dimen>
+    <dimen name="material_380dp">380dip</dimen>
     <dimen name="material_400dp">400dip</dimen>
+    <dimen name="material_600dp">600dip</dimen>
 
     <!--material sp-->
     <dimen name="material_8sp">8sp</dimen>

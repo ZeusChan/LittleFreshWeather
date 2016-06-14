@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.wrappers.CurWeatherInfoWrapper;
+import com.zeuschan.littlefreshweather.prsentation.wrappers.LifeIndexWrapper;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static final int VIEW_MAIN = 0;
     public static final int VIEW_FORECAST = 1;
     public static final int VIEW_CURRENT_WEATHER_INFO = 2;
+    public static final int VIEW_LIFE_INDEX = 3;
 
     private WeatherEntity mWeatherEntity = null;
     private Context mContext = null;
@@ -45,14 +49,16 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return VIEW_MAIN;
         } else if (1 == position) {
             return VIEW_FORECAST;
-        } else {
+        } else if (2 == position) {
             return VIEW_CURRENT_WEATHER_INFO;
+        } else {
+            return VIEW_LIFE_INDEX;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mWeatherEntity != null ? 3 : 0;
+        return mWeatherEntity != null ? 4 : 0;
     }
 
     @Override
@@ -61,8 +67,10 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_main, parent, false));
         } else if (VIEW_FORECAST == viewType) {
             return new ForecastViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_forecast, parent, false));
-        } else {
+        } else if (VIEW_CURRENT_WEATHER_INFO == viewType) {
             return new CurWeatherInfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_cur_weather_info, parent, false));
+        } else {
+            return new LifeIndexViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_life_index, parent, false));
         }
     }
 
@@ -82,7 +90,7 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
             forecastViewHolder.lvCityWeatherForecast.setAdapter(new ForecastAdapter(mContext, R.layout.cv_city_weather_forecast_item, mWeatherEntity.getForecasts()));
-        } else {
+        } else if (2 == position) {
             CurWeatherInfoViewHolder curWeatherInfoViewHolder = (CurWeatherInfoViewHolder)holder;
             curWeatherInfoViewHolder.tvTitleName.setText(R.string.current_weather_info);
             List<CurWeatherInfoWrapper> listWeatherInfo = new ArrayList<>();
@@ -92,6 +100,27 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.humidity), mWeatherEntity.getHumidity() + "%"));
             listWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.air_pressure), mWeatherEntity.getAirPressure() + "hpa"));
             curWeatherInfoViewHolder.gvCurWeatherInfo.setAdapter(new CurWeatherInfoAdapter(mContext, R.layout.cv_city_weather_cur_weather_info_item, listWeatherInfo));
+        } else {
+            LifeIndexViewHolder lifeIndexViewHolder = (LifeIndexViewHolder)holder;
+            lifeIndexViewHolder.tvTitleName.setText(R.string.life_index);
+            List<LifeIndexWrapper> listLifeIndex = new ArrayList<>();
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.dress_index), mWeatherEntity.getDressBrief(), mWeatherEntity.getDressDescription()));
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.uv_index), mWeatherEntity.getUvBrief(), mWeatherEntity.getUvDescription()));
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.carwash_index), mWeatherEntity.getCarWashBrief(), mWeatherEntity.getCarWashDescription()));
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.travel_index), mWeatherEntity.getTravelBrief(), mWeatherEntity.getTravelDescription()));
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.flu_index), mWeatherEntity.getFluBrief(), mWeatherEntity.getFluDescription()));
+            listLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.sport_index), mWeatherEntity.getSportBrief(), mWeatherEntity.getSportDescription()));
+            lifeIndexViewHolder.lvLifeIndex.setAdapter(new LifeIndexAdapter(mContext, R.layout.cv_city_weather_life_index_item, listLifeIndex));
+        }
+    }
+
+    public static class LifeIndexViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
+        @BindView(R.id.lv_city_weather_life_index) ListView lvLifeIndex;
+
+        public LifeIndexViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

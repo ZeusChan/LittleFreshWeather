@@ -11,4 +11,11 @@
     <string name="felt_temp">体感温度</string>
     <string name="humidity">湿度</string>
     <string name="air_pressure">气压</string>
+    <string name="life_index">生活指数</string>
+    <string name="dress_index">穿衣指数</string>
+    <string name="uv_index">紫外线指数</string>
+    <string name="carwash_index">洗车指数</string>
+    <string name="travel_index">旅游指数</string>
+    <string name="flu_index">感冒指数</string>
+    <string name="sport_index">运动指数</string>
 </resources>
