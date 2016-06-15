@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/material_180dp"
+    android:layout_height="@dimen/material_232dp"
     android:layout_marginLeft="@dimen/material_8dp"
     android:layout_marginRight="@dimen/material_8dp"
     android:layout_marginTop="@dimen/material_8dp"
     android:layout_marginBottom="@dimen/material_8dp"
-    app:cardCornerRadius="@dimen/material_corners_2dp"
+    app:cardCornerRadius="@dimen/material_corners_4dp"
     app:cardElevation="@dimen/material_elevation_4dp"
     app:cardBackgroundColor="@color/colorSemiTransparent"
     app:contentPadding="@dimen/material_4dp">
@@ -16,7 +16,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/material_4dp">
 
         <TextView
             android:id="@+id/tv_cv_title_name"
@@ -24,12 +25,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/material_2dp"
             android:layout_gravity="center_vertical|left"
-            android:textColor="@color/colorLightGray"/>
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_24sp"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/material_1dp"
-            android:background="@android:color/darker_gray"
+            android:layout_height="@dimen/material_2dp"
+            android:background="@color/colorLightGray"
             android:layout_marginTop="@dimen/material_6dp"
             android:layout_marginBottom="@dimen/material_6dp"
             android:layout_marginRight="@dimen/material_2dp"
@@ -40,7 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/material_2dp"
-            android:layout_marginRight="@dimen/material_2dp"/>
+            android:layout_marginRight="@dimen/material_2dp"
+            android:listSelector="@color/colorTransparent"
+            android:divider="@color/colorTransparent"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

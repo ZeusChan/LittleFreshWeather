@@ -79,11 +79,11 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (0 == position) {
             MainViewHolder mainViewHolder = (MainViewHolder)holder;
-            mainViewHolder.tvCityName.setText(mWeatherEntity.getCityName());
             mainViewHolder.tvAirQualityIndex.setText(mWeatherEntity.getAirQulityIndex());
-            mainViewHolder.tvAirQualityType.setText(mWeatherEntity.getAirQulityType());
-            mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
+            mainViewHolder.tvAirQualityType.setText("空气" + mWeatherEntity.getAirQulityType());
             mainViewHolder.tvCurTemp.setText(mWeatherEntity.getCurrentTemperature());
+            mainViewHolder.tvUpdateTime.setText(mWeatherEntity.getDataUpdateTime() + " 发布");
+            mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
         } else if (1 == position) {
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
@@ -143,11 +143,11 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static class MainViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_city_weather_main_city_name) TextView tvCityName;
         @BindView(R.id.tv_city_weather_main_air_quality_index) TextView tvAirQualityIndex;
         @BindView(R.id.tv_city_weather_main_air_quality_type) TextView tvAirQualityType;
         @BindView(R.id.tv_city_weather_main_weather_desc) TextView tvWeatherDesc;
         @BindView(R.id.tv_city_weather_main_cur_temp) TextView tvCurTemp;
+        @BindView(R.id.tv_city_weather_main_update_time) TextView tvUpdateTime;
 
         public MainViewHolder(View itemView) {
             super(itemView);

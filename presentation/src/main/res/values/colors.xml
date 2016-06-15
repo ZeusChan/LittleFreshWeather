@@ -6,7 +6,9 @@
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorSemiTransparent">#5e000000</color>
+    <color name="colorSemiTransLightGray">#6ec1c1c1</color>
 
     <color name="colorLightGray">#f0f0f0</color>
     <color name="colorDarkGray">#c1c1c1</color>
+    <color name="colorLightGreen">#1daa16</color>
 </resources>

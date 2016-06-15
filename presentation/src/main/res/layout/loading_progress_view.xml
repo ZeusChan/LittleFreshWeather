@@ -3,25 +3,24 @@
     android:id="@+id/rl_loading_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
     android:visibility="gone">
-
-    <ProgressBar
-        android:id="@+id/pb_loading_progress"
-        android:layout_width="@dimen/material_48dp"
-        android:layout_height="@dimen/material_48dp"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:indeterminateBehavior="cycle" />
 
     <TextView
         android:id="@+id/tv_loading_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pb_loading_progress"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/material_4dp"
         android:text="@string/loading"
         android:textColor="@color/colorLightGray"/>
+
+    <ProgressBar
+        android:id="@+id/pb_loading_progress"
+        android:layout_width="@dimen/material_48dp"
+        android:layout_height="@dimen/material_48dp"
+        android:layout_above="@id/tv_loading_progress"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle" />
 
 </RelativeLayout>

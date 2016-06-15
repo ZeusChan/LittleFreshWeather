@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:textColor="@color/colorLightGray"/>
+        android:textColor="@color/colorLightGray"
+        android:textSize="@dimen/material_24sp"/>
 
 </RelativeLayout>

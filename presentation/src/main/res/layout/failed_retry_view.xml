@@ -6,22 +6,25 @@
     android:background="@android:color/transparent"
     android:visibility="gone">
 
-    <TextView
-        android:id="@+id/tv_failed_retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/load_failed"
-        android:textColor="@color/colorLightGray"/>
-
     <Button
         android:id="@+id/bt_failed_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_failed_retry"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/material_4dp"
         android:layout_centerHorizontal="true"
         android:text="@string/retry"
+        android:textColor="@color/colorLightGray"
+        android:background="@drawable/button_background_selector"/>
+
+    <TextView
+        android:id="@+id/tv_failed_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bt_failed_retry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/material_4dp"
+        android:text="@string/load_failed"
         android:textColor="@color/colorLightGray"/>
 
 </RelativeLayout>
