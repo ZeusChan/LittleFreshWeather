@@ -48,6 +48,7 @@ public class CityWeatherPresenter implements Presenter {
 
         @Override
         public void onNext(WeatherEntity weatherEntity) {
+            CityWeatherPresenter.this.mView.setToolbarCity(weatherEntity.getCityName());
             CityWeatherPresenter.this.mView.showContent();
             CityWeatherPresenter.this.mView.renderCityWeather(weatherEntity);
         }

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
@@ -27,6 +28,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
     @BindView(R.id.rv_city_weather) RecyclerView rvCityWeather;
     @BindView(R.id.bt_failed_retry) Button btFailedRetry;
+    @BindView(R.id.tv_city_weather_toolbar_city) TextView tvToolbarCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,11 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         if (entity != null) {
             mCityWeatherAdapter.setWeatherEntity(entity);
         }
+    }
+
+    @Override
+    public void setToolbarCity(String cityName) {
+        tvToolbarCity.setText(cityName);
     }
 
     @Override

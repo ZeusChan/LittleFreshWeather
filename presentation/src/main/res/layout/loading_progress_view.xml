@@ -21,6 +21,7 @@
         android:layout_below="@id/pb_loading_progress"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/material_4dp"
-        android:text="@string/loading"/>
+        android:text="@string/loading"
+        android:textColor="@color/colorLightGray"/>
 
 </RelativeLayout>

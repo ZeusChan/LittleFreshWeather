@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/load_failed"/>
+        android:text="@string/load_failed"
+        android:textColor="@color/colorLightGray"/>
 
     <Button
         android:id="@+id/bt_failed_retry"
@@ -20,6 +21,7 @@
         android:layout_below="@id/tv_failed_retry"
         android:layout_marginTop="@dimen/material_4dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/retry"/>
+        android:text="@string/retry"
+        android:textColor="@color/colorLightGray"/>
 
 </RelativeLayout>

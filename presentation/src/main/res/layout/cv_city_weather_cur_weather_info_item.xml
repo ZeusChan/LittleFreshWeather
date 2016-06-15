@@ -10,13 +10,15 @@
         android:layout_weight="1"
         android:layout_width="@dimen/material_0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/colorLightGray"/>
 
     <TextView
         android:id="@+id/tv_city_weather_cur_weather_info_item_value"
         android:layout_weight="1"
         android:layout_width="@dimen/material_0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/colorLightGray"/>
 
 </LinearLayout>

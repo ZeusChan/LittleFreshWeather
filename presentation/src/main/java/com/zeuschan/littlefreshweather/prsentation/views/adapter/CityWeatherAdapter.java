@@ -14,8 +14,6 @@ import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.wrappers.CurWeatherInfoWrapper;
 import com.zeuschan.littlefreshweather.prsentation.wrappers.LifeIndexWrapper;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
