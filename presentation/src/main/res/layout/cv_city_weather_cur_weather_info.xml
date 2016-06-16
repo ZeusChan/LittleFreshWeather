@@ -30,8 +30,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/material_2dp"
-            android:background="@color/colorLightGray"
+            android:layout_height="@dimen/material_1dp"
+            android:background="@color/colorSemiTransLightGray"
             android:layout_marginTop="@dimen/material_6dp"
             android:layout_marginBottom="@dimen/material_6dp"
             android:layout_marginRight="@dimen/material_2dp"

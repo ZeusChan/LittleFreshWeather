@@ -49,6 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorDarkGray"/>
+        android:background="@color/colorSemiTransLightGray"/>
 
 </RelativeLayout>

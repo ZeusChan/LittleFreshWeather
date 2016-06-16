@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LittleFreshWeather</string>
+    <string name="app_name">小清新天气</string>
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>
     <string name="retry">重试</string>
