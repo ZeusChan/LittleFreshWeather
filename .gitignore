@@ -26,6 +26,7 @@ gradlew
 gradlew.bat
 gradle/
 build/
+captures/
 
 #vi
 *.swp

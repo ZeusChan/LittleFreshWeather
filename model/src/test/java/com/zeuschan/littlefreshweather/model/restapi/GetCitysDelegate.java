@@ -1,6 +1,6 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
-import com.zeuschan.littlefreshweather.model.entities.CityEntity;
+import com.zeuschan.littlefreshweather.model.entity.CityEntity;
 
 import java.util.List;
 

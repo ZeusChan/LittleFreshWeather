@@ -1,8 +1,8 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
-import com.zeuschan.littlefreshweather.model.responses.CityWeatherResponse;
-import com.zeuschan.littlefreshweather.model.responses.CitysResponse;
-import com.zeuschan.littlefreshweather.model.responses.ConditionsResponse;
+import com.zeuschan.littlefreshweather.model.response.CityWeatherResponse;
+import com.zeuschan.littlefreshweather.model.response.CitysResponse;
+import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
 import java.util.Map;
 

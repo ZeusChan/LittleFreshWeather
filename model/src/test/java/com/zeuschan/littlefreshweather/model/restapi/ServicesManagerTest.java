@@ -2,9 +2,9 @@ package com.zeuschan.littlefreshweather.model.restapi;
 
 
 
-import com.zeuschan.littlefreshweather.model.entities.CityEntity;
-import com.zeuschan.littlefreshweather.model.entities.WeatherConditionEntity;
-import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
+import com.zeuschan.littlefreshweather.model.entity.CityEntity;
+import com.zeuschan.littlefreshweather.model.entity.WeatherConditionEntity;
+import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class ServicesManagerTest {
     public void testServicesManagerGetCitys() throws Exception {
         assertNotNull(mServicesManger);
         TestSubscriber<List<CityEntity>> testSubscriber = TestSubscriber.create(new GetCitysDelegate());
-        mServicesManger.getCitys().subscribe(testSubscriber);
+        mServicesManger.getCityEntities().subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
 
@@ -70,7 +70,7 @@ public class ServicesManagerTest {
     public void testServicesManagerGetWeatherConditions() throws Exception {
         assertNotNull(mServicesManger);
         TestSubscriber<List<WeatherConditionEntity>> testSubscriber = TestSubscriber.create(new GetWeatherConditionsDelegate());
-        mServicesManger.getWeatherConditions().subscribe(testSubscriber);
+        mServicesManger.getWeatherConditionEntities().subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
 

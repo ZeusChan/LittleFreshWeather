@@ -1,6 +1,6 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
-import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
+import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 
 /**
  * Created by chenxiong on 2016/6/2.

@@ -1,13 +1,16 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
-import com.zeuschan.littlefreshweather.common.utils.Constants;
-import com.zeuschan.littlefreshweather.model.entities.CityEntity;
-import com.zeuschan.littlefreshweather.model.entities.WeatherConditionEntity;
-import com.zeuschan.littlefreshweather.model.entities.WeatherEntity;
-import com.zeuschan.littlefreshweather.model.exceptions.WeatherServiceException;
-import com.zeuschan.littlefreshweather.model.responses.CityWeatherResponse;
-import com.zeuschan.littlefreshweather.model.responses.CitysResponse;
-import com.zeuschan.littlefreshweather.model.responses.ConditionsResponse;
+import android.util.Log;
+
+import com.zeuschan.littlefreshweather.common.util.Constants;
+import com.zeuschan.littlefreshweather.model.datasource.DataSource;
+import com.zeuschan.littlefreshweather.model.entity.CityEntity;
+import com.zeuschan.littlefreshweather.model.entity.WeatherConditionEntity;
+import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
+import com.zeuschan.littlefreshweather.model.exception.WeatherServiceException;
+import com.zeuschan.littlefreshweather.model.response.CityWeatherResponse;
+import com.zeuschan.littlefreshweather.model.response.CitysResponse;
+import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,16 +27,22 @@ import rx.functions.Func1;
 /**
  * Created by chenxiong on 2016/5/31.
  */
-public class ServicesManager {
+public class ServicesManager implements DataSource {
+    private static final String TAG = ServicesManager.class.getSimpleName();
+
     private static final int DEFAULT_TIMEOUT = 5;
 
-    private static ServicesManager ourInstance = new ServicesManager();
+    private static ServicesManager ourerInstance = new ServicesManager();
+    public static ServicesManager getInstance() {
+        return ourerInstance;
+    }
 
     private final WeatherInfoService weatherInfoService;
 
-    public static ServicesManager getInstance() {
-        return ourInstance;
-    }
+    private List<CityEntity> mCityEntities = new ArrayList<>();
+    private List<WeatherConditionEntity> mWeatherCondtionEntities = new ArrayList<>();
+    private List<WeatherEntity.Forecast> mForecasts = new ArrayList<>();
+
 
     private ServicesManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -48,7 +57,8 @@ public class ServicesManager {
         weatherInfoService = retrofit.create(WeatherInfoService.class);
     }
 
-    public Observable<List<CityEntity>> getCitys() {
+    @Override
+    public Observable<List<CityEntity>> getCityEntities() {
         HashMap<String, String> params = new HashMap<>(2);
         params.put("search", Constants.SEARCH_ALL_CITY);
         params.put("key", Constants.WEATHER_KEY);
@@ -61,7 +71,7 @@ public class ServicesManager {
                             throw new WeatherServiceException(citysResponse.getResultCode());
                         }
 
-                        List<CityEntity> cityEntities = new ArrayList<CityEntity>();
+                        mCityEntities.clear();
                         List<CitysResponse.CityInfo> cityInfos = citysResponse.getCitys();
                         for (CitysResponse.CityInfo cityInfo : cityInfos) {
                             CityEntity cityEntity = new CityEntity();
@@ -69,14 +79,15 @@ public class ServicesManager {
                             cityEntity.setCountry(cityInfo.getCountry());
                             cityEntity.setProvince(cityInfo.getProvince());
                             cityEntity.setCity(cityInfo.getCity());
-                            cityEntities.add(cityEntity);
+                            mCityEntities.add(cityEntity);
                         }
-                        return cityEntities;
+                        return mCityEntities;
                     }
                 });
     }
 
-    public Observable<List<WeatherConditionEntity>> getWeatherConditions() {
+    @Override
+    public Observable<List<WeatherConditionEntity>> getWeatherConditionEntities() {
         HashMap<String, String> params = new HashMap<>(2);
         params.put("search", Constants.SEARCH_ALL_COND);
         params.put("key", Constants.WEATHER_KEY);
@@ -89,21 +100,22 @@ public class ServicesManager {
                             throw new WeatherServiceException(conditionsResponse.getResultCode());
                         }
 
-                        List<WeatherConditionEntity> weatherConditionEntities = new ArrayList<WeatherConditionEntity>();
+                        mWeatherCondtionEntities.clear();
                         List<ConditionsResponse.ConditionInfo> weatherConditionInfos = conditionsResponse.getConditions();
                         for (ConditionsResponse.ConditionInfo conditionInfo : weatherConditionInfos) {
                             WeatherConditionEntity conditionEntity = new WeatherConditionEntity();
                             conditionEntity.setWeatherCode(conditionInfo.getConditionCode());
                             conditionEntity.setWeatherDescription(conditionInfo.getWeatherDescription());
                             conditionEntity.setWeatherIconUrl(conditionInfo.getWeatherIconUrl());
-                            weatherConditionEntities.add(conditionEntity);
+                            mWeatherCondtionEntities.add(conditionEntity);
                         }
-                        return weatherConditionEntities;
+                        return mWeatherCondtionEntities;
                     }
                 });
     }
 
-    public Observable<WeatherEntity> getCityWeather(final String cityId) {
+    @Override
+    public Observable<WeatherEntity> getCityWeather(String cityId) {
         HashMap<String, String> params = new HashMap<>(2);
         params.put("cityid", cityId);
         params.put("key", Constants.WEATHER_KEY);
@@ -156,7 +168,7 @@ public class ServicesManager {
                         weatherEntity.setSportBrief(cityWeatherInfo.getSuggestion().getSport().getBrf());
                         weatherEntity.setSportDescription(cityWeatherInfo.getSuggestion().getSport().getTxt());
 
-                        List<WeatherEntity.Forecast> forecasts = new ArrayList<WeatherEntity.Forecast>();
+                        mForecasts.clear();
                         List<CityWeatherResponse.CityWeatherInfo.DailyForecast> forecastsResponse = cityWeatherInfo.getDaily_forecast();
                         for (CityWeatherResponse.CityWeatherInfo.DailyForecast forecastResponse :
                                 forecastsResponse) {
@@ -185,9 +197,9 @@ public class ServicesManager {
                             forcast.setAirPressure(forecastResponse.getPres());
                             forcast.setVisibility(forecastResponse.getVis());
 
-                            forecasts.add(forcast);
+                            mForecasts.add(forcast);
                         }
-                        weatherEntity.setForecasts(forecasts);
+                        weatherEntity.setForecasts(mForecasts);
 
                         return weatherEntity;
                     }
