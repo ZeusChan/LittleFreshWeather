@@ -12,10 +12,10 @@ import rx.Observable;
 /**
  * Created by chenxiong on 2016/6/2.
  */
-public class GetCitysUseCase extends UseCase<List<CityEntity>> {
+public class GetCitiesUseCase extends UseCase<List<CityEntity>> {
     private Context mContext;
 
-    public GetCitysUseCase(Context context) {
+    public GetCitiesUseCase(Context context) {
         mContext = context;
     }
 

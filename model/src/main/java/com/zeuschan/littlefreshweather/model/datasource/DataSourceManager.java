@@ -65,7 +65,7 @@ public class DataSourceManager implements DataSource {
                 }).doOnNext(new Action1<List<CityEntity>>() {
                     @Override
                     public void call(List<CityEntity> cityEntities) {
-                        if (mIsCityEntitiesDiskCacheExists)
+                        if (!mIsCityEntitiesDiskCacheExists)
                             mDiskCacheManager.putCityEntities(cityEntities);
                     }
                 });

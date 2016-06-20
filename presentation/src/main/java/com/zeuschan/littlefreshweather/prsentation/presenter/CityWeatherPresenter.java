@@ -15,10 +15,12 @@ public class CityWeatherPresenter implements Presenter {
 
     private CityWeatherView mView;
     private GetCityWeatherUseCase mUseCase;
+    private String mCityId;
 
-    public void attachView(CityWeatherView view) {
+    public void attachView(CityWeatherView view, String cityId) {
         mView = view;
-        mUseCase = new GetCityWeatherUseCase(view.getContext().getApplicationContext(), "CN101010100");
+        mCityId = cityId;
+        mUseCase = new GetCityWeatherUseCase(mView.getContext().getApplicationContext(), mCityId/*"CN101010100"*/);
     }
 
     @Override

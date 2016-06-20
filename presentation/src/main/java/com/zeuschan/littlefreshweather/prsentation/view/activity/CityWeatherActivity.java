@@ -1,6 +1,6 @@
 package com.zeuschan.littlefreshweather.prsentation.view.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener {
-
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
+    public static final String CITY_ID = "city_id";
+
     private CityWeatherPresenter mPresenter;
     private CityWeatherAdapter mCityWeatherAdapter;
 
@@ -36,8 +37,11 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         setContentView(R.layout.activity_city_weather);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        String cityId = intent.getStringExtra(CITY_ID);
+
         mPresenter = new CityWeatherPresenter();
-        mPresenter.attachView(this);
+        mPresenter.attachView(this, cityId);
 
         rvCityWeather.setLayoutManager(new LinearLayoutManager(this));
         mCityWeatherAdapter = new CityWeatherAdapter(this);
@@ -65,11 +69,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
-    public Context getContext() {
-        return this;
-    }
-
-    @Override
     public void showLoading() {
         rlLoadingProgress.setVisibility(View.VISIBLE);
     }
@@ -77,16 +76,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     public void hideLoading() {
         rlLoadingProgress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError(String msg) {
-
-    }
-
-    @Override
-    public void hideError() {
-
     }
 
     @Override

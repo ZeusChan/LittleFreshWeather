@@ -18,14 +18,14 @@ import static org.junit.Assert.*;
  * Created by chenxiong on 2016/6/2.
  */
 @RunWith(AndroidJUnit4.class)
-public class GetCitysUseCaseTest {
-    public static final String TAG = GetCitysUseCaseTest.class.getSimpleName();
+public class GetCitiesUseCaseTest {
+    public static final String TAG = GetCitiesUseCaseTest.class.getSimpleName();
 
     private UseCase<List<CityEntity>> mUseCase = null;
 
     @Before
     public void createGetCitysUseCase() {
-        //mUseCase = new GetCitysUseCase();
+        //mUseCase = new GetCitiesUseCase();
     }
 
     @Test
