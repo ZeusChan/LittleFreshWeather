@@ -2,12 +2,15 @@ package com.zeuschan.littlefreshweather.model.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by chenxiong on 2016/5/30.
  */
 public class WeatherEntity {
+    public static final String DEFAULT_VALUE = "--";
+
     /**
      * 城市基本信息
      */
@@ -90,6 +93,44 @@ public class WeatherEntity {
      * 一周天气
      */
     @SerializedName("forecasts") private List<Forecast> forecasts;
+
+    public WeatherEntity() {
+        cityId = DEFAULT_VALUE;
+        cityName = DEFAULT_VALUE;
+        dataUpdateTime = DEFAULT_VALUE;
+        airQulityIndex = DEFAULT_VALUE;
+        pm25 = DEFAULT_VALUE;
+        pm10 = DEFAULT_VALUE;
+        so2 = DEFAULT_VALUE;
+        no2 = DEFAULT_VALUE;
+        co = DEFAULT_VALUE;
+        o3 = DEFAULT_VALUE;
+        airQulityType = DEFAULT_VALUE;
+        weatherCode = DEFAULT_VALUE;
+        weatherDescription = DEFAULT_VALUE;
+        currentTemperature = DEFAULT_VALUE;
+        feltTemperature = DEFAULT_VALUE;
+        rainfall = DEFAULT_VALUE;
+        humidity = DEFAULT_VALUE;
+        airPressure = DEFAULT_VALUE;
+        visibility = DEFAULT_VALUE;
+        windSpeed = DEFAULT_VALUE;
+        windScale = DEFAULT_VALUE;
+        windDirection = DEFAULT_VALUE;
+        dressBrief = DEFAULT_VALUE;
+        dressDescription = DEFAULT_VALUE;
+        uvBrief = DEFAULT_VALUE;
+        uvDescription = DEFAULT_VALUE;
+        carWashBrief = DEFAULT_VALUE;
+        carWashDescription = DEFAULT_VALUE;
+        travelBrief = DEFAULT_VALUE;
+        travelDescription = DEFAULT_VALUE;
+        fluBrief = DEFAULT_VALUE;
+        fluDescription = DEFAULT_VALUE;
+        sportBrief = DEFAULT_VALUE;
+        sportDescription = DEFAULT_VALUE;
+        forecasts = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
@@ -443,7 +484,7 @@ public class WeatherEntity {
         @SerializedName("weather_desc_n") private String weatherDescriptionNight;
 
         // 降雨量（mm）
-        @SerializedName("rain_fall") private double rainfall;
+        @SerializedName("rain_fall") private String rainfall;
         // 降水概率
         @SerializedName("rain_prob") private String rainProbability;
         // 湿度（%）
@@ -452,6 +493,26 @@ public class WeatherEntity {
         @SerializedName("air_press") private String airPressure;
         // 能见度（km）
         @SerializedName("visibility") private String visibility;
+
+        public Forecast() {
+            date = DEFAULT_VALUE;
+            sunriseTime = DEFAULT_VALUE;
+            sunsetTime = DEFAULT_VALUE;
+            maxTemperature = DEFAULT_VALUE;
+            minTemperature = DEFAULT_VALUE;
+            windSpeed = DEFAULT_VALUE;
+            windScale = DEFAULT_VALUE;
+            windDirection = DEFAULT_VALUE;
+            weatherCodeDaytime = DEFAULT_VALUE;
+            weatherDescriptionDaytime = DEFAULT_VALUE;
+            weatherCodeNight = DEFAULT_VALUE;
+            weatherDescriptionNight = DEFAULT_VALUE;
+            rainfall = DEFAULT_VALUE;
+            rainProbability = DEFAULT_VALUE;
+            humidity = DEFAULT_VALUE;
+            airPressure = DEFAULT_VALUE;
+            visibility = DEFAULT_VALUE;
+        }
 
         @Override
         public String toString() {
@@ -516,11 +577,11 @@ public class WeatherEntity {
             this.minTemperature = minTemperature;
         }
 
-        public double getRainfall() {
+        public String getRainfall() {
             return rainfall;
         }
 
-        public void setRainfall(double rainfall) {
+        public void setRainfall(String rainfall) {
             this.rainfall = rainfall;
         }
 

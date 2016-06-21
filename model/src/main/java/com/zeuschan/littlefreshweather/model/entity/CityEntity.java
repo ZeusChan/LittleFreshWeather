@@ -6,10 +6,19 @@ import com.google.gson.annotations.SerializedName;
  * Created by chenxiong on 2016/5/31.
  */
 public class CityEntity {
+    public static final String DEFAULT_VALUE = "--";
+
     @SerializedName("city_id") private String cityId;
     @SerializedName("country") private String country;
     @SerializedName("province") private String province;
     @SerializedName("city") private String city;
+
+    public CityEntity() {
+        cityId = DEFAULT_VALUE;
+        country = DEFAULT_VALUE;
+        province = DEFAULT_VALUE;
+        city = DEFAULT_VALUE;
+    }
 
     @Override
     public String toString() {

@@ -1,6 +1,6 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
-import android.util.Log;
+import android.text.TextUtils;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.model.datasource.DataSource;
@@ -14,6 +14,7 @@ import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -67,19 +68,26 @@ public class ServicesManager implements DataSource {
                 .map(new Func1<CitysResponse, List<CityEntity>>() {
                     @Override
                     public List<CityEntity> call(CitysResponse citysResponse) {
+                        if (null == citysResponse) {
+                            throw new WeatherServiceException("no data");
+                        }
                         if (!citysResponse.getResultCode().equals(Constants.OK)) {
-                            throw new WeatherServiceException(citysResponse.getResultCode());
+                            throw new WeatherServiceException("error code: " + citysResponse.getResultCode());
                         }
 
                         mCityEntities.clear();
                         List<CitysResponse.CityInfo> cityInfos = citysResponse.getCitys();
-                        for (CitysResponse.CityInfo cityInfo : cityInfos) {
-                            CityEntity cityEntity = new CityEntity();
-                            cityEntity.setCityId(cityInfo.getId());
-                            cityEntity.setCountry(cityInfo.getCountry());
-                            cityEntity.setProvince(cityInfo.getProvince());
-                            cityEntity.setCity(cityInfo.getCity());
-                            mCityEntities.add(cityEntity);
+                        if (cityInfos != null) {
+                            for (CitysResponse.CityInfo cityInfo : cityInfos) {
+                                if (cityInfo != null) {
+                                    CityEntity cityEntity = new CityEntity();
+                                    cityEntity.setCityId(TextUtils.isEmpty(cityInfo.getId()) ? CityEntity.DEFAULT_VALUE : cityInfo.getId());
+                                    cityEntity.setCountry(TextUtils.isEmpty(cityInfo.getCountry()) ? CityEntity.DEFAULT_VALUE : cityInfo.getCountry());
+                                    cityEntity.setProvince(TextUtils.isEmpty(cityInfo.getProvince()) ? CityEntity.DEFAULT_VALUE : cityInfo.getProvince());
+                                    cityEntity.setCity(TextUtils.isEmpty(cityInfo.getCity()) ? CityEntity.DEFAULT_VALUE : cityInfo.getCity());
+                                    mCityEntities.add(cityEntity);
+                                }
+                            }
                         }
                         return mCityEntities;
                     }
@@ -96,18 +104,25 @@ public class ServicesManager implements DataSource {
                 .map(new Func1<ConditionsResponse, List<WeatherConditionEntity>>() {
                     @Override
                     public List<WeatherConditionEntity> call(ConditionsResponse conditionsResponse) {
+                        if (null == conditionsResponse) {
+                            throw new WeatherServiceException("no data");
+                        }
                         if (!conditionsResponse.getResultCode().equals(Constants.OK)) {
-                            throw new WeatherServiceException(conditionsResponse.getResultCode());
+                            throw new WeatherServiceException("error code: " + conditionsResponse.getResultCode());
                         }
 
                         mWeatherCondtionEntities.clear();
                         List<ConditionsResponse.ConditionInfo> weatherConditionInfos = conditionsResponse.getConditions();
-                        for (ConditionsResponse.ConditionInfo conditionInfo : weatherConditionInfos) {
-                            WeatherConditionEntity conditionEntity = new WeatherConditionEntity();
-                            conditionEntity.setWeatherCode(conditionInfo.getConditionCode());
-                            conditionEntity.setWeatherDescription(conditionInfo.getWeatherDescription());
-                            conditionEntity.setWeatherIconUrl(conditionInfo.getWeatherIconUrl());
-                            mWeatherCondtionEntities.add(conditionEntity);
+                        if (weatherConditionInfos != null) {
+                            for (ConditionsResponse.ConditionInfo conditionInfo : weatherConditionInfos) {
+                                if (conditionInfo != null) {
+                                    WeatherConditionEntity conditionEntity = new WeatherConditionEntity();
+                                    conditionEntity.setWeatherCode(TextUtils.isEmpty(conditionInfo.getConditionCode()) ? WeatherConditionEntity.DEFAULT_VALUE : conditionInfo.getConditionCode());
+                                    conditionEntity.setWeatherDescription(TextUtils.isEmpty(conditionInfo.getWeatherDescription()) ? WeatherConditionEntity.DEFAULT_VALUE : conditionInfo.getWeatherDescription());
+                                    conditionEntity.setWeatherIconUrl(TextUtils.isEmpty(conditionInfo.getWeatherIconUrl()) ? WeatherConditionEntity.DEFAULT_VALUE : conditionInfo.getWeatherIconUrl());
+                                    mWeatherCondtionEntities.add(conditionEntity);
+                                }
+                            }
                         }
                         return mWeatherCondtionEntities;
                     }
@@ -124,80 +139,190 @@ public class ServicesManager implements DataSource {
                 .map(new Func1<CityWeatherResponse, WeatherEntity>() {
                     @Override
                     public WeatherEntity call(CityWeatherResponse cityWeatherResponse) {
+                        if (null == cityWeatherResponse || null == cityWeatherResponse.getCityWeatherInfos()) {
+                            throw new WeatherServiceException("no data");
+                        }
                         CityWeatherResponse.CityWeatherInfo cityWeatherInfo = cityWeatherResponse.getCityWeatherInfos().get(0);
+                        if (null == cityWeatherInfo) {
+                            throw new WeatherServiceException("no data");
+                        }
                         if (!cityWeatherInfo.getResultCode().equals(Constants.OK)) {
-                            throw new WeatherServiceException(cityWeatherInfo.getResultCode());
+                            throw new WeatherServiceException("error code: " + cityWeatherInfo.getResultCode());
                         }
                         WeatherEntity weatherEntity = new WeatherEntity();
 
-                        weatherEntity.setCityId(cityWeatherInfo.getBasic().getId());
-                        weatherEntity.setCityName(cityWeatherInfo.getBasic().getCity());
-                        weatherEntity.setDataUpdateTime(cityWeatherInfo.getBasic().getUpdate().getLoc());
+                        CityWeatherResponse.CityWeatherInfo.Basic basic = cityWeatherInfo.getBasic();
+                        if (basic != null) {
+                            if (basic.getId() != null)
+                                weatherEntity.setCityId(basic.getId());
+                            if (basic.getCity() != null)
+                                weatherEntity.setCityName(basic.getCity());
+                            if (basic.getUpdate() != null && basic.getUpdate().getLoc() != null)
+                                weatherEntity.setDataUpdateTime(basic.getUpdate().getLoc());
+                        }
 
-                        weatherEntity.setAirQulityIndex(cityWeatherInfo.getAqi().getCity().getAqi());
-                        weatherEntity.setPm25(cityWeatherInfo.getAqi().getCity().getPm25());
-                        weatherEntity.setPm10(cityWeatherInfo.getAqi().getCity().getPm10());
-                        weatherEntity.setSo2(cityWeatherInfo.getAqi().getCity().getSo2());
-                        weatherEntity.setNo2(cityWeatherInfo.getAqi().getCity().getNo2());
-                        weatherEntity.setCo(cityWeatherInfo.getAqi().getCity().getCo());
-                        weatherEntity.setO3(cityWeatherInfo.getAqi().getCity().getO3());
-                        weatherEntity.setAirQulityType(cityWeatherInfo.getAqi().getCity().getQlty());
+                        CityWeatherResponse.CityWeatherInfo.Aqi aqi = cityWeatherInfo.getAqi();
+                        if (aqi != null) {
+                            CityWeatherResponse.CityWeatherInfo.Aqi.City city = aqi.getCity();
+                            if (city != null) {
+                                if (city.getAqi() != null)
+                                    weatherEntity.setAirQulityIndex(city.getAqi());
+                                if (city.getPm25() != null)
+                                    weatherEntity.setPm25(city.getPm25());
+                                if (city.getPm10() != null)
+                                    weatherEntity.setPm10(city.getPm10());
+                                if (city.getSo2() != null)
+                                    weatherEntity.setSo2(city.getSo2());
+                                if (city.getNo2() != null)
+                                    weatherEntity.setNo2(city.getNo2());
+                                if (city.getCo() != null)
+                                    weatherEntity.setCo(city.getCo());
+                                if (city.getO3() != null)
+                                    weatherEntity.setO3(city.getO3());
+                                if (city.getQlty() != null)
+                                    weatherEntity.setAirQulityType(city.getQlty());
+                            }
+                        }
 
-                        weatherEntity.setWeatherCode(cityWeatherInfo.getNow().getCond().getCode());
-                        weatherEntity.setWeatherDescription(cityWeatherInfo.getNow().getCond().getTxt());
-                        weatherEntity.setCurrentTemperature(cityWeatherInfo.getNow().getTmp());
-                        weatherEntity.setFeltTemperature(cityWeatherInfo.getNow().getFl());
-                        weatherEntity.setRainfall(cityWeatherInfo.getNow().getPcpn());
-                        weatherEntity.setHumidity(cityWeatherInfo.getNow().getHum());
-                        weatherEntity.setAirPressure(cityWeatherInfo.getNow().getPres());
-                        weatherEntity.setVisibility(cityWeatherInfo.getNow().getVis());
-                        weatherEntity.setWindSpeed(cityWeatherInfo.getNow().getWind().getSpd());
-                        weatherEntity.setWindScale(cityWeatherInfo.getNow().getWind().getSc());
-                        weatherEntity.setWindDirection(cityWeatherInfo.getNow().getWind().getDir());
+                        CityWeatherResponse.CityWeatherInfo.Now now = cityWeatherInfo.getNow();
+                        if (now != null) {
+                            CityWeatherResponse.CityWeatherInfo.Now.Cond cond = now.getCond();
+                            if (cond != null) {
+                                if (cond.getCode() != null)
+                                    weatherEntity.setWeatherCode(cond.getCode());
+                                if (cond.getTxt() != null)
+                                    weatherEntity.setWeatherDescription(cond.getTxt());
+                            }
+                            if (now.getTmp() != null)
+                                weatherEntity.setCurrentTemperature(now.getTmp());
+                            if (now.getFl() != null)
+                                weatherEntity.setFeltTemperature(now.getFl());
+                            if (now.getPcpn() != null)
+                                weatherEntity.setRainfall(now.getPcpn());
+                            if (now.getHum() != null)
+                                weatherEntity.setHumidity(now.getHum());
+                            if (now.getPres() != null)
+                                weatherEntity.setAirPressure(now.getPres());
+                            if (now.getVis() != null)
+                                weatherEntity.setVisibility(now.getVis());
+                            CityWeatherResponse.CityWeatherInfo.Now.Wind wind = now.getWind();
+                            if (wind != null) {
+                                if (wind.getSpd() != null)
+                                    weatherEntity.setWindSpeed(wind.getSpd());
+                                if (wind.getSc() != null)
+                                    weatherEntity.setWindScale(wind.getSc());
+                                if (wind.getDir() != null)
+                                    weatherEntity.setWindDirection(wind.getDir());
+                            }
+                        }
 
-                        weatherEntity.setDressBrief(cityWeatherInfo.getSuggestion().getDrsg().getBrf());
-                        weatherEntity.setDressDescription(cityWeatherInfo.getSuggestion().getDrsg().getTxt());
-                        weatherEntity.setUvBrief(cityWeatherInfo.getSuggestion().getUv().getBrf());
-                        weatherEntity.setUvDescription(cityWeatherInfo.getSuggestion().getUv().getTxt());
-                        weatherEntity.setCarWashBrief(cityWeatherInfo.getSuggestion().getCw().getBrf());
-                        weatherEntity.setCarWashDescription(cityWeatherInfo.getSuggestion().getCw().getTxt());
-                        weatherEntity.setTravelBrief(cityWeatherInfo.getSuggestion().getTrav().getBrf());
-                        weatherEntity.setTravelDescription(cityWeatherInfo.getSuggestion().getTrav().getTxt());
-                        weatherEntity.setFluBrief(cityWeatherInfo.getSuggestion().getFlu().getBrf());
-                        weatherEntity.setFluDescription(cityWeatherInfo.getSuggestion().getFlu().getTxt());
-                        weatherEntity.setSportBrief(cityWeatherInfo.getSuggestion().getSport().getBrf());
-                        weatherEntity.setSportDescription(cityWeatherInfo.getSuggestion().getSport().getTxt());
+                        CityWeatherResponse.CityWeatherInfo.Suggestion suggestion = cityWeatherInfo.getSuggestion();
+                        if (suggestion != null) {
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Drsg drsg = suggestion.getDrsg();
+                            if (drsg != null) {
+                                if (drsg.getBrf() != null)
+                                    weatherEntity.setDressBrief(drsg.getBrf());
+                                if (drsg.getTxt() != null)
+                                    weatherEntity.setDressDescription(drsg.getTxt());
+                            }
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Uv uv = suggestion.getUv();
+                            if (uv != null) {
+                                if (uv.getBrf() != null)
+                                    weatherEntity.setUvBrief(uv.getBrf());
+                                if (uv.getTxt() != null)
+                                    weatherEntity.setUvDescription(uv.getTxt());
+                            }
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Cw cw = suggestion.getCw();
+                            if (cw != null) {
+                                if (cw.getBrf() != null)
+                                    weatherEntity.setCarWashBrief(cw.getBrf());
+                                if (cw.getTxt() != null)
+                                    weatherEntity.setCarWashDescription(cw.getTxt());
+                            }
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Trav trav = suggestion.getTrav();
+                            if (trav != null) {
+                                if (trav.getBrf() != null)
+                                    weatherEntity.setTravelBrief(trav.getBrf());
+                                if (trav.getTxt() != null)
+                                    weatherEntity.setTravelDescription(trav.getTxt());
+                            }
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Flu flu = suggestion.getFlu();
+                            if (flu != null) {
+                                if (flu.getBrf() != null)
+                                    weatherEntity.setFluBrief(flu.getBrf());
+                                if (flu.getTxt() != null)
+                                    weatherEntity.setFluDescription(flu.getTxt());
+                            }
+                            CityWeatherResponse.CityWeatherInfo.Suggestion.Sport sport = suggestion.getSport();
+                            if (sport != null) {
+                                if (sport.getBrf() != null)
+                                    weatherEntity.setSportBrief(sport.getBrf());
+                                if (sport.getTxt() != null)
+                                    weatherEntity.setSportDescription(sport.getTxt());
+                            }
+                        }
 
                         mForecasts.clear();
                         List<CityWeatherResponse.CityWeatherInfo.DailyForecast> forecastsResponse = cityWeatherInfo.getDaily_forecast();
-                        for (CityWeatherResponse.CityWeatherInfo.DailyForecast forecastResponse :
-                                forecastsResponse) {
-                            WeatherEntity.Forecast forcast = new WeatherEntity.Forecast();
+                        if (forecastsResponse != null) {
+                            for (CityWeatherResponse.CityWeatherInfo.DailyForecast forecastResponse :
+                                    forecastsResponse) {
+                                if (forecastResponse != null) {
+                                    WeatherEntity.Forecast forcast = new WeatherEntity.Forecast();
 
-                            forcast.setDate(forecastResponse.getDate());
+                                    if (forecastResponse.getDate() != null)
+                                        forcast.setDate(forecastResponse.getDate());
 
-                            forcast.setSunriseTime(forecastResponse.getAstro().getSr());
-                            forcast.setSunsetTime(forecastResponse.getAstro().getSs());
+                                    CityWeatherResponse.CityWeatherInfo.DailyForecast.Astro astro = forecastResponse.getAstro();
+                                    if (astro != null) {
+                                        if (astro.getSr() != null)
+                                            forcast.setSunriseTime(astro.getSr());
+                                        if (astro.getSs() != null)
+                                            forcast.setSunsetTime(astro.getSs());
+                                    }
 
-                            forcast.setMaxTemperature(forecastResponse.getTmp().getMax());
-                            forcast.setMinTemperature(forecastResponse.getTmp().getMin());
+                                    CityWeatherResponse.CityWeatherInfo.DailyForecast.Tmp tmp = forecastResponse.getTmp();
+                                    if (tmp != null) {
+                                        forcast.setMaxTemperature(tmp.getMax());
+                                        forcast.setMinTemperature(tmp.getMin());
+                                    }
 
-                            forcast.setWindSpeed(forecastResponse.getWind().getSpd());
-                            forcast.setWindScale(forecastResponse.getWind().getSc());
-                            forcast.setWindDirection(forecastResponse.getWind().getDir());
+                                    CityWeatherResponse.CityWeatherInfo.DailyForecast.Wind wind = forecastResponse.getWind();
+                                    if (wind != null) {
+                                        if (wind.getSpd() != null)
+                                            forcast.setWindSpeed(wind.getSpd());
+                                        if (wind.getSc() != null)
+                                            forcast.setWindScale(wind.getSc());
+                                        if (wind.getDir() != null)
+                                            forcast.setWindDirection(wind.getDir());
+                                    }
 
-                            forcast.setWeatherCodeDaytime(forecastResponse.getCond().getCode_d());
-                            forcast.setWeatherCodeNight(forecastResponse.getCond().getCode_n());
-                            forcast.setWeatherDescriptionDaytime(forecastResponse.getCond().getTxt_d());
-                            forcast.setWeatherDescriptionNight(forecastResponse.getCond().getTxt_n());
+                                    CityWeatherResponse.CityWeatherInfo.DailyForecast.Cond cond = forecastResponse.getCond();
+                                    if (cond != null) {
+                                        if (cond.getCode_d() != null)
+                                            forcast.setWeatherCodeDaytime(cond.getCode_d());
+                                        if (cond.getCode_n() != null)
+                                            forcast.setWeatherCodeNight(cond.getCode_n());
+                                        if (cond.getTxt_d() != null)
+                                            forcast.setWeatherDescriptionDaytime(cond.getTxt_d());
+                                        if (cond.getTxt_n() != null)
+                                            forcast.setWeatherDescriptionNight(cond.getTxt_n());
+                                    }
 
-                            forcast.setRainfall(forecastResponse.getPcpn());
-                            forcast.setRainProbability(forecastResponse.getPop());
-                            forcast.setHumidity(forecastResponse.getHum());
-                            forcast.setAirPressure(forecastResponse.getPres());
-                            forcast.setVisibility(forecastResponse.getVis());
+                                    if (forecastResponse.getPcpn() != null)
+                                        forcast.setRainfall(forecastResponse.getPcpn());
+                                    if (forecastResponse.getPop() != null)
+                                        forcast.setRainProbability(forecastResponse.getPop());
+                                    if (forecastResponse.getHum() != null)
+                                        forcast.setHumidity(forecastResponse.getHum());
+                                    if (forecastResponse.getPres() != null)
+                                        forcast.setAirPressure(forecastResponse.getPres());
+                                    if (forecastResponse.getVis() != null)
+                                        forcast.setVisibility(forecastResponse.getVis());
 
-                            mForecasts.add(forcast);
+                                    mForecasts.add(forcast);
+                                }
+                            }
                         }
                         weatherEntity.setForecasts(mForecasts);
 

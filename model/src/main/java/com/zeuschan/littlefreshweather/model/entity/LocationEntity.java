@@ -4,11 +4,21 @@ package com.zeuschan.littlefreshweather.model.entity;
  * Created by chenxiong on 2016/6/20.
  */
 public class LocationEntity {
+    public static final String DEFAULT_VALUE = "--";
+
     private String country;
     private String province;
     private String city;
     private String cityCode;
     private String district;
+
+    public LocationEntity() {
+        country = DEFAULT_VALUE;
+        province = DEFAULT_VALUE;
+        city = DEFAULT_VALUE;
+        cityCode = DEFAULT_VALUE;
+        district = DEFAULT_VALUE;
+    }
 
     @Override
     public String toString() {

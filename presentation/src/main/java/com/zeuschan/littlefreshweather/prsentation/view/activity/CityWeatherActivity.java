@@ -29,7 +29,8 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
     @BindView(R.id.rv_city_weather) RecyclerView rvCityWeather;
     @BindView(R.id.bt_failed_retry) Button btFailedRetry;
-    @BindView(R.id.tv_city_weather_toolbar_city) TextView tvToolbarCity;
+    @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
+    @BindView(R.id.bt_city_weather_toolbar_add) Button btToolbarAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mCityWeatherAdapter = new CityWeatherAdapter(this);
 
         btFailedRetry.setOnClickListener(this);
+        btToolbarAdd.setOnClickListener(this);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     public void setToolbarCity(String cityName) {
-        tvToolbarCity.setText(cityName);
+        tvToolbarTitle.setText(cityName);
     }
 
     @Override
@@ -105,11 +107,21 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    public void navigateToCitiesActivity() {
+        Intent intent = new Intent(this, CitiesActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.bt_failed_retry: {
                 mPresenter.loadData();
+            } break;
+            case R.id.bt_city_weather_toolbar_add: {
+                navigateToCitiesActivity();
             } break;
         }
     }

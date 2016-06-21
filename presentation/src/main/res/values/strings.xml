@@ -3,6 +3,7 @@
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>
     <string name="retry">重试</string>
+    <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
     <string name="centigrade">℃</string>
     <string name="forecast_title">天气预报</string>
     <string name="current_weather_info">实时气象信息</string>
@@ -18,4 +19,7 @@
     <string name="travel_index">旅游指数</string>
     <string name="flu_index">感冒指数</string>
     <string name="sport_index">运动指数</string>
+    <string name="city_selection">选择城市</string>
+    <string name="input_city_name">请输入城市名称</string>
+    <string name="add_city">+</string>
 </resources>

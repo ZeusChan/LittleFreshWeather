@@ -9,21 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zeuschan.littlefreshweather.prsentation.view.activity.SplashActivity">
 
-    <ImageView
-        android:id="@+id/iv_splash_icon"
+
+    <TextView
+        android:id="@+id/tv_splash_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/iv_splash_icon"
-        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/material_16dp"
         android:gravity="center"
         android:text="@string/app_name"
         android:textSize="@dimen/material_12sp"/>
+
+    <ImageView
+        android:id="@+id/iv_splash_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_splash_title"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"/>
 
 </RelativeLayout>

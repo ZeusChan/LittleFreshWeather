@@ -47,6 +47,7 @@ public class CityWeatherPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
+            e.printStackTrace();
             CityWeatherPresenter.this.mView.hideLoading();
             CityWeatherPresenter.this.mView.showRetry();
         }

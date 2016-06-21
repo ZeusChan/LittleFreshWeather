@@ -43,9 +43,8 @@ public class SplashActivity extends BaseActivity implements SplashView {
     }
 
     @Override
-    public void navigateToCitysActivity() {
-        Intent intent = new Intent(this, CityWeatherActivity.class);
-        intent.putExtra(CityWeatherActivity.CITY_ID, "CN101010100");
+    public void navigateToCitiesActivity(String cityId) {
+        Intent intent = new Intent(this, CitiesActivity.class);
         startActivity(intent);
         finish();
     }

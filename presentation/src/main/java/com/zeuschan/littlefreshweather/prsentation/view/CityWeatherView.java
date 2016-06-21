@@ -11,4 +11,6 @@ public interface CityWeatherView extends BaseView {
      */
     void renderCityWeather(WeatherEntity entity);
     void setToolbarCity(String cityName);
+
+    void navigateToCitiesActivity();
 }

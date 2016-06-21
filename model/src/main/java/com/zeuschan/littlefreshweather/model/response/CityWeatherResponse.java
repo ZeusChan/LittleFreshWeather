@@ -336,7 +336,7 @@ public class CityWeatherResponse {
             @Expose @SerializedName("wind") private Wind wind;
             @Expose @SerializedName("date") private String date;
             @Expose @SerializedName("hum") private String hum;
-            @Expose @SerializedName("pcpn") private double pcpn;
+            @Expose @SerializedName("pcpn") private String pcpn;
             @Expose @SerializedName("pop") private String pop;
             @Expose @SerializedName("pres") private String pres;
             @Expose @SerializedName("vis") private String vis;
@@ -373,11 +373,11 @@ public class CityWeatherResponse {
                 this.hum = hum;
             }
 
-            public double getPcpn() {
+            public String getPcpn() {
                 return pcpn;
             }
 
-            public void setPcpn(double pcpn) {
+            public void setPcpn(String pcpn) {
                 this.pcpn = pcpn;
             }
 

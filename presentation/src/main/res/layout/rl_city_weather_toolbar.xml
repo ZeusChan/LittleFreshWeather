@@ -11,13 +11,24 @@
     android:elevation="@dimen/material_8dp">
 
     <TextView
-        android:id="@+id/tv_city_weather_toolbar_city"
+        android:id="@+id/tv_city_weather_toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textColor="@color/colorLightGray"
         android:textSize="@dimen/material_24sp"
         android:text="@string/app_name"/>
+
+    <Button
+        android:id="@+id/bt_city_weather_toolbar_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="@string/add_city"
+        android:background="@drawable/button_background_selector"/>
 
 </RelativeLayout>

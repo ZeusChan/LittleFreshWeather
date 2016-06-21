@@ -21,4 +21,11 @@ public class Constants {
     public static final String OVER_LIMIT = "no more requests";
     public static final String SERVER_TIMEOUT = "anr";
     public static final String PERMISSION_DENIED = "permission denied";
+
+    // Preferences file name
+    public static final String GLOBAL_SETTINGS = "global_settings";
+    // Preferences keys
+    public static final String PRF_KEY_CITY_ID = "city_id";
+    // Preferences Values
+    public static final String DEFAULT_CITY_ID = "CN101010100";
 }

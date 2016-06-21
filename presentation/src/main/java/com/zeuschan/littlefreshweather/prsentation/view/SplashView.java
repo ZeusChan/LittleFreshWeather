@@ -6,5 +6,5 @@ package com.zeuschan.littlefreshweather.prsentation.view;
  */
 public interface SplashView extends BaseView {
     void navigateToCityWeatherActivity(String cityId);
-    void navigateToCitysActivity();
+    void navigateToCitiesActivity(String cityId);
 }
