@@ -19,6 +19,10 @@ public class GetCityWeatherUseCase extends UseCase<WeatherEntity> {
         this.mCityId = mCityId;
     }
 
+    public void setCityId(String cityId) {
+        mCityId = cityId;
+    }
+
     @Override
     protected Observable<WeatherEntity> buildUseCaseObservable() {
         return DataSourceManager.getInstance(mContext).getCityWeather(mCityId);

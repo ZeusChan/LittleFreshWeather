@@ -1,5 +1,8 @@
 package com.zeuschan.littlefreshweather.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.List;
 /**
  * Created by chenxiong on 2016/5/30.
  */
-public class WeatherEntity {
+public class WeatherEntity implements Parcelable {
     public static final String DEFAULT_VALUE = "--";
 
     /**
@@ -453,7 +456,7 @@ public class WeatherEntity {
         this.windSpeed = windSpeed;
     }
 
-    public static class Forecast {
+    public static class Forecast implements Parcelable {
         // 日期
         @SerializedName("date") private String date;
 
@@ -672,5 +675,158 @@ public class WeatherEntity {
         public void setWindSpeed(String windSpeed) {
             this.windSpeed = windSpeed;
         }
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.date);
+            dest.writeString(this.sunriseTime);
+            dest.writeString(this.sunsetTime);
+            dest.writeString(this.maxTemperature);
+            dest.writeString(this.minTemperature);
+            dest.writeString(this.windSpeed);
+            dest.writeString(this.windScale);
+            dest.writeString(this.windDirection);
+            dest.writeString(this.weatherCodeDaytime);
+            dest.writeString(this.weatherDescriptionDaytime);
+            dest.writeString(this.weatherCodeNight);
+            dest.writeString(this.weatherDescriptionNight);
+            dest.writeString(this.rainfall);
+            dest.writeString(this.rainProbability);
+            dest.writeString(this.humidity);
+            dest.writeString(this.airPressure);
+            dest.writeString(this.visibility);
+        }
+
+        protected Forecast(Parcel in) {
+            this.date = in.readString();
+            this.sunriseTime = in.readString();
+            this.sunsetTime = in.readString();
+            this.maxTemperature = in.readString();
+            this.minTemperature = in.readString();
+            this.windSpeed = in.readString();
+            this.windScale = in.readString();
+            this.windDirection = in.readString();
+            this.weatherCodeDaytime = in.readString();
+            this.weatherDescriptionDaytime = in.readString();
+            this.weatherCodeNight = in.readString();
+            this.weatherDescriptionNight = in.readString();
+            this.rainfall = in.readString();
+            this.rainProbability = in.readString();
+            this.humidity = in.readString();
+            this.airPressure = in.readString();
+            this.visibility = in.readString();
+        }
+
+        public static final Creator<Forecast> CREATOR = new Creator<Forecast>() {
+            @Override
+            public Forecast createFromParcel(Parcel source) {
+                return new Forecast(source);
+            }
+
+            @Override
+            public Forecast[] newArray(int size) {
+                return new Forecast[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.cityId);
+        dest.writeString(this.cityName);
+        dest.writeString(this.dataUpdateTime);
+        dest.writeString(this.airQulityIndex);
+        dest.writeString(this.pm25);
+        dest.writeString(this.pm10);
+        dest.writeString(this.so2);
+        dest.writeString(this.no2);
+        dest.writeString(this.co);
+        dest.writeString(this.o3);
+        dest.writeString(this.airQulityType);
+        dest.writeString(this.weatherCode);
+        dest.writeString(this.weatherDescription);
+        dest.writeString(this.currentTemperature);
+        dest.writeString(this.feltTemperature);
+        dest.writeString(this.rainfall);
+        dest.writeString(this.humidity);
+        dest.writeString(this.airPressure);
+        dest.writeString(this.visibility);
+        dest.writeString(this.windSpeed);
+        dest.writeString(this.windScale);
+        dest.writeString(this.windDirection);
+        dest.writeString(this.dressBrief);
+        dest.writeString(this.dressDescription);
+        dest.writeString(this.uvBrief);
+        dest.writeString(this.uvDescription);
+        dest.writeString(this.carWashBrief);
+        dest.writeString(this.carWashDescription);
+        dest.writeString(this.travelBrief);
+        dest.writeString(this.travelDescription);
+        dest.writeString(this.fluBrief);
+        dest.writeString(this.fluDescription);
+        dest.writeString(this.sportBrief);
+        dest.writeString(this.sportDescription);
+        dest.writeTypedList(this.forecasts);
+    }
+
+    protected WeatherEntity(Parcel in) {
+        this.cityId = in.readString();
+        this.cityName = in.readString();
+        this.dataUpdateTime = in.readString();
+        this.airQulityIndex = in.readString();
+        this.pm25 = in.readString();
+        this.pm10 = in.readString();
+        this.so2 = in.readString();
+        this.no2 = in.readString();
+        this.co = in.readString();
+        this.o3 = in.readString();
+        this.airQulityType = in.readString();
+        this.weatherCode = in.readString();
+        this.weatherDescription = in.readString();
+        this.currentTemperature = in.readString();
+        this.feltTemperature = in.readString();
+        this.rainfall = in.readString();
+        this.humidity = in.readString();
+        this.airPressure = in.readString();
+        this.visibility = in.readString();
+        this.windSpeed = in.readString();
+        this.windScale = in.readString();
+        this.windDirection = in.readString();
+        this.dressBrief = in.readString();
+        this.dressDescription = in.readString();
+        this.uvBrief = in.readString();
+        this.uvDescription = in.readString();
+        this.carWashBrief = in.readString();
+        this.carWashDescription = in.readString();
+        this.travelBrief = in.readString();
+        this.travelDescription = in.readString();
+        this.fluBrief = in.readString();
+        this.fluDescription = in.readString();
+        this.sportBrief = in.readString();
+        this.sportDescription = in.readString();
+        this.forecasts = in.createTypedArrayList(Forecast.CREATOR);
+    }
+
+    public static final Creator<WeatherEntity> CREATOR = new Creator<WeatherEntity>() {
+        @Override
+        public WeatherEntity createFromParcel(Parcel source) {
+            return new WeatherEntity(source);
+        }
+
+        @Override
+        public WeatherEntity[] newArray(int size) {
+            return new WeatherEntity[size];
+        }
+    };
 }

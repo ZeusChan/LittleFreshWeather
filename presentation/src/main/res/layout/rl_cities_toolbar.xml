@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_cities_toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/material_48dp"
+    android:layout_alignParentTop="true"
+    android:paddingLeft="@dimen/material_8dp"
+    android:paddingRight="@dimen/material_8dp"
+    android:background="@color/colorSemiTransparent"
+    android:elevation="@dimen/material_8dp">
+
+    <ImageButton
+        android:id="@+id/ib_cities_toolbar_back"
+        android:layout_width="@dimen/material_48dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        android:background="@drawable/toolbar_button_background_selector"/>
+
+    <TextView
+        android:id="@+id/tv_cities_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/ib_cities_toolbar_back"
+        android:layout_marginLeft="@dimen/material_2dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorLightGray"
+        android:textSize="@dimen/material_24sp"
+        android:text="@string/city_selection"/>
+</RelativeLayout>

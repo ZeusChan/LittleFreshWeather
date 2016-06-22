@@ -14,8 +14,8 @@ import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -40,6 +40,7 @@ public class ServicesManager implements DataSource {
 
     private final WeatherInfoService weatherInfoService;
 
+    private Map<String, String> mNameMap = new HashMap<>();
     private List<CityEntity> mCityEntities = new ArrayList<>();
     private List<WeatherConditionEntity> mWeatherCondtionEntities = new ArrayList<>();
     private List<WeatherEntity.Forecast> mForecasts = new ArrayList<>();
@@ -56,6 +57,13 @@ public class ServicesManager implements DataSource {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         weatherInfoService = retrofit.create(WeatherInfoService.class);
+
+        mNameMap.put("CN10101", "北京");
+        mNameMap.put("CN10102", "上海");
+        mNameMap.put("CN10103", "天津");
+        mNameMap.put("CN10104", "重庆");
+        mNameMap.put("CN10132", "香港");
+        mNameMap.put("CN10133", "澳门");
     }
 
     @Override
@@ -80,6 +88,9 @@ public class ServicesManager implements DataSource {
                         if (cityInfos != null) {
                             for (CitysResponse.CityInfo cityInfo : cityInfos) {
                                 if (cityInfo != null) {
+                                    if (cityInfo.getId() != null && cityInfo.getId().length() > 7 && mNameMap.get(cityInfo.getId().subSequence(0, 7)) != null) {
+                                        cityInfo.setProvince(mNameMap.get(cityInfo.getId().subSequence(0, 7)));
+                                    }
                                     CityEntity cityEntity = new CityEntity();
                                     cityEntity.setCityId(TextUtils.isEmpty(cityInfo.getId()) ? CityEntity.DEFAULT_VALUE : cityInfo.getId());
                                     cityEntity.setCountry(TextUtils.isEmpty(cityInfo.getCountry()) ? CityEntity.DEFAULT_VALUE : cityInfo.getCountry());

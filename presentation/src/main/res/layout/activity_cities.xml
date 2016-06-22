@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@mipmap/city">
 
-    <include layout="@layout/rl_city_weather_toolbar"/>
+    <include layout="@layout/rl_cities_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
             android:id="@+id/et_cities_city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_24dp"
-            android:layout_marginBottom="@dimen/material_4dp"
+            android:layout_marginTop="@dimen/material_16dp"
+            android:layout_marginBottom="@dimen/material_16dp"
             android:layout_marginLeft="@dimen/material_16dp"
             android:layout_marginRight="@dimen/material_16dp"
             android:layout_alignParentTop="true"
@@ -27,17 +27,17 @@
             android:paddingBottom="@dimen/material_16dp"
             android:gravity="center_vertical|left"
             android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_16sp"
             android:hint="@string/input_city_name"
             android:textColorHint="@color/colorDarkGray"
             android:background="@drawable/edit_background_selector"
             android:visibility="invisible"/>
 
         <View
+            android:id="@+id/v_cities_divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/material_1dp"
             android:layout_below="@id/et_cities_city_name"
-            android:layout_marginTop="@dimen/material_6dp"
-            android:layout_marginBottom="@dimen/material_6dp"
             android:layout_marginRight="@dimen/material_2dp"
             android:layout_marginLeft="@dimen/material_2dp"
             android:background="@color/colorSemiTransLightGray"/>
@@ -46,9 +46,11 @@
             android:id="@+id/lv_cities_candidates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/material_2dp"
-            android:layout_marginRight="@dimen/material_2dp"
-            android:listSelector="@color/colorTransparent"
+            android:layout_below="@id/v_cities_divider"
+            android:layout_marginTop="@dimen/material_16dp"
+            android:paddingBottom="@dimen/material_16dp"
+            android:layout_marginLeft="@dimen/material_16dp"
+            android:layout_marginRight="@dimen/material_16dp"
             android:divider="@color/colorTransparent"/>
 
         <include layout="@layout/loading_progress_view"/>

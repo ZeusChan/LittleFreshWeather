@@ -24,7 +24,7 @@ import rx.Subscriber;
  * Created by chenxiong on 2016/6/20.
  */
 public class SplashPresenter implements Presenter, AMapLocationListener {
-    private static final int LOCATION_UPPER_BOUND = 2;
+    private static final int LOCATION_UPPER_BOUND = 1;
     private SplashView mView;
     private GetCitiesUseCase mUseCase;
 

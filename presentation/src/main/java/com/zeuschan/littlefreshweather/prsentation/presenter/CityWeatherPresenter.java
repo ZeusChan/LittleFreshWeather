@@ -20,7 +20,12 @@ public class CityWeatherPresenter implements Presenter {
     public void attachView(CityWeatherView view, String cityId) {
         mView = view;
         mCityId = cityId;
-        mUseCase = new GetCityWeatherUseCase(mView.getContext().getApplicationContext(), mCityId/*"CN101010100"*/);
+        mUseCase = new GetCityWeatherUseCase(mView.getContext().getApplicationContext(), mCityId);
+    }
+
+    public void setCityId(String cityId) {
+        mCityId = cityId;
+        mUseCase.setCityId(mCityId);
     }
 
     @Override

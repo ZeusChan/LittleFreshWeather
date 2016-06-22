@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/material_2dp"
-    android:paddingBottom="@dimen/material_2dp"
-    android:paddingLeft="@dimen/material_8dp"
-    android:paddingRight="@dimen/material_8dp">
+    android:paddingTop="@dimen/material_16dp"
+    android:paddingBottom="@dimen/material_0dp"
+    android:paddingLeft="@dimen/material_16dp"
+    android:paddingRight="@dimen/material_16dp">
 
     <TextView
         android:id="@+id/tv_cities_canditate_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/material_16dp"
         android:gravity="left|center_vertical"
-        android:textColor="@color/colorLightGray"/>
+        android:textColor="@color/colorLightGray"
+        android:textSize="@dimen/material_16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_1dp"
+        android:background="@color/colorSemiTransLightGray"/>
 
 </LinearLayout>

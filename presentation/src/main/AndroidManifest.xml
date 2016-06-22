@@ -43,8 +43,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.CityWeatherActivity" />
-        <activity android:name=".view.activity.CitiesActivity"></activity>
+        <activity android:name=".view.activity.CityWeatherActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".view.activity.CitiesActivity"
+            android:windowSoftInputMode="adjustNothing">
+        </activity>
+        <service android:name=".service.WeatherUpdateService"/>
+        <receiver android:name=".receiver.AlarmReceiver"/>
     </application>
 
 </manifest>

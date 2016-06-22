@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.zeuschan.littlefreshweather.prsentation.presenter.CitiesPresenter;
 import com.zeuschan.littlefreshweather.prsentation.view.CitiesView;
 import com.zeuschan.littlefreshweather.prsentation.view.adapter.CitiesCandidatesApdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,14 +29,15 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
     CitiesPresenter mPresenter;
     CitiesCandidatesApdapter mAdapter;
-    List<CityEntity> mCandidates;
+    List<CityEntity> mCandidates = new ArrayList<>();
 
-    @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
     @BindView(R.id.bt_failed_retry) Button btFailedRetry;
     @BindView(R.id.et_cities_city_name) EditText etCityName;
     @BindView(R.id.lv_cities_candidates) ListView lvCandidates;
+    @BindView(R.id.tv_cities_toolbar_title) TextView tvToolbarTitle;
+    @BindView(R.id.ib_cities_toolbar_back) ImageButton ibToolbarBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,10 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
         etCityName.requestFocus();
 
         mPresenter = new CitiesPresenter(this);
+        mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
+        lvCandidates.setAdapter(mAdapter);
+        lvCandidates.setOnItemClickListener(this);
+        ibToolbarBack.setOnClickListener(this);
     }
 
     @Override
@@ -72,13 +79,9 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
     @Override
     public void refreshCandidatesList(List<CityEntity> candidates) {
-        mCandidates = candidates;
-        if (mAdapter == null) {
-            mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
-            lvCandidates.setAdapter(mAdapter);
-        } else {
-            mAdapter.notifyDataSetChanged();
-        }
+        mCandidates.clear();
+        mCandidates.addAll(candidates);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -135,8 +138,14 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.bt_failed_retry) {
-            mPresenter.loadData();
+        int id = v.getId();
+        switch (id) {
+            case R.id.bt_failed_retry: {
+                mPresenter.loadData();
+            } break;
+            case R.id.ib_cities_toolbar_back: {
+                onBackPressed();
+            } break;
         }
     }
 }
