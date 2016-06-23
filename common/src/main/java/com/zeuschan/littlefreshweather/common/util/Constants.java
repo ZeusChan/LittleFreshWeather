@@ -29,5 +29,5 @@ public class Constants {
     public static final String PRF_KEY_UPDATE_FREQUENCY = "update_frequency";
     // Preferences values
     public static final String DEFAULT_CITY_ID = "CN101010100";
-    public static final int DEFAULT_UPDATE_FREQUENCY = 10 * /*60 * */1000;
+    public static final int DEFAULT_UPDATE_FREQUENCY = 60 * 60 * 1000;
 }

@@ -34,7 +34,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     public static final String CITY_ID = "city_id";
     public static final String WEATHER_UPDATE_ACTION = "com.zeuschan.littlefreshweather.prsentation.WEATHER_UPDATE";
 
-    public static final int MSG_WEATHER_UPDATE = 1;
+    public static final int MSG_WEATHER_UPDATE = 0;
 
     private CityWeatherPresenter mPresenter;
     private CityWeatherAdapter mCityWeatherAdapter;

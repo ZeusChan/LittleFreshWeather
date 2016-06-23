@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/material_48dp"
     android:layout_alignParentTop="true"
-    android:paddingLeft="@dimen/material_8dp"
-    android:paddingRight="@dimen/material_8dp"
     android:background="@color/colorSemiTransparent"
     android:elevation="@dimen/material_8dp">
 
