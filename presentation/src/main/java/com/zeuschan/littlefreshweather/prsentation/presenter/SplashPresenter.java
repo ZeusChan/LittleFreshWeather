@@ -37,12 +37,17 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
     private String mCityId = null;
     private boolean mIsNetworkAvailable = false;
     private String mDefaultCityId = null;
-    private boolean mIsDownloadDone = false;
-    private boolean mIsLocationDone = false;
+    private boolean mIsFirstStartup = true;
+    private boolean mIsDownloadFinished = false;
+    private boolean mIsLocateFinished = false;
+    private boolean mIsDownloadSucceeded = false;
+    private boolean mIsLocateSucceeded = false;
 
     public void attachView(SplashView view) {
         mView = view;
         mDefaultCityId = FileUtil.getStringFromPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
+        mIsFirstStartup = FileUtil.getBooleanFromPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_FIRST_STARTUP, true);
+        FileUtil.putBooleanToPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_FIRST_STARTUP, false);
         mIsNetworkAvailable = NetUtil.isNetworkAvailable(mView.getContext().getApplicationContext());
         if (mIsNetworkAvailable) {
             mUseCase = new GetCitiesUseCase(mView.getContext().getApplicationContext());
@@ -53,13 +58,10 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
     @Override
     public void start() {
         if (!mIsNetworkAvailable) {
-            mView.showError(mView.getContext().getString(R.string.network_unavailable));
-            mView.navigateToCityWeatherActivity(mDefaultCityId);
+            gotoNext();
             return;
         }
 
-        mIsDownloadDone = false;
-        mIsLocationDone = false;
         mUseCase.execute(new GetCitiesSubscriber());
         mLocationCounter = 0;
         mLocationClient.startLocation();
@@ -82,9 +84,10 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
                 || TextUtils.isEmpty(aMapLocation.getCity())) {
             if (mLocationCounter > LOCATION_UPPER_BOUND) {
                 //mView.showError("定位失败");
-                mIsLocationDone = true;
+                mIsLocateSucceeded = false;
                 mLocationClient.stopLocation();
-                mView.navigateToCitiesActivity(mDefaultCityId);
+                mIsLocateFinished = true;
+                gotoNext();
             }
             return;
         }
@@ -96,14 +99,11 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
         mLocationEntity.setCityCode(aMapLocation.getCityCode());
         mLocationEntity.setDistrict(aMapLocation.getDistrict());
         //mView.showError("定位成功");
-        mIsLocationDone = true;
+        mIsLocateSucceeded = true;
         mLocationClient.stopLocation();
+        mIsLocateFinished = true;
 
-        if (getCityIdFromLocation())
-            mView.navigateToCityWeatherActivity(mCityId);
-        else if (mIsDownloadDone) {
-            mView.navigateToCityWeatherActivity(mDefaultCityId);
-        }
+        gotoNext();
     }
 
     private boolean getCityIdFromLocation() {
@@ -113,7 +113,6 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
                         &&*/ ((mLocationEntity.getCity().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getCity()))
                         || (mLocationEntity.getDistrict().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getDistrict())))) {
                     mCityId = cityEntity.getCityId();
-                    FileUtil.putStringToPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, mCityId);
                     return true;
                 }
             }
@@ -144,22 +143,57 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
     private final class GetCitiesSubscriber extends Subscriber<List<CityEntity>> {
         @Override
         public void onCompleted() {
-
+            mIsDownloadSucceeded = true;
+            mIsDownloadFinished = true;
+            gotoNext();
         }
 
         @Override
         public void onError(Throwable e) {
-            mIsDownloadDone = true;
+            mIsDownloadSucceeded = false;
+            mIsDownloadFinished = true;
+            gotoNext();
         }
 
         @Override
         public void onNext(List<CityEntity> cityEntities) {
-            mIsDownloadDone = true;
             mListCities = cityEntities;
-            if (getCityIdFromLocation())
+        }
+    }
+
+    private void locateSucceeded() {
+        if (mIsFirstStartup) {
+            mView.navigateToCitiesActivity(mCityId, true);
+        } else {
+            if (mCityId.equalsIgnoreCase(mDefaultCityId)) {
                 mView.navigateToCityWeatherActivity(mCityId);
-            else if (mIsLocationDone) {
+            } else {
+                mView.navigateToCitiesActivity(mCityId, true);
+            }
+        }
+    }
+
+    private void locateFailed() {
+        if (mIsFirstStartup)
+            mView.navigateToCitiesActivity(mDefaultCityId, false);
+        else
+            mView.navigateToCityWeatherActivity(mDefaultCityId);
+    }
+
+    private void gotoNext() {
+        if (!mIsNetworkAvailable) {
+            mView.showError(mView.getContext().getString(R.string.network_unavailable));
+            mView.navigateToCityWeatherActivity(mDefaultCityId);
+        } else if (mIsDownloadFinished && mIsLocateFinished) {
+            if (!mIsDownloadSucceeded) {
+                mView.showError(mView.getContext().getString(R.string.server_unavailable));
                 mView.navigateToCityWeatherActivity(mDefaultCityId);
+            } else {
+                if (!mIsLocateSucceeded || !getCityIdFromLocation()) {
+                    locateFailed();
+                } else {
+                    locateSucceeded();
+                }
             }
         }
     }

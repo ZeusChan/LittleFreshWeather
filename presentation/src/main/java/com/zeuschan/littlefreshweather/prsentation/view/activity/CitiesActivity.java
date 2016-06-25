@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zeuschan.littlefreshweather.common.util.Constants;
+import com.zeuschan.littlefreshweather.common.util.FileUtil;
 import com.zeuschan.littlefreshweather.model.entity.CityEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.CitiesPresenter;
@@ -26,10 +28,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CitiesActivity extends BaseActivity implements CitiesView, View.OnClickListener, TextWatcher, ListView.OnItemClickListener {
+    public static final String CITY_ID = "city_id";
+    public static final String LOCATE_RESULT = "locate_result";
 
     CitiesPresenter mPresenter;
     CitiesCandidatesApdapter mAdapter;
     List<CityEntity> mCandidates = new ArrayList<>();
+    String mLocateCityId;
+    boolean mIsLocateSucceeded = false;
 
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
@@ -44,6 +50,13 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cities);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        mLocateCityId = intent.getStringExtra(CITY_ID);
+        mIsLocateSucceeded = intent.getBooleanExtra(LOCATE_RESULT, false);
+        if (mIsLocateSucceeded && mLocateCityId != null) {
+
+        }
 
         btFailedRetry.setOnClickListener(this);
         etCityName.addTextChangedListener(this);

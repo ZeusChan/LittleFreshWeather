@@ -47,7 +47,7 @@
             android:launchMode="singleTask">
         </activity>
         <activity android:name=".view.activity.CitiesActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing|stateVisible">
         </activity>
         <service android:name=".service.WeatherUpdateService"/>
         <receiver android:name=".receiver.AlarmReceiver"/>

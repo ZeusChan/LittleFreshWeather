@@ -4,6 +4,7 @@
     <string name="load_failed">加载失败</string>
     <string name="retry">重试</string>
     <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
+    <string name="server_unavailable">天气服务不可用，请稍后再试</string>
     <string name="centigrade">℃</string>
     <string name="forecast_title">天气预报</string>
     <string name="current_weather_info">实时气象信息</string>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/material_16dp"
+    android:paddingBottom="@dimen/material_16dp"
+    android:paddingLeft="@dimen/material_16dp"
+    android:paddingRight="@dimen/material_16dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/material_4dp"
+        android:src="@drawable/ic_location_on_white_24dp"/>
+
+    <TextView
+        android:id="@+id/tv_cities_located_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/colorLightGray"
+        android:textSize="@dimen/material_16sp"/>
+
+</LinearLayout>

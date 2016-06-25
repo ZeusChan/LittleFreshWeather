@@ -16,9 +16,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public static final int MSG_NAVIGATE_CITY_WEATHER = 1;
     public static final int MSG_NAVIGATE_CITIES = 2;
 
+    private static final int FIRE_DELAY = 500;
+
     SplashPresenter mPresenter;
     UIHandler mHandler = new UIHandler();
     String mCityId;
+    String mLocateCityId;
+    boolean mIsLocateSucceeded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
     protected void onPostResume() {
         super.onPostResume();
 
-        Message message = mHandler.obtainMessage(MSG_START);
-        message.sendToTarget();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Message message = mHandler.obtainMessage(MSG_START);
+                message.sendToTarget();
+            }
+        }, FIRE_DELAY);
     }
 
     @Override
@@ -45,13 +54,14 @@ public class SplashActivity extends BaseActivity implements SplashView {
     @Override
     public void navigateToCityWeatherActivity(String cityId) {
         mCityId = cityId;
-
         Message message = mHandler.obtainMessage(MSG_NAVIGATE_CITY_WEATHER);
         message.sendToTarget();
     }
 
     @Override
-    public void navigateToCitiesActivity(String cityId) {
+    public void navigateToCitiesActivity(String cityId, boolean locateSucceeded) {
+        mLocateCityId = cityId;
+        mIsLocateSucceeded = locateSucceeded;
         Message message = mHandler.obtainMessage(MSG_NAVIGATE_CITIES);
         message.sendToTarget();
     }
@@ -73,6 +83,8 @@ public class SplashActivity extends BaseActivity implements SplashView {
                 } break;
                 case MSG_NAVIGATE_CITIES: {
                     Intent intent = new Intent(SplashActivity.this, CitiesActivity.class);
+                    intent.putExtra(CitiesActivity.CITY_ID, mLocateCityId);
+                    intent.putExtra(CitiesActivity.LOCATE_RESULT, mIsLocateSucceeded);
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
                 } break;

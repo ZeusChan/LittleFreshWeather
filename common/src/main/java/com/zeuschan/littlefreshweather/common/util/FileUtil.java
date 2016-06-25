@@ -33,4 +33,16 @@ public class FileUtil {
         SharedPreferences preferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return preferences.getString(key, defValue);
     }
+
+    public static void putBooleanToPreferences(Context context, String prfName, String key, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(prfName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getBooleanFromPreferences(Context context, String prefName, String key, boolean defValue) {
+        SharedPreferences preferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, defValue);
+    }
 }
