@@ -34,24 +34,33 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<CurWeatherInfoWrapper> mListWeatherInfo = new ArrayList<>();
     private List<LifeIndexWrapper> mListLifeIndex = new ArrayList<>();
+    private List<WeatherEntity.Forecast> mListForecasts = new ArrayList<>();
     private ForecastAdapter mForecastAdapter = null;
     private CurWeatherInfoAdapter mCurWeatherInfoAdapter = null;
     private LifeIndexAdapter mLifeIndexAdapter = null;
 
     public CityWeatherAdapter(Context mContext) {
         this.mContext = mContext;
+        mForecastAdapter = new ForecastAdapter(mContext, R.layout.cv_city_weather_forecast_item, mListForecasts);
+        mCurWeatherInfoAdapter = new CurWeatherInfoAdapter(mContext, R.layout.cv_city_weather_cur_weather_info_item, mListWeatherInfo);
+        mLifeIndexAdapter = new LifeIndexAdapter(mContext, R.layout.cv_city_weather_life_index_item, mListLifeIndex);
     }
 
     public void setWeatherEntity(WeatherEntity mWeatherEntity) {
-        this.mWeatherEntity = mWeatherEntity;
+        mListLifeIndex.clear();
         mListWeatherInfo.clear();
+        mListForecasts.clear();
+
+        this.mWeatherEntity = mWeatherEntity;
+
         mListWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.wind_dirction), mWeatherEntity.getWindDirection()));
         mListWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.wind_scale), mWeatherEntity.getWindScale() + "级"));
         mListWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.felt_temp), mWeatherEntity.getFeltTemperature() + "℃"));
         mListWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.humidity), mWeatherEntity.getHumidity() + "%"));
         mListWeatherInfo.add(new CurWeatherInfoWrapper(mContext.getString(R.string.air_pressure), mWeatherEntity.getAirPressure() + "hpa"));
 
-        mListLifeIndex.clear();
+        mListForecasts.addAll(mWeatherEntity.getForecasts());
+
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.dress_index), mWeatherEntity.getDressBrief(), mWeatherEntity.getDressDescription()));
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.uv_index), mWeatherEntity.getUvBrief(), mWeatherEntity.getUvDescription()));
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.carwash_index), mWeatherEntity.getCarWashBrief(), mWeatherEntity.getCarWashDescription()));
@@ -59,20 +68,10 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.flu_index), mWeatherEntity.getFluBrief(), mWeatherEntity.getFluDescription()));
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.sport_index), mWeatherEntity.getSportBrief(), mWeatherEntity.getSportDescription()));
 
-        if (null == mForecastAdapter)
-            mForecastAdapter = new ForecastAdapter(mContext, R.layout.cv_city_weather_forecast_item, mWeatherEntity.getForecasts());
-        else
-            mForecastAdapter.notifyDataSetChanged();
-        if (null == mCurWeatherInfoAdapter)
-            mCurWeatherInfoAdapter = new CurWeatherInfoAdapter(mContext, R.layout.cv_city_weather_cur_weather_info_item, mListWeatherInfo);
-        else
-            mCurWeatherInfoAdapter.notifyDataSetChanged();
-        if (null == mLifeIndexAdapter)
-            mLifeIndexAdapter = new LifeIndexAdapter(mContext, R.layout.cv_city_weather_life_index_item, mListLifeIndex);
-        else
-            mLifeIndexAdapter.notifyDataSetChanged();
-
         notifyDataSetChanged();
+        mCurWeatherInfoAdapter.notifyDataSetChanged();
+        mForecastAdapter.notifyDataSetChanged();
+        mLifeIndexAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -121,15 +120,15 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (1 == position) {
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
-            forecastViewHolder.lvCityWeatherForecast.setAdapter(mForecastAdapter);
+            //forecastViewHolder.lvCityWeatherForecast.setAdapter(mForecastAdapter);
         } else if (2 == position) {
             CurWeatherInfoViewHolder curWeatherInfoViewHolder = (CurWeatherInfoViewHolder)holder;
             curWeatherInfoViewHolder.tvTitleName.setText(R.string.current_weather_info);
-            curWeatherInfoViewHolder.gvCurWeatherInfo.setAdapter(mCurWeatherInfoAdapter);
+            //curWeatherInfoViewHolder.gvCurWeatherInfo.setAdapter(mCurWeatherInfoAdapter);
         } else {
             LifeIndexViewHolder lifeIndexViewHolder = (LifeIndexViewHolder)holder;
             lifeIndexViewHolder.tvTitleName.setText(R.string.life_index);
-            lifeIndexViewHolder.lvLifeIndex.setAdapter(mLifeIndexAdapter);
+            //lifeIndexViewHolder.lvLifeIndex.setAdapter(mLifeIndexAdapter);
         }
     }
 

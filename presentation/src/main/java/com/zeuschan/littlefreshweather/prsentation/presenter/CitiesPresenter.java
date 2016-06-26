@@ -92,7 +92,7 @@ public class CitiesPresenter implements Presenter {
             if (cityId != null) {
                 for (CityEntity entity : mCities) {
                     if (cityId.equalsIgnoreCase(entity.getCityId())) {
-                        return entity.getCity();
+                        return entity.getProvince() + " - " + entity.getCity();
                     }
                 }
             }

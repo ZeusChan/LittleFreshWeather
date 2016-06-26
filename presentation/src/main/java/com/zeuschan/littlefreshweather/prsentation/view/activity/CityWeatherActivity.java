@@ -64,6 +64,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
         rvCityWeather.setLayoutManager(new LinearLayoutManager(this));
         mCityWeatherAdapter = new CityWeatherAdapter(this);
+        rvCityWeather.setAdapter(mCityWeatherAdapter);
 
         btFailedRetry.setOnClickListener(this);
         ibToolbarCities.setOnClickListener(this);
@@ -107,7 +108,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     public void renderCityWeather(WeatherEntity entity) {
         if (entity != null) {
-            rvCityWeather.setAdapter(mCityWeatherAdapter);
             mCityWeatherAdapter.setWeatherEntity(entity);
         }
     }
