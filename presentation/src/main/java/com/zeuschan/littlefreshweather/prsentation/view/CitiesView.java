@@ -13,4 +13,7 @@ public interface CitiesView extends BaseView {
     public void hideCityNameEdit();
     public void refreshCandidatesList(List<CityEntity> candidates);
     public void navigateToCityWeatherActivity(String cityId);
+    public void setLocatedCityName(String locatedName);
+    public void showLocatedCityName();
+    public void hideLocatedCityName();
 }

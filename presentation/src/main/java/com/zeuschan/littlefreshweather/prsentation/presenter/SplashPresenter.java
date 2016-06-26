@@ -80,6 +80,12 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
     public void onLocationChanged(AMapLocation aMapLocation) {
         ++mLocationCounter;
 
+//        aMapLocation.setCountry("中国");
+//        aMapLocation.setProvince("湖北省");
+//        aMapLocation.setCity("武汉市");
+//        aMapLocation.setDistrict("武昌区");
+
+
         if (null == aMapLocation || TextUtils.isEmpty(aMapLocation.getCountry()) || TextUtils.isEmpty(aMapLocation.getProvince())
                 || TextUtils.isEmpty(aMapLocation.getCity())) {
             if (mLocationCounter > LOCATION_UPPER_BOUND) {
@@ -110,8 +116,8 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
         if (mLocationEntity != null && mListCities != null) {
             for (CityEntity cityEntity : mListCities) {
                 if (/*(mLocationEntity.getProvince().contains(cityEntity.getProvince()) || cityEntity.getProvince().contains(mLocationEntity.getProvince()))
-                        &&*/ ((mLocationEntity.getCity().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getCity()))
-                        || (mLocationEntity.getDistrict().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getDistrict())))) {
+                        &&*/ ((mLocationEntity.getDistrict().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getDistrict()))
+                        || (mLocationEntity.getCity().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getCity())))) {
                     mCityId = cityEntity.getCityId();
                     return true;
                 }

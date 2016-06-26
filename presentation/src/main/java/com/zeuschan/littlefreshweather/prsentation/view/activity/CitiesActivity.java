@@ -13,8 +13,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zeuschan.littlefreshweather.common.util.Constants;
-import com.zeuschan.littlefreshweather.common.util.FileUtil;
 import com.zeuschan.littlefreshweather.model.entity.CityEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.CitiesPresenter;
@@ -44,6 +42,7 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @BindView(R.id.lv_cities_candidates) ListView lvCandidates;
     @BindView(R.id.tv_cities_toolbar_title) TextView tvToolbarTitle;
     @BindView(R.id.ib_cities_toolbar_back) ImageButton ibToolbarBack;
+    @BindView(R.id.bt_cities_located) Button btLocatedCityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +53,18 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
         Intent intent = getIntent();
         mLocateCityId = intent.getStringExtra(CITY_ID);
         mIsLocateSucceeded = intent.getBooleanExtra(LOCATE_RESULT, false);
-        if (mIsLocateSucceeded && mLocateCityId != null) {
-
-        }
 
         btFailedRetry.setOnClickListener(this);
         etCityName.addTextChangedListener(this);
         tvToolbarTitle.setText(R.string.city_selection);
-        etCityName.requestFocus();
 
         mPresenter = new CitiesPresenter(this);
+        mPresenter.setLocatedCityId(mLocateCityId);
         mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
         lvCandidates.setAdapter(mAdapter);
         lvCandidates.setOnItemClickListener(this);
         ibToolbarBack.setOnClickListener(this);
+        btLocatedCityName.setOnClickListener(this);
     }
 
     @Override
@@ -120,12 +117,30 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @Override
     public void hideCityNameEdit() {
         etCityName.setVisibility(View.INVISIBLE);
+        etCityName.clearFocus();
     }
 
     @Override
     public void showCityNameEdit() {
         etCityName.setVisibility(View.VISIBLE);
         etCityName.requestFocus();
+    }
+
+    @Override
+    public void showLocatedCityName() {
+        if (mLocateCityId != null && mIsLocateSucceeded) {
+            btLocatedCityName.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideLocatedCityName() {
+        btLocatedCityName.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLocatedCityName(String locatedName) {
+        btLocatedCityName.setText(locatedName);
     }
 
     @Override
@@ -158,6 +173,9 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
             } break;
             case R.id.ib_cities_toolbar_back: {
                 onBackPressed();
+            } break;
+            case R.id.bt_cities_located: {
+                navigateToCityWeatherActivity(mLocateCityId);
             } break;
         }
     }

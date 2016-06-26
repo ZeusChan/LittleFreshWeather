@@ -11,7 +11,7 @@ public class MyApplication extends Application {
 
     private void initLeakCheck() {
         if (BuildConfig.DEBUG) {
-            LeakCanary.install(this);
+            //LeakCanary.install(this);
         }
     }
 

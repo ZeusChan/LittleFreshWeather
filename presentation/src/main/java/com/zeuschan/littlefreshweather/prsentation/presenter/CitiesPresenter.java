@@ -1,8 +1,11 @@
 package com.zeuschan.littlefreshweather.prsentation.presenter;
 
 
+import android.text.TextUtils;
+
 import com.zeuschan.littlefreshweather.domain.usecase.GetCitiesUseCase;
 import com.zeuschan.littlefreshweather.model.entity.CityEntity;
+import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.view.CitiesView;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ public class CitiesPresenter implements Presenter {
     private GetCitiesUseCase mUseCase;
     private List<CityEntity> mCities;
     private List<CityEntity> mCandidates = new ArrayList<>();
+    private String mLocatedCityId;
 
     public CitiesPresenter(CitiesView view) {
         mView = view;
@@ -35,17 +39,21 @@ public class CitiesPresenter implements Presenter {
     }
 
     public void loadData() {
+        mView.hideLocatedCityName();
         mView.hideCityNameEdit();
         mView.hideRetry();
         mView.showLoading();
         mUseCase.execute(new CitiesSubscriber());
     }
 
+    public void setLocatedCityId(String locatedId) {
+        mLocatedCityId = locatedId;
+    }
+
     public void getCandidates(String keyWord) {
         if (mCities != null) {
             mCandidates.clear();
-            for (CityEntity entity :
-                    mCities) {
+            for (CityEntity entity : mCities) {
                 if (entity.getCity().contains(keyWord) || entity.getProvince().contains(keyWord)) {
                     mCandidates.add(entity);
                 }
@@ -59,6 +67,13 @@ public class CitiesPresenter implements Presenter {
         public void onCompleted() {
             mView.hideLoading();
             mView.showCityNameEdit();
+            String cityName = getCityName(mLocatedCityId);
+            if (!TextUtils.isEmpty(cityName)) {
+                mView.setLocatedCityName(mView.getContext().getString(R.string.located_city) + cityName);
+                mView.showLocatedCityName();
+            } else {
+                mView.hideLocatedCityName();
+            }
         }
 
         @Override
@@ -71,6 +86,18 @@ public class CitiesPresenter implements Presenter {
         @Override
         public void onNext(List<CityEntity> cityEntities) {
             mCities = cityEntities;
+        }
+
+        private String getCityName(String cityId) {
+            if (cityId != null) {
+                for (CityEntity entity : mCities) {
+                    if (cityId.equalsIgnoreCase(entity.getCityId())) {
+                        return entity.getCity();
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
