@@ -13,7 +13,9 @@ import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.common.util.FileUtil;
 import com.zeuschan.littlefreshweather.domain.usecase.GetCityWeatherUseCase;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
+import com.zeuschan.littlefreshweather.prsentation.presenter.WidgetPresenter;
 import com.zeuschan.littlefreshweather.prsentation.receiver.AlarmReceiver;
+import com.zeuschan.littlefreshweather.prsentation.receiver.WeatherAppWidget;
 import com.zeuschan.littlefreshweather.prsentation.view.activity.CityWeatherActivity;
 
 import rx.Subscriber;
@@ -29,7 +31,7 @@ public class WeatherUpdateService extends Service {
     public void onCreate() {
         super.onCreate();
         String cityId = FileUtil.getStringFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
-        mUseCase = new GetCityWeatherUseCase(getApplicationContext(), cityId);
+        mUseCase = new GetCityWeatherUseCase(getApplicationContext(), cityId, false);
     }
 
     @Nullable
@@ -72,6 +74,8 @@ public class WeatherUpdateService extends Service {
             Intent intent = new Intent(CityWeatherActivity.WEATHER_UPDATE_ACTION);
             intent.putExtra(CityWeatherActivity.WeatherUpdateReceiver.WEATHER_ENTITY, weatherEntity);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+
+            /*LocalBroadcastManager.getInstance(getApplicationContext()).*/sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION));
         }
     }
 }

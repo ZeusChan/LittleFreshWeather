@@ -2,6 +2,7 @@ package com.zeuschan.littlefreshweather.prsentation.presenter;
 
 
 import android.content.Context;
+import android.telecom.Call;
 
 import com.zeuschan.littlefreshweather.domain.usecase.GetCityWeatherUseCase;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
@@ -12,12 +13,18 @@ import rx.Subscriber;
  * Created by chenxiong on 2016/6/27.
  */
 public class WidgetPresenter implements Presenter {
-    GetCityWeatherUseCase mUseCase;
-    String mCityId;
+    private GetCityWeatherUseCase mUseCase;
+    private String mCityId;
+    private DataCallback mCallback;
 
-    public WidgetPresenter(Context context, String cityId) {
+    public interface DataCallback {
+        public void renderData(WeatherEntity entity);
+    }
+
+    public WidgetPresenter(Context context, String cityId, DataCallback callback) {
         mCityId = cityId;
         mUseCase = new GetCityWeatherUseCase(context, mCityId, true);
+        mCallback = callback;
     }
 
     public void setCityId(String cityId) {
@@ -48,7 +55,9 @@ public class WidgetPresenter implements Presenter {
 
         @Override
         public void onNext(WeatherEntity weatherEntity) {
-
+            if (mCallback != null) {
+                mCallback.renderData(weatherEntity);
+            }
         }
     }
 }
