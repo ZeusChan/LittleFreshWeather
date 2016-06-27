@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/material_680dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/material_8dp"
     android:layout_marginRight="@dimen/material_8dp"
     android:layout_marginTop="@dimen/material_8dp"
@@ -16,7 +16,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/material_4dp">
 
         <TextView
@@ -37,14 +37,332 @@
             android:layout_marginRight="@dimen/material_2dp"
             android:layout_marginLeft="@dimen/material_2dp"/>
 
-        <ListView
+        <!--ListView
             android:id="@+id/lv_city_weather_life_index"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/material_2dp"
             android:layout_marginRight="@dimen/material_2dp"
             android:listSelector="@color/colorTransparent"
-            android:divider="@color/colorTransparent"/>
+            android:divider="@color/colorTransparent"/-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name1"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief1"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper1"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper1"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name2"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief2"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper2"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper2"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name3"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief3"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper3"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper3"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper4"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name4"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief4"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper4"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper4"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper5"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name5"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief5"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper5"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper5"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/material_8dp"
+            android:paddingBottom="@dimen/material_8dp"
+            android:paddingLeft="@dimen/material_8dp"
+            android:paddingRight="@dimen/material_8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_city_weather_life_index_upper6"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp">
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_name6"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+                <TextView
+                    android:id="@+id/tv_city_weather_life_index_brief6"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorLightGray"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_city_weather_life_index_desc6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_city_weather_life_index_upper6"
+                android:layout_alignLeft="@id/ll_city_weather_life_index_upper6"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorLightGray"
+                android:paddingTop="@dimen/material_8dp"
+                android:paddingBottom="@dimen/material_8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorSemiTransLightGray"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

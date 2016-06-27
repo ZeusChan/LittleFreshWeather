@@ -35,15 +35,9 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<CurWeatherInfoWrapper> mListWeatherInfo = new ArrayList<>();
     private List<LifeIndexWrapper> mListLifeIndex = new ArrayList<>();
     private List<WeatherEntity.Forecast> mListForecasts = new ArrayList<>();
-    private ForecastAdapter mForecastAdapter = null;
-    private CurWeatherInfoAdapter mCurWeatherInfoAdapter = null;
-    private LifeIndexAdapter mLifeIndexAdapter = null;
 
     public CityWeatherAdapter(Context mContext) {
         this.mContext = mContext;
-        mForecastAdapter = new ForecastAdapter(mContext, R.layout.cv_city_weather_forecast_item, mListForecasts);
-        mCurWeatherInfoAdapter = new CurWeatherInfoAdapter(mContext, R.layout.cv_city_weather_cur_weather_info_item, mListWeatherInfo);
-        mLifeIndexAdapter = new LifeIndexAdapter(mContext, R.layout.cv_city_weather_life_index_item, mListLifeIndex);
     }
 
     public void setWeatherEntity(WeatherEntity mWeatherEntity) {
@@ -69,9 +63,6 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mListLifeIndex.add(new LifeIndexWrapper(mContext.getString(R.string.sport_index), mWeatherEntity.getSportBrief(), mWeatherEntity.getSportDescription()));
 
         notifyDataSetChanged();
-        mCurWeatherInfoAdapter.notifyDataSetChanged();
-        mForecastAdapter.notifyDataSetChanged();
-        mLifeIndexAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -121,20 +112,145 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
             //forecastViewHolder.lvCityWeatherForecast.setAdapter(mForecastAdapter);
+
+            int index = 0;
+            for (WeatherEntity.Forecast forecast : mListForecasts) {
+                ++index;
+                switch (index) {
+                    case 1: {
+                        forecastViewHolder.tvDate1.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade1.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc1.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 2: {
+                        forecastViewHolder.tvDate2.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade2.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc2.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 3: {
+                        forecastViewHolder.tvDate3.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade3.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc3.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 4: {
+                        forecastViewHolder.tvDate4.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade4.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc4.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 5: {
+                        forecastViewHolder.tvDate5.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade5.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc5.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 6: {
+                        forecastViewHolder.tvDate6.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade6.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc6.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                    case 7: {
+                        forecastViewHolder.tvDate7.setText(forecast.getDate());
+                        forecastViewHolder.tvCentigrade7.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
+                        forecastViewHolder.tvDesc7.setText(forecast.getWeatherDescriptionDaytime());
+                    } break;
+                }
+            }
+
         } else if (2 == position) {
             CurWeatherInfoViewHolder curWeatherInfoViewHolder = (CurWeatherInfoViewHolder)holder;
             curWeatherInfoViewHolder.tvTitleName.setText(R.string.current_weather_info);
             //curWeatherInfoViewHolder.gvCurWeatherInfo.setAdapter(mCurWeatherInfoAdapter);
+
+            int index = 0;
+            for (CurWeatherInfoWrapper info: mListWeatherInfo) {
+                ++index;
+                switch (index) {
+                    case 1: {
+                        curWeatherInfoViewHolder.tvName1.setText(info.getWeatherInfoName());
+                        curWeatherInfoViewHolder.tvValue1.setText(info.getWeatherInfoValue());
+                    } break;
+                    case 2: {
+                        curWeatherInfoViewHolder.tvName2.setText(info.getWeatherInfoName());
+                        curWeatherInfoViewHolder.tvValue2.setText(info.getWeatherInfoValue());
+                    } break;
+                    case 3: {
+                        curWeatherInfoViewHolder.tvName3.setText(info.getWeatherInfoName());
+                        curWeatherInfoViewHolder.tvValue3.setText(info.getWeatherInfoValue());
+                    } break;
+                    case 4: {
+                        curWeatherInfoViewHolder.tvName4.setText(info.getWeatherInfoName());
+                        curWeatherInfoViewHolder.tvValue4.setText(info.getWeatherInfoValue());
+                    } break;
+                    case 5: {
+                        curWeatherInfoViewHolder.tvName5.setText(info.getWeatherInfoName());
+                        curWeatherInfoViewHolder.tvValue5.setText(info.getWeatherInfoValue());
+                    } break;
+                }
+            }
         } else {
             LifeIndexViewHolder lifeIndexViewHolder = (LifeIndexViewHolder)holder;
             lifeIndexViewHolder.tvTitleName.setText(R.string.life_index);
             //lifeIndexViewHolder.lvLifeIndex.setAdapter(mLifeIndexAdapter);
+
+            int index = 0;
+            for (LifeIndexWrapper lifeIndex : mListLifeIndex) {
+                ++index;
+                switch (index) {
+                    case 1: {
+                        lifeIndexViewHolder.tvName1.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief1.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc1.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                    case 2: {
+                        lifeIndexViewHolder.tvName2.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief2.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc2.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                    case 3: {
+                        lifeIndexViewHolder.tvName3.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief3.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc3.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                    case 4: {
+                        lifeIndexViewHolder.tvName4.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief4.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc4.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                    case 5: {
+                        lifeIndexViewHolder.tvName5.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief5.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc5.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                    case 6: {
+                        lifeIndexViewHolder.tvName6.setText(lifeIndex.getLifeIndexName());
+                        lifeIndexViewHolder.tvBrief6.setText(lifeIndex.getLifeIndexBrief());
+                        lifeIndexViewHolder.tvDesc6.setText(lifeIndex.getLifeIndexDesc());
+                    } break;
+                }
+            }
         }
     }
 
     public static class LifeIndexViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
-        @BindView(R.id.lv_city_weather_life_index) ListView lvLifeIndex;
+        //@BindView(R.id.lv_city_weather_life_index) ListView lvLifeIndex;
+        @BindView(R.id.tv_city_weather_life_index_name1) TextView tvName1;
+        @BindView(R.id.tv_city_weather_life_index_brief1) TextView tvBrief1;
+        @BindView(R.id.tv_city_weather_life_index_desc1) TextView tvDesc1;
+        @BindView(R.id.tv_city_weather_life_index_name2) TextView tvName2;
+        @BindView(R.id.tv_city_weather_life_index_brief2) TextView tvBrief2;
+        @BindView(R.id.tv_city_weather_life_index_desc2) TextView tvDesc2;
+        @BindView(R.id.tv_city_weather_life_index_name3) TextView tvName3;
+        @BindView(R.id.tv_city_weather_life_index_brief3) TextView tvBrief3;
+        @BindView(R.id.tv_city_weather_life_index_desc3) TextView tvDesc3;
+        @BindView(R.id.tv_city_weather_life_index_name4) TextView tvName4;
+        @BindView(R.id.tv_city_weather_life_index_brief4) TextView tvBrief4;
+        @BindView(R.id.tv_city_weather_life_index_desc4) TextView tvDesc4;
+        @BindView(R.id.tv_city_weather_life_index_name5) TextView tvName5;
+        @BindView(R.id.tv_city_weather_life_index_brief5) TextView tvBrief5;
+        @BindView(R.id.tv_city_weather_life_index_desc5) TextView tvDesc5;
+        @BindView(R.id.tv_city_weather_life_index_name6) TextView tvName6;
+        @BindView(R.id.tv_city_weather_life_index_brief6) TextView tvBrief6;
+        @BindView(R.id.tv_city_weather_life_index_desc6) TextView tvDesc6;
 
         public LifeIndexViewHolder(View itemView) {
             super(itemView);
@@ -144,7 +260,17 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public static class CurWeatherInfoViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
-        @BindView(R.id.gv_city_weather_cur_weather_info) GridView gvCurWeatherInfo;
+        //@BindView(R.id.gv_city_weather_cur_weather_info) GridView gvCurWeatherInfo;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name1) TextView tvName1;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value1) TextView tvValue1;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name2) TextView tvName2;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value2) TextView tvValue2;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name3) TextView tvName3;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value3) TextView tvValue3;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name4) TextView tvName4;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value4) TextView tvValue4;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_name5) TextView tvName5;
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_value5) TextView tvValue5;
 
         public CurWeatherInfoViewHolder(View itemView) {
             super(itemView);
@@ -154,7 +280,28 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public static class ForecastViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
-        @BindView(R.id.lv_city_weather_forecast) ListView lvCityWeatherForecast;
+        //@BindView(R.id.lv_city_weather_forecast) ListView lvCityWeatherForecast;
+        @BindView(R.id.tv_city_weather_forecast_item_date1) TextView tvDate1;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade1) TextView tvCentigrade1;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc1) TextView tvDesc1;
+        @BindView(R.id.tv_city_weather_forecast_item_date2) TextView tvDate2;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade2) TextView tvCentigrade2;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc2) TextView tvDesc2;
+        @BindView(R.id.tv_city_weather_forecast_item_date3) TextView tvDate3;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade3) TextView tvCentigrade3;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc3) TextView tvDesc3;
+        @BindView(R.id.tv_city_weather_forecast_item_date4) TextView tvDate4;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade4) TextView tvCentigrade4;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc4) TextView tvDesc4;
+        @BindView(R.id.tv_city_weather_forecast_item_date5) TextView tvDate5;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade5) TextView tvCentigrade5;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc5) TextView tvDesc5;
+        @BindView(R.id.tv_city_weather_forecast_item_date6) TextView tvDate6;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade6) TextView tvCentigrade6;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc6) TextView tvDesc6;
+        @BindView(R.id.tv_city_weather_forecast_item_date7) TextView tvDate7;
+        @BindView(R.id.tv_city_weather_forecast_item_centigrade7) TextView tvCentigrade7;
+        @BindView(R.id.tv_city_weather_forecast_item_weather_desc7) TextView tvDesc7;
 
         public ForecastViewHolder(View itemView) {
             super(itemView);

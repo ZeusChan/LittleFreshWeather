@@ -96,10 +96,10 @@ public class DataSourceManager implements DataSource {
     }
 
     @Override
-    public Observable<WeatherEntity> getCityWeather(String cityId) {
+    public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
         final String id = cityId;
-        if (NetUtil.isNetworkAvailable(mContext)) {
-            return mServiceManager.getCityWeather(cityId)
+        if (NetUtil.isNetworkAvailable(mContext) && !fromCache) {
+            return mServiceManager.getCityWeather(cityId, false)
                     .doOnNext(new Action1<WeatherEntity>() {
                         @Override
                         public void call(WeatherEntity weatherEntity) {
@@ -108,13 +108,13 @@ public class DataSourceManager implements DataSource {
                     });
         }
 
-        return mDiskCacheManager.getCityWeather(cityId)
+        return mDiskCacheManager.getCityWeather(cityId, false)
                 .concatMap(new Func1<WeatherEntity, Observable<? extends WeatherEntity>>() {
                     @Override
                     public Observable<? extends WeatherEntity> call(WeatherEntity weatherEntity) {
                         if (null == weatherEntity ) {
                             mIsWeatherEntityDiskCacheExists = false;
-                            return mServiceManager.getCityWeather(id);
+                            return mServiceManager.getCityWeather(id, false);
                         }
                         else {
                             mIsWeatherEntityDiskCacheExists = true;

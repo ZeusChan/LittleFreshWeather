@@ -141,7 +141,7 @@ public class ServicesManager implements DataSource {
     }
 
     @Override
-    public Observable<WeatherEntity> getCityWeather(String cityId) {
+    public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
         HashMap<String, String> params = new HashMap<>(2);
         params.put("cityid", cityId);
         params.put("key", Constants.WEATHER_KEY);

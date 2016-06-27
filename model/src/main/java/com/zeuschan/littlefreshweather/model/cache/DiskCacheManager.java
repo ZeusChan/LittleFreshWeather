@@ -151,7 +151,7 @@ public class DiskCacheManager implements DataSource {
     }
 
     @Override
-    public Observable<WeatherEntity> getCityWeather(String cityId) {
+    public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
 
         if (mDiskLruCache != null) {
             try {

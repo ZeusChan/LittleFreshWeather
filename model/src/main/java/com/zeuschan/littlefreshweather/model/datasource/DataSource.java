@@ -14,5 +14,5 @@ import rx.Observable;
 public interface DataSource {
     public Observable<List<CityEntity>> getCityEntities();
     public Observable<List<WeatherConditionEntity>> getWeatherConditionEntities();
-    public Observable<WeatherEntity> getCityWeather(String cityId);
+    public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache);
 }

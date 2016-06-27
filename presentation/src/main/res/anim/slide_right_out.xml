@@ -4,5 +4,5 @@
     android:shareInterpolator="true"
     android:interpolator="@android:interpolator/decelerate_cubic">
     <translate android:fromXDelta="0.0" android:toXDelta="100.0%p"/>
-    <alpha android:fromAlpha="1.0" android:toAlpha="0.5"/>
+    <!--alpha android:fromAlpha="1.0" android:toAlpha="0.5"/-->
 </set>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_16dp"
+    android:background="@color/colorSemiTransparent">
+
+    <TextView
+        android:id="@+id/tv_widget_cur_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|left"
+        android:textSize="@dimen/material_64sp"
+        android:textColor="@color/colorLightGray"/>
+
+    <TextView
+        android:id="@+id/tv_widget_cur_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_widget_cur_temp"
+        android:layout_below="@id/tv_widget_cur_temp"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/colorLightGray"/>
+
+    <TextView
+        android:id="@+id/tv_widget_weather_desc"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tv_widget_cur_city"
+        android:layout_alignLeft="@id/tv_widget_cur_city"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/colorLightGray"/>
+
+    <TextView
+        android:id="@+id/tv_widget_cur_aqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_widget_weather_desc"
+        android:layout_alignRight="@id/tv_widget_cur_temp"
+        android:gravity="center_vertical|right"
+        android:textColor="@color/colorLightGray"/>
+
+    <TextView
+        android:layout_width="@dimen/material_1dp"
+        android:layout_height="@dimen/material_100dp"
+        android:layout_toRightOf="@id/tv_widget_cur_temp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/material_24dp"
+        android:layout_marginRight="@dimen/material_24dp"
+        android:background="@color/colorLightGray"/>
+
+</RelativeLayout>

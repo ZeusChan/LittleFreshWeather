@@ -13,10 +13,12 @@ import rx.Observable;
 public class GetCityWeatherUseCase extends UseCase<WeatherEntity> {
     private Context mContext;
     private String mCityId;
+    private boolean mFromCache;
 
-    public GetCityWeatherUseCase(Context context, String mCityId) {
+    public GetCityWeatherUseCase(Context context, String cityId, boolean fromCache) {
         mContext = context;
-        this.mCityId = mCityId;
+        mCityId = cityId;
+        mFromCache = fromCache;
     }
 
     public void setCityId(String cityId) {
@@ -25,6 +27,6 @@ public class GetCityWeatherUseCase extends UseCase<WeatherEntity> {
 
     @Override
     protected Observable<WeatherEntity> buildUseCaseObservable() {
-        return DataSourceManager.getInstance(mContext).getCityWeather(mCityId);
+        return DataSourceManager.getInstance(mContext).getCityWeather(mCityId, mFromCache);
     }
 }
