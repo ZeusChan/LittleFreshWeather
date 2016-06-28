@@ -22,6 +22,7 @@ import com.zeuschan.littlefreshweather.common.util.NetUtil;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.CityWeatherPresenter;
+import com.zeuschan.littlefreshweather.prsentation.service.WeatherNotificationService;
 import com.zeuschan.littlefreshweather.prsentation.service.WeatherUpdateService;
 import com.zeuschan.littlefreshweather.prsentation.view.CityWeatherView;
 import com.zeuschan.littlefreshweather.prsentation.view.adapter.CityWeatherAdapter;
@@ -72,8 +73,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mWeatherUpdateReceiver = new WeatherUpdateReceiver();
 
-        Intent i = new Intent(this, WeatherUpdateService.class);
-        startService(i);
+        startServices();
     }
 
     @Override
@@ -85,6 +85,8 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mPresenter.setCityId(cityId);
         mPresenter.stop();
         mPresenter.start();
+
+        startServices();
     }
 
     @Override
@@ -197,5 +199,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
             message.setData(bundle);
             message.sendToTarget();
         }
+    }
+
+    private void startServices() {
+        Intent intent1 = new Intent(this, WeatherUpdateService.class);
+        startService(intent1);
+
+        Intent intent2 = new Intent(this, WeatherNotificationService.class);
+        startService(intent2);
     }
 }

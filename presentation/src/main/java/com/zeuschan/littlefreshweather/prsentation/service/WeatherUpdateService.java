@@ -75,7 +75,8 @@ public class WeatherUpdateService extends Service {
             intent.putExtra(CityWeatherActivity.WeatherUpdateReceiver.WEATHER_ENTITY, weatherEntity);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
 
-            /*LocalBroadcastManager.getInstance(getApplicationContext()).*/sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION));
+            sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
+            startService(new Intent(WeatherUpdateService.this, WeatherNotificationService.class));
         }
     }
 }

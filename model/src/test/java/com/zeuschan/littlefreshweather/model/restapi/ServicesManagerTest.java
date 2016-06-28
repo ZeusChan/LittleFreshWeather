@@ -106,7 +106,7 @@ public class ServicesManagerTest {
     public void testServicesManagerGetCityWeather() throws Exception {
         assertNotNull(mServicesManger);
         TestSubscriber<WeatherEntity> testSubscriber = TestSubscriber.create(new GetCityWeatherDelegate());
-        mServicesManger.getCityWeather("CN101010300").subscribe(testSubscriber);
+        mServicesManger.getCityWeather("CN101010300", false).subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
 

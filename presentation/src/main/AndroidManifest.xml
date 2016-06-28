@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zeuschan.littlefreshweather.prsentation">
 
-    <!-- uses-permission android:name="android.permission.INTERNET" / -->
-    <!-- uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/ -->
+    <permission
+        android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"
+        android:label="@string/permission_send_update_label"
+        android:description="@string/permission_send_update_desc"
+        android:permissionGroup="android.permission-group.PERSONAL_INFO"
+        android:protectionLevel="normal"/>
 
+    <permission
+        android:name="com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE"
+        android:label="@string/permission_recv_update_label"
+        android:description="@string/permission_recv_update_desc"
+        android:permissionGroup="android.permission-group.PERSONAL_INFO"
+        android:protectionLevel="normal"/>
+
+    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"/>
+    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE"/>
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -38,7 +52,8 @@
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".view.activity.SplashActivity">
+        <activity android:name=".view.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,15 +61,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.CityWeatherActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.activity.CitiesActivity"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait">
         </activity>
         <service android:name=".service.WeatherUpdateService"/>
+        <service android:name=".service.WeatherNotificationService"/>
         <receiver android:name=".receiver.AlarmReceiver"/>
         <receiver android:name=".receiver.WeatherAppWidget"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:permission="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE">
             <intent-filter >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

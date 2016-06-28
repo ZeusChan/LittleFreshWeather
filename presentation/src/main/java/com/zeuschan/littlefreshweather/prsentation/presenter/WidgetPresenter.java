@@ -18,7 +18,7 @@ public class WidgetPresenter implements Presenter {
     private DataCallback mCallback;
 
     public interface DataCallback {
-        public void renderData(WeatherEntity entity);
+        void renderData(WeatherEntity entity);
     }
 
     public WidgetPresenter(Context context, String cityId, DataCallback callback) {
@@ -51,6 +51,9 @@ public class WidgetPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            if (mCallback != null) {
+                mCallback.renderData(null);
+            }
         }
 
         @Override

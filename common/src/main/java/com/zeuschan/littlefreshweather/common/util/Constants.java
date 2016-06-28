@@ -22,6 +22,10 @@ public class Constants {
     public static final String SERVER_TIMEOUT = "anr";
     public static final String PERMISSION_DENIED = "permission denied";
 
+    // Permissions
+    public static final String SEND_WEATHER_UPDATE = "com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE";
+    public static final String RECV_WEATHER_UPDATE = "com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE";
+
     // Preferences file name
     public static final String GLOBAL_SETTINGS = "global_settings";
     // Preferences keys

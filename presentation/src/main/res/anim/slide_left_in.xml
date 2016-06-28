@@ -3,6 +3,6 @@
     android:duration="400"
     android:shareInterpolator="true"
     android:interpolator="@android:interpolator/decelerate_cubic">
-    <!--translate android:fromXDelta="-100.0%p" android:toXDelta="0.0"/-->
+    <translate android:fromXDelta="-10.0%p" android:toXDelta="0.0"/>
     <alpha android:fromAlpha="0.5" android:toAlpha="1.0"/>
 </set>
