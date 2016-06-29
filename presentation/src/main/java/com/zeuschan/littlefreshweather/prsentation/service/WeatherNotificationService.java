@@ -112,9 +112,10 @@ public class WeatherNotificationService extends Service implements WidgetPresent
             mNotificationBuilder = new NotificationCompat.Builder(this);
         }
 
-        mNotificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mNotificationBuilder.setSmallIcon(R.mipmap.ic_launcher).setPriority(Notification.PRIORITY_MAX);
         notification = mNotificationBuilder.build();
         notification.bigContentView = views;
+        notification.contentView = views;
         views.setOnClickPendingIntent(R.id.rl_city_weather, pendingIntent);
 
         //mNotificationManager.notify(1, notification);

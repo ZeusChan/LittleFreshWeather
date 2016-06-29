@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@mipmap/night0">
+    android:orientation="vertical">
 
-    <include layout="@layout/rl_city_weather_toolbar"/>
+    <include
+        android:id="@+id/rl_city_weather_background_view"
+        layout="@layout/rl_city_weather_background_view"/>
+
+    <include
+        android:id="@+id/rl_city_weather_toolbar"
+        layout="@layout/rl_city_weather_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_city_weather_toolbar">
 
         <android.support.v7.widget.RecyclerView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,4 +31,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
