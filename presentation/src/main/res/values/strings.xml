@@ -28,4 +28,19 @@
     <string name="permission_send_update_desc">发送更新的天气数据，用于刷新天气小工具的显示</string>
     <string name="permission_recv_update_label">接收更新数据</string>
     <string name="permission_recv_update_desc">接收更新的天气数据，用于刷新天气小工具的显示</string>
+    <string name="shower_rain">阵雨</string>
+    <string name="heavy_shower_rain">强阵雨</string>
+    <string name="thunder_shower">雷阵雨</string>
+    <string name="heavy_thunderstorm">强雷阵雨</string>
+    <string name="hail">雷阵雨伴有冰雹</string>
+    <string name="light_rain">小雨</string>
+    <string name="moderate_rain">中雨</string>
+    <string name="heavy_rain">大雨</string>
+    <string name="extreme_rain">极端降雨</string>
+    <string name="drizzle_rain">毛毛雨</string>
+    <string name="drizzle_rain_1">细雨</string>
+    <string name="storm">暴雨</string>
+    <string name="heavy_storm">大暴雨</string>
+    <string name="severe_storm">特大暴雨</string>
+    <string name="freezing_rain">冻雨</string>
 </resources>

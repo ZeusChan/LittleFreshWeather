@@ -1,6 +1,7 @@
 package com.zeuschan.littlefreshweather.prsentation.view.activity;
 
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
+import com.zeuschan.littlefreshweather.common.util.DensityUtil;
 import com.zeuschan.littlefreshweather.common.util.FileUtil;
 import com.zeuschan.littlefreshweather.common.util.NetUtil;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
@@ -31,6 +32,8 @@ import com.zeuschan.littlefreshweather.prsentation.service.WeatherNotificationSe
 import com.zeuschan.littlefreshweather.prsentation.service.WeatherUpdateService;
 import com.zeuschan.littlefreshweather.prsentation.view.CityWeatherView;
 import com.zeuschan.littlefreshweather.prsentation.view.adapter.CityWeatherAdapter;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +45,50 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     public static final int MSG_WEATHER_UPDATE = 0;
 
+    private static final int RAIN_GEN_INTERVAL = 50;
+    private static final int RAIN_NUM_H = 120;
+    private static final int RAIN_NUM_M = 80;
+    private static final int RAIN_NUM_L = 50;
+    private static final int RAIN_SPEED_H = 500;
+    private static final int RAIN_SPEED_M = 1000;
+    private static final int RAIN_SPEED_L = 1500;
+    private static final int RAIN_SPEED_OFFSET = 500;
+    private int mRainIconId = R.drawable.raindrop_l;
+    private int mSpecialWeatherNumRain = 0;
+    private int mSpecialWeatherNumLimitRain;
+    private int mSpecialWeatherSpeedLimitRain;
+
+
+    private static final int SNOW_GEN_INTERVAL = 150;
+    private static final int SNOW_SPEED_H = 3500;
+    private static final int SNOW_SPEED_M = 3500;
+    private static final int SNOW_SPEED_L = 3500;
+    private int mSnowIconDarkId = R.drawable.snow_dark_l;
+    private int mSnowIconLightId = R.drawable.snow_light_l;
+    private int mSpecialWeatherNumSnow = 0;
+    private int mSpecialWeatherNumLimitSnow;
+    private int mSpecialWeatherSpeedLimitSnow;
+
+    private static final int CLOUD_GEN_INTERVAL = 500;
+    private static final int CLOUD_SPEED_H = 40000;
+    private static final int CLOUD_SPEED_M = 60000;
+    private static final int CLOUD_SPEED_L = 80000;
+    private int mCloudIconFrontId = R.drawable.cloudy_day_2;
+    private int mCloudIconBackId = R.drawable.cloudy_day_1;
+    private int mSpecialWeatherNumCloud = 0;
+    private int mSpecialWeatherNumLimitCloud;
+    private int mSpecialWeatherSpeedLimitCloud;
+
+    private static final int LIGHTNING_GEN_INTERVAL = 3000;
+    private static final int LIGHTNING_SPEED_H = 300;
+    private static final int LIGHTNING_SPEED_L = 1000;
+    private int mSpecialWeatherNumLightning = 0;
+    private int mSpecialWeatherNumLimitLightning;
+    private int mSpecialWeatherSpeedLimitLightning;
+
+    private int mAnimationType = 0;
+
+    private Random mRandom = new Random();
     private CityWeatherPresenter mPresenter;
     private CityWeatherAdapter mCityWeatherAdapter;
     private LocalBroadcastManager mLocalBroadcastManager;
@@ -54,6 +101,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @BindView(R.id.bt_failed_retry) Button btFailedRetry;
     @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
     @BindView(R.id.ib_city_weather_toolbar_cities) ImageButton ibToolbarCities;
+    @BindView(R.id.ib_city_weather_toolbar_menu) ImageButton ibToolbarMenu;
     @BindView(R.id.rl_city_weather_background_view) RelativeLayout rlBackgroundView;
 
     @Override
@@ -75,6 +123,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
         btFailedRetry.setOnClickListener(this);
         ibToolbarCities.setOnClickListener(this);
+        ibToolbarMenu.setOnClickListener(this);
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mWeatherUpdateReceiver = new WeatherUpdateReceiver();
@@ -111,13 +160,14 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     protected void onPause() {
         super.onPause();
         mLocalBroadcastManager.unregisterReceiver(mWeatherUpdateReceiver);
+        stopAnimation();
     }
 
     @Override
     public void renderCityWeather(WeatherEntity entity) {
         if (entity != null) {
             mCityWeatherAdapter.setWeatherEntity(entity);
-            startAnimation();
+            startAnimation(10);
         }
     }
 
@@ -178,6 +228,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
             case R.id.ib_city_weather_toolbar_cities: {
                 navigateToCitiesActivity();
             } break;
+            case R.id.ib_city_weather_toolbar_menu: {
+                ++mAnimationType;
+                if (mAnimationType >= 10) {
+                    mAnimationType = 0;
+                }
+                startAnimation(mAnimationType);
+            } break;
         }
     }
 
@@ -216,19 +273,229 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         startService(intent2);
     }
 
-    private void startAnimation() {
-        ImageView imageView1 = new ImageView(this);
-        imageView1.setVisibility(View.VISIBLE);
-        imageView1.setImageResource(R.drawable.raindrop);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        rlBackgroundView.addView(imageView1, layoutParams);
+    private Runnable rainProc = new Runnable() {
+        @Override
+        public void run() {
+            ++mSpecialWeatherNumRain;
+            if (mSpecialWeatherNumRain <= mSpecialWeatherNumLimitRain) {
+                int screenHeight = DensityUtil.getScreenHeight(CityWeatherActivity.this);
+                int screenWidth = DensityUtil.getScreenWidth(CityWeatherActivity.this);
+                int fX = mRandom.nextInt(screenWidth << 1);
+                int tX = fX - (int)(screenHeight * 0.58);
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView1, "translationY", 0, 800);
-        animator.setDuration(500);
-        animator.setRepeatMode(ObjectAnimator.RESTART);
-        animator.setRepeatCount(ObjectAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.start();
+                ImageView imageView = new ImageView(CityWeatherActivity.this);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageResource(mRainIconId);
+                imageView.setRotation(30);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(fX, 0, 0, 0);
+                rlBackgroundView.addView(imageView, layoutParams);
+
+                PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", -100, screenHeight + 100);
+                PropertyValuesHolder holderX = PropertyValuesHolder.ofFloat("translationX", fX, tX);
+                ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(imageView, holderX, holderY);
+                if ((mSpecialWeatherNumRain & 0x1) == 0) {
+                    animator.setDuration(mSpecialWeatherSpeedLimitRain);
+                } else {
+                    animator.setDuration(mSpecialWeatherSpeedLimitRain + RAIN_SPEED_OFFSET);
+                }
+                animator.setRepeatMode(ObjectAnimator.RESTART);
+                animator.setRepeatCount(ObjectAnimator.INFINITE);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
+
+                mHandler.postDelayed(rainProc, RAIN_GEN_INTERVAL);
+            }
+        }
+    };
+
+    private Runnable snowProc = new Runnable() {
+        @Override
+        public void run() {
+            ++mSpecialWeatherNumSnow;
+            if (mSpecialWeatherNumSnow <= mSpecialWeatherNumLimitSnow) {
+                int screenHeight = DensityUtil.getScreenHeight(CityWeatherActivity.this);
+                int screenWidth = DensityUtil.getScreenWidth(CityWeatherActivity.this);
+                int fX = mRandom.nextInt(screenWidth);
+
+                ImageView imageView = new ImageView(CityWeatherActivity.this);
+                imageView.setVisibility(View.VISIBLE);
+                if ((mSpecialWeatherNumSnow & 0x1) == 0) {
+                    imageView.setImageResource(mSnowIconLightId);
+                } else {
+                    imageView.setImageResource(mSnowIconDarkId);
+                }
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(fX, 0, 0, 0);
+                rlBackgroundView.addView(imageView, layoutParams);
+
+                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", -100, screenHeight + 100);
+                if ((mSpecialWeatherNumSnow & 0x1) == 0) {
+                    animator.setDuration(mSpecialWeatherSpeedLimitSnow);
+                } else {
+                    animator.setDuration(mSpecialWeatherSpeedLimitSnow + RAIN_SPEED_OFFSET);
+                }
+                animator.setRepeatMode(ObjectAnimator.RESTART);
+                animator.setRepeatCount(ObjectAnimator.INFINITE);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
+
+                mHandler.postDelayed(snowProc, SNOW_GEN_INTERVAL);
+            }
+        }
+    };
+
+    private Runnable cloudProc = new Runnable() {
+        @Override
+        public void run() {
+            ++mSpecialWeatherNumCloud;
+            if (mSpecialWeatherNumCloud <= mSpecialWeatherNumLimitCloud) {
+                int toolbarHeight = ibToolbarCities.getHeight();
+                int screenWidth = DensityUtil.getScreenWidth(CityWeatherActivity.this);
+
+                boolean isBack = (mSpecialWeatherNumCloud & 0x1) == 0;
+
+                ImageView imageView = new ImageView(CityWeatherActivity.this);
+                imageView.setVisibility(View.VISIBLE);
+                if (isBack) {
+                    imageView.setImageResource(mCloudIconBackId);
+                } else {
+                    imageView.setImageResource(mCloudIconFrontId);
+                }
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                if (isBack) {
+                    layoutParams.setMargins(0, toolbarHeight, 0, 0);
+                } else {
+                    layoutParams.setMargins(0, toolbarHeight + mRandom.nextInt(100), 0, 0);
+                }
+                rlBackgroundView.addView(imageView, layoutParams);
+
+                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationX", -(screenWidth * 2 / 3), screenWidth);
+                if (isBack) {
+                    animator.setDuration(CLOUD_SPEED_L);
+                } else {
+                    animator.setDuration(CLOUD_SPEED_H);
+                }
+                animator.setRepeatMode(ObjectAnimator.RESTART);
+                animator.setRepeatCount(ObjectAnimator.INFINITE);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
+
+                mHandler.postDelayed(cloudProc, CLOUD_GEN_INTERVAL);
+            }
+        }
+    };
+
+    private Runnable lightningProc = new Runnable() {
+        @Override
+        public void run() {
+            ++mSpecialWeatherNumLightning;
+            if (mSpecialWeatherNumLightning <= mSpecialWeatherNumLimitLightning) {
+                int screenHeight = DensityUtil.getScreenHeight(CityWeatherActivity.this);
+                int screenWidth = DensityUtil.getScreenWidth(CityWeatherActivity.this);
+
+                ImageView imageView = new ImageView(CityWeatherActivity.this);
+                imageView.setVisibility(View.VISIBLE);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                if ((mSpecialWeatherNumLightning & 0x1) == 0) {
+                    imageView.setImageResource(R.drawable.lightning_2);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    layoutParams.setMargins(0, mRandom.nextInt(screenHeight >> 2), screenWidth >> 2 + mRandom.nextInt(screenWidth >> 2), 0);
+                } else {
+                    imageView.setImageResource(R.drawable.lightning_1);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    layoutParams.setMargins(mRandom.nextInt(screenWidth >> 2), mRandom.nextInt(screenHeight >> 2), 0, 0);
+                }
+                rlBackgroundView.addView(imageView, layoutParams);
+
+                ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "alpha", 0, 1);
+                animator.setDuration(LIGHTNING_SPEED_H);
+                animator.setRepeatMode(ObjectAnimator.REVERSE);
+                animator.setRepeatCount(3);
+                animator.setInterpolator(new AccelerateInterpolator());
+                animator.start();
+
+                mHandler.postDelayed(lightningProc, LIGHTNING_GEN_INTERVAL + mRandom.nextInt(LIGHTNING_GEN_INTERVAL));
+            }
+        }
+    };
+
+    private void stopAnimation() {
+        for (int i = 0; i != rlBackgroundView.getChildCount(); ++i) {
+            View view = rlBackgroundView.getChildAt(i);
+            if (view != null) {
+                view.clearAnimation();
+            }
+        }
+        rlBackgroundView.removeAllViews();
+        mSpecialWeatherNumRain = 0;
+        mSpecialWeatherNumCloud = 0;
+        mSpecialWeatherNumSnow = 0;
+        mSpecialWeatherNumLightning = 0;
+    }
+
+    private void startAnimation(/*WeatherEntity entity*/int animationType) {
+        stopAnimation();
+
+        if (/*entity != null*/true) {
+            // rain
+            // snow
+            // cloud
+            // lightning
+            if (animationType == 0) {
+                mRainIconId = R.drawable.raindrop_l;
+                mSpecialWeatherNumLimitRain = RAIN_NUM_L;
+                mSpecialWeatherSpeedLimitRain = RAIN_SPEED_L;
+                mHandler.postDelayed(rainProc, 20);
+            } else if (animationType == 1) {
+                mRainIconId = R.drawable.raindrop_m;
+                mSpecialWeatherNumLimitRain = RAIN_NUM_M;
+                mSpecialWeatherSpeedLimitRain = RAIN_SPEED_M;
+                mHandler.postDelayed(rainProc, 20);
+            } else if (animationType == 2) {
+                mRainIconId = R.drawable.raindrop_h;
+                mSpecialWeatherNumLimitRain = RAIN_NUM_H;
+                mSpecialWeatherSpeedLimitRain = RAIN_SPEED_H;
+                mHandler.postDelayed(rainProc, 20);
+            } else if (animationType == 3) {
+                mSnowIconLightId = R.drawable.snow_light_l;
+                mSnowIconDarkId = R.drawable.snow_dark_l;
+                mSpecialWeatherNumLimitSnow = RAIN_NUM_L;
+                mSpecialWeatherSpeedLimitSnow = SNOW_SPEED_L;
+                mHandler.postDelayed(snowProc, 20);
+            } else if (animationType == 4) {
+                mSnowIconLightId = R.drawable.snow_light_m;
+                mSnowIconDarkId = R.drawable.snow_dark_m;
+                mSpecialWeatherNumLimitSnow = RAIN_NUM_M;
+                mSpecialWeatherSpeedLimitSnow = SNOW_SPEED_M;
+                mHandler.postDelayed(snowProc, 20);
+            } else if (animationType == 5) {
+                mSnowIconLightId = R.drawable.snow_light_h;
+                mSnowIconDarkId = R.drawable.snow_dark_h;
+                mSpecialWeatherNumLimitSnow = RAIN_NUM_H;
+                mSpecialWeatherSpeedLimitSnow = SNOW_SPEED_H;
+                mHandler.postDelayed(snowProc, 20);
+            } else if (animationType == 6) {
+                mCloudIconBackId = R.drawable.cloudy_day_1;
+                mCloudIconFrontId = R.drawable.cloudy_day_2;
+                mSpecialWeatherNumLimitCloud = 2;
+                mHandler.postDelayed(cloudProc, 20);
+            } else if (animationType == 7) {
+                mCloudIconBackId = R.drawable.cloudy_night1;
+                mCloudIconFrontId = R.drawable.cloudy_night2;
+                mSpecialWeatherNumLimitCloud = 2;
+                mHandler.postDelayed(cloudProc, 20);
+            } else if (animationType == 8) {
+                mCloudIconBackId = R.drawable.fog_cloud_1;
+                mCloudIconFrontId = R.drawable.fog_cloud_2;
+                mSpecialWeatherNumLimitCloud = 2;
+                mHandler.postDelayed(cloudProc, 20);
+            } else if (animationType == 9) {
+                mSpecialWeatherNumLimitLightning = 2;
+                mHandler.postDelayed(lightningProc, 20);
+            } else {
+
+            }
+        }
     }
 }

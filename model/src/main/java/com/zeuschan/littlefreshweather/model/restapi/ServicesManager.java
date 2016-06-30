@@ -33,9 +33,9 @@ public class ServicesManager implements DataSource {
 
     private static final int DEFAULT_TIMEOUT = 5;
 
-    private static ServicesManager ourerInstance = new ServicesManager();
+    private static ServicesManager ourInstance = new ServicesManager();
     public static ServicesManager getInstance() {
-        return ourerInstance;
+        return ourInstance;
     }
 
     private final WeatherInfoService weatherInfoService;
