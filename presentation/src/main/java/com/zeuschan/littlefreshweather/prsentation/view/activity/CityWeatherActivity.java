@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener {
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
@@ -60,9 +62,9 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
 
     private static final int SNOW_GEN_INTERVAL = 150;
-    private static final int SNOW_SPEED_H = 3500;
-    private static final int SNOW_SPEED_M = 3500;
-    private static final int SNOW_SPEED_L = 3500;
+    private static final int SNOW_SPEED_H = 4500;
+    private static final int SNOW_SPEED_M = 4500;
+    private static final int SNOW_SPEED_L = 4500;
     private int mSnowIconDarkId = R.drawable.snow_dark_l;
     private int mSnowIconLightId = R.drawable.snow_light_l;
     private int mSpecialWeatherNumSnow = 0;
@@ -86,7 +88,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private int mSpecialWeatherNumLimitLightning;
     private int mSpecialWeatherSpeedLimitLightning;
 
-    private int mAnimationType = 0;
+    private int mAnimationType = 10;
 
     private Random mRandom = new Random();
     private CityWeatherPresenter mPresenter;
@@ -94,6 +96,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private LocalBroadcastManager mLocalBroadcastManager;
     private WeatherUpdateReceiver mWeatherUpdateReceiver;
     private UIHandler mHandler = new UIHandler();
+    private Unbinder mUnbinder = null;
 
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
@@ -108,7 +111,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_weather);
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
 
         Intent intent = getIntent();
         String cityId = intent.getStringExtra(CITY_ID);
@@ -148,6 +151,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     protected void onStart() {
         super.onStart();
         mPresenter.start();
+        mPresenter.getBackgroundImage(rlBackgroundView, R.mipmap.night0);
     }
 
     @Override
@@ -174,7 +178,29 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void clearMemory() {
         mPresenter.stop();
+        mHandler.removeMessages(MSG_WEATHER_UPDATE);
+        mHandler.removeCallbacks(rainProc);
+        mHandler.removeCallbacks(snowProc);
+        mHandler.removeCallbacks(cloudProc);
+        mHandler.removeCallbacks(lightningProc);
+        mHandler = null;
+        mPresenter = null;
+        mUnbinder.unbind();
+        mCityWeatherAdapter = null;
+        mLocalBroadcastManager = null;
+        mWeatherUpdateReceiver = null;
+        setContentView(new FrameLayout(this));
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+        System.exit(0);
     }
 
     @Override
@@ -214,7 +240,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     public void navigateToCitiesActivity() {
-        Intent intent = new Intent(this, CitiesActivity.class);
+        Intent intent = new Intent(this.getApplicationContext(), CitiesActivity.class);
         startActivity(intent);
     }
 
@@ -266,10 +292,10 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     private void startServices() {
-        Intent intent1 = new Intent(this, WeatherUpdateService.class);
+        Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
         startService(intent1);
 
-        Intent intent2 = new Intent(this, WeatherNotificationService.class);
+        Intent intent2 = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
         startService(intent2);
     }
 

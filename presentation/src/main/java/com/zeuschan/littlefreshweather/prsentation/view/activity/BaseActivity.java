@@ -8,12 +8,20 @@ import android.widget.Toast;
 import com.zeuschan.littlefreshweather.prsentation.view.BaseView;
 
 
-public class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearMemory();
+    }
+
+    protected abstract void clearMemory();
 
     @Override
     public Context getContext() {

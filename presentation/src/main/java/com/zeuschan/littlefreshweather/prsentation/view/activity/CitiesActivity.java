@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CitiesActivity extends BaseActivity implements CitiesView, View.OnClickListener, TextWatcher, ListView.OnItemClickListener {
     public static final String CITY_ID = "city_id";
@@ -34,6 +37,7 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     List<CityEntity> mCandidates = new ArrayList<>();
     String mLocateCityId;
     boolean mIsLocateSucceeded = false;
+    Unbinder mUnbinder;
 
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
@@ -43,12 +47,13 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @BindView(R.id.tv_cities_toolbar_title) TextView tvToolbarTitle;
     @BindView(R.id.ib_cities_toolbar_back) ImageButton ibToolbarBack;
     @BindView(R.id.bt_cities_located) Button btLocatedCityName;
+    @BindView(R.id.ll_cities_root) LinearLayout llCitiesRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cities);
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
 
         Intent intent = getIntent();
         mLocateCityId = intent.getStringExtra(CITY_ID);
@@ -71,12 +76,23 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     protected void onStart() {
         super.onStart();
         mPresenter.start();
+        mPresenter.getBackgroundImage(llCitiesRoot, R.mipmap.city);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mPresenter.stop();
+    }
+
+    @Override
+    protected void clearMemory() {
+        mUnbinder.unbind();
+        mCandidates.clear();
+        mCandidates = null;
+        mPresenter = null;
+        mUnbinder = null;
+        setContentView(new FrameLayout(this));
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatDelegate;
+import android.widget.FrameLayout;
 
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.SplashPresenter;
@@ -16,7 +18,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public static final int MSG_NAVIGATE_CITY_WEATHER = 1;
     public static final int MSG_NAVIGATE_CITIES = 2;
 
-    private static final int FIRE_DELAY = 500;
+    private static final int FIRE_DELAY = 200;
 
     SplashPresenter mPresenter;
     UIHandler mHandler = new UIHandler();
@@ -52,6 +54,16 @@ public class SplashActivity extends BaseActivity implements SplashView {
     }
 
     @Override
+    protected void clearMemory() {
+        mHandler.removeMessages(MSG_START);
+        mHandler.removeMessages(MSG_NAVIGATE_CITY_WEATHER);
+        mHandler.removeMessages(MSG_NAVIGATE_CITIES);
+        mHandler = null;
+        mPresenter = null;
+        setContentView(new FrameLayout(this));
+    }
+
+    @Override
     public void navigateToCityWeatherActivity(String cityId) {
         mCityId = cityId;
         Message message = mHandler.obtainMessage(MSG_NAVIGATE_CITY_WEATHER);
@@ -76,13 +88,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
                     mPresenter.start();
                 } break;
                 case MSG_NAVIGATE_CITY_WEATHER: {
-                    Intent intent = new Intent(SplashActivity.this, CityWeatherActivity.class);
+                    Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CityWeatherActivity.class);
                     intent.putExtra(CityWeatherActivity.CITY_ID, mCityId);
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
                 } break;
                 case MSG_NAVIGATE_CITIES: {
-                    Intent intent = new Intent(SplashActivity.this, CitiesActivity.class);
+                    Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CitiesActivity.class);
                     intent.putExtra(CitiesActivity.CITY_ID, mLocateCityId);
                     intent.putExtra(CitiesActivity.LOCATE_RESULT, mIsLocateSucceeded);
                     SplashActivity.this.startActivity(intent);

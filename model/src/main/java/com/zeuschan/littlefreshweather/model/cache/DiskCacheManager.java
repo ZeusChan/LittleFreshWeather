@@ -23,7 +23,7 @@ import rx.Subscriber;
  * Created by chenxiong on 2016/6/17.
  */
 public class DiskCacheManager implements DataSource {
-    private static final int DISK_CACHE_SIZE = 10 * 1024 * 1024;
+    private static final int DISK_CACHE_SIZE = 20 * 1024 * 1024;
     private static final String CITY_ENTITIES_CACHE_KEY = "city_entities";
     private static final String WEATHER_CONDITION_ENTITIES_CACHE_KEY = "weather_condition_entities";
     private static final String CITY_WEATHER_ENTITY_CACHE_KEY = "city_weather_entity";
@@ -68,28 +68,30 @@ public class DiskCacheManager implements DataSource {
 
     @Override
     public Observable<List<CityEntity>> getCityEntities() {
-
-        if (mDiskLruCache != null) {
-            try {
-                DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String(CITY_ENTITIES_CACHE_KEY.getBytes()));
-                if (snapshot != null) {
-                    final String cityEntitiesJson = snapshot.getString(0);
-                    return Observable.create(new Observable.OnSubscribe<List<CityEntity>>() {
-                        @Override
-                        public void call(Subscriber<? super List<CityEntity>> subscriber) {
+        return Observable.create(new Observable.OnSubscribe<List<CityEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<CityEntity>> subscriber) {
+                if (mDiskLruCache == null) {
+                    subscriber.onError(new DiskCacheException("disk cache not exists"));
+                } else {
+                    try {
+                        DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String(CITY_ENTITIES_CACHE_KEY.getBytes()));
+                        if (snapshot != null) {
+                            String cityEntitiesJson = snapshot.getString(0);
                             subscriber.onNext(mJsonProcesser.jsonToCityEntities(cityEntitiesJson));
                             subscriber.onCompleted();
+                        } else {
+                            subscriber.onNext(null);
+                            subscriber.onCompleted();
                         }
-                    });
+                    } catch (IOException e) {
+                        DiskCacheException diskCacheManager = new DiskCacheException("io failed");
+                        diskCacheManager.initCause(e);
+                        subscriber.onError(diskCacheManager);
+                    }
                 }
-                else
-                    return Observable.just(null);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-
-        return Observable.error(new DiskCacheException("disk cache not exists"));
+        });
     }
 
     public void putWeatherConditionEntities(List<WeatherConditionEntity> weatherConditionEntities) {
@@ -111,27 +113,30 @@ public class DiskCacheManager implements DataSource {
     @Override
     public Observable<List<WeatherConditionEntity>> getWeatherConditionEntities() {
 
-        if (mDiskLruCache != null) {
-            try {
-                DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String(WEATHER_CONDITION_ENTITIES_CACHE_KEY.getBytes()));
-                if (snapshot != null) {
-                    final String weatherConditionEntitiesJson = snapshot.getString(0);
-                    return Observable.create(new Observable.OnSubscribe<List<WeatherConditionEntity>>() {
-                        @Override
-                        public void call(Subscriber<? super List<WeatherConditionEntity>> subscriber) {
+        return Observable.create(new Observable.OnSubscribe<List<WeatherConditionEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<WeatherConditionEntity>> subscriber) {
+                if (mDiskLruCache == null) {
+                    subscriber.onError(new DiskCacheException("disk cache not exists"));
+                } else {
+                    try {
+                        DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String(WEATHER_CONDITION_ENTITIES_CACHE_KEY.getBytes()));
+                        if (snapshot != null) {
+                            String weatherConditionEntitiesJson = snapshot.getString(0);
                             subscriber.onNext(mJsonProcesser.jsonToWeatherConditionEntities(weatherConditionEntitiesJson));
                             subscriber.onCompleted();
+                        } else {
+                            subscriber.onNext(null);
+                            subscriber.onCompleted();
                         }
-                    });
+                    } catch (IOException e) {
+                        DiskCacheException diskCacheManager = new DiskCacheException("io failed");
+                        diskCacheManager.initCause(e);
+                        subscriber.onError(diskCacheManager);
+                    }
                 }
-                else
-                    return Observable.just(null);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-
-        return Observable.error(new DiskCacheException("disk cache not exists"));
+        });
     }
 
     public void putCityWeather(WeatherEntity weatherEntity, String cityId) {
@@ -151,28 +156,31 @@ public class DiskCacheManager implements DataSource {
     }
 
     @Override
-    public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
-
-        if (mDiskLruCache != null) {
-            try {
-                DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String((CITY_WEATHER_ENTITY_CACHE_KEY + cityId).getBytes()));
-                if (snapshot != null) {
-                    final String weatherEntityJson = snapshot.getString(0);
-                    return Observable.create(new Observable.OnSubscribe<WeatherEntity>() {
-                        @Override
-                        public void call(Subscriber<? super WeatherEntity> subscriber) {
+    public Observable<WeatherEntity> getCityWeather(final String cityId, boolean fromCache) {
+        return Observable.create(new Observable.OnSubscribe<WeatherEntity>() {
+            @Override
+            public void call(Subscriber<? super WeatherEntity> subscriber) {
+                if (mDiskLruCache == null) {
+                    subscriber.onError(new DiskCacheException("disk cache not exists"));
+                } else {
+                    try {
+                        DiskLruCache.Snapshot snapshot = mDiskLruCache.get(StringUtil.bytesToMd5String((CITY_WEATHER_ENTITY_CACHE_KEY + cityId).getBytes()));
+                        if (snapshot != null) {
+                            String weatherEntityJson = snapshot.getString(0);
                             subscriber.onNext(mJsonProcesser.jsonToWeatherEntity(weatherEntityJson));
                             subscriber.onCompleted();
                         }
-                    });
+                        else {
+                            subscriber.onNext(null);
+                            subscriber.onCompleted();
+                        }
+                    } catch (IOException e) {
+                        DiskCacheException diskCacheManager = new DiskCacheException("io failed");
+                        diskCacheManager.initCause(e);
+                        subscriber.onError(diskCacheManager);
+                    }
                 }
-                else
-                    return Observable.just(null);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-
-        return Observable.error(new DiskCacheException("disk cache not exists"));
+        });
     }
 }

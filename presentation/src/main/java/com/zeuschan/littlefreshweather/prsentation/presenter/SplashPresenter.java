@@ -74,17 +74,22 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
         mLocationClient.onDestroy();
         mUseCase.unsubscribe();
+        mView = null;
+        mUseCase = null;
+        mLocationClient = null;
+        mLocationClientOption = null;
+        if (mListCities != null) {
+            mListCities.clear();;
+            mListCities = null;
+        }
+        if (mLocationEntity != null) {
+            mLocationEntity = null;
+        }
     }
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         ++mLocationCounter;
-
-//        aMapLocation.setCountry("中国");
-//        aMapLocation.setProvince("湖北省");
-//        aMapLocation.setCity("武汉市");
-//        aMapLocation.setDistrict("武昌区");
-
 
         if (null == aMapLocation || TextUtils.isEmpty(aMapLocation.getCountry()) || TextUtils.isEmpty(aMapLocation.getProvince())
                 || TextUtils.isEmpty(aMapLocation.getCity())) {
@@ -163,35 +168,41 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
         @Override
         public void onNext(List<CityEntity> cityEntities) {
-            mListCities = cityEntities;
+            if (mListCities != null)
+                mListCities = cityEntities;
         }
     }
 
     private void locateSucceeded() {
-        if (mIsFirstStartup) {
+        if (mIsFirstStartup && mView != null) {
             mView.navigateToCitiesActivity(mCityId, true);
         } else {
-            if (mCityId.equalsIgnoreCase(mDefaultCityId)) {
+            if (mCityId.equalsIgnoreCase(mDefaultCityId) && mView != null) {
                 mView.navigateToCityWeatherActivity(mCityId);
             } else {
-                mView.navigateToCitiesActivity(mCityId, true);
+                if (mView != null) {
+                    mView.navigateToCitiesActivity(mCityId, true);
+                }
             }
         }
     }
 
     private void locateFailed() {
-        if (mIsFirstStartup)
+        if (mIsFirstStartup && mView != null) {
             mView.navigateToCitiesActivity(mDefaultCityId, false);
-        else
-            mView.navigateToCityWeatherActivity(mDefaultCityId);
+        }
+        else {
+            if (mView != null)
+                mView.navigateToCityWeatherActivity(mDefaultCityId);
+        }
     }
 
     private void gotoNext() {
-        if (!mIsNetworkAvailable) {
+        if (!mIsNetworkAvailable && mView != null) {
             mView.showError(mView.getContext().getString(R.string.network_unavailable));
             mView.navigateToCityWeatherActivity(mDefaultCityId);
         } else if (mIsDownloadFinished && mIsLocateFinished) {
-            if (!mIsDownloadSucceeded) {
+            if (!mIsDownloadSucceeded && mView != null) {
                 mView.showError(mView.getContext().getString(R.string.server_unavailable));
                 mView.navigateToCityWeatherActivity(mDefaultCityId);
             } else {
