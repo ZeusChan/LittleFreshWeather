@@ -46,18 +46,24 @@ public class CityWeatherPresenter implements Presenter {
     public void stop() {
         if (mUseCase != null) {
             mUseCase.unsubscribe();
-            mUseCase = null;
         }
         if (mBitmapUseCase != null) {
             mBitmapUseCase.unsubscribe();
-            mBitmapUseCase = null;
         }
+    }
+
+    @Override
+    public void destroy() {
+        mUseCase = null;
+        mBitmapUseCase = null;
         mView = null;
     }
 
     public void getBackgroundImage(View view, int resId) {
-        mBitmapUseCase.setResourceId(resId);
-        mBitmapUseCase.execute(new BitmapSubscriber(view, resId));
+        if (mBitmapUseCase != null) {
+            mBitmapUseCase.setResourceId(resId);
+            mBitmapUseCase.execute(new BitmapSubscriber(view, resId));
+        }
     }
 
     public void loadData() {

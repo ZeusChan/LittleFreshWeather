@@ -56,6 +56,7 @@ public class WeatherUpdateService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mUseCase.unsubscribe();
+        mUseCase = null;
     }
 
     private final class CityWeatherSubscriber extends Subscriber<WeatherEntity> {

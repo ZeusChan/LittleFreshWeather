@@ -44,6 +44,10 @@ public class CitiesPresenter implements Presenter {
     public void stop() {
         mUseCase.unsubscribe();
         mBitmapUseCase.unsubscribe();
+    }
+
+    @Override
+    public void destroy() {
         if (mCities != null) {
             mCities.clear();
             mCities = null;

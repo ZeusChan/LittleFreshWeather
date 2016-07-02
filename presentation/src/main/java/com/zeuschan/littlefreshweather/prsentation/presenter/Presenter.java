@@ -6,4 +6,5 @@ package com.zeuschan.littlefreshweather.prsentation.presenter;
 public interface Presenter {
     void start();
     void stop();
+    void destroy();
 }

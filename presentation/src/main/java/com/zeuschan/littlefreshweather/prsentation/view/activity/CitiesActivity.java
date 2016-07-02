@@ -87,6 +87,7 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
     @Override
     protected void clearMemory() {
+        mPresenter.destroy();
         mUnbinder.unbind();
         mCandidates.clear();
         mCandidates = null;

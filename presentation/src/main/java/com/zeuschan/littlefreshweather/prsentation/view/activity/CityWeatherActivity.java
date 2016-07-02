@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Process;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,8 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.internal.tls.AndroidTrustRootIndex;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener {
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
@@ -178,11 +181,12 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void onStop() {
         super.onStop();
+        mPresenter.stop();
     }
 
     @Override
     protected void clearMemory() {
-        mPresenter.stop();
+        mPresenter.destroy();
         mHandler.removeMessages(MSG_WEATHER_UPDATE);
         mHandler.removeCallbacks(rainProc);
         mHandler.removeCallbacks(snowProc);
@@ -196,10 +200,10 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mWeatherUpdateReceiver = null;
         setContentView(new FrameLayout(this));
 
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        this.startActivity(intent);
         System.exit(0);
     }
 

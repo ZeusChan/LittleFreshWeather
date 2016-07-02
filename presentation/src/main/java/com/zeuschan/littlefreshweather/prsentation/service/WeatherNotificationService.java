@@ -51,6 +51,7 @@ public class WeatherNotificationService extends Service implements WidgetPresent
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.stop();
+            mPresenter.destroy();
         }
     }
 

@@ -42,6 +42,12 @@ public class WidgetPresenter implements Presenter {
         mUseCase.unsubscribe();
     }
 
+    @Override
+    public void destroy() {
+        mUseCase = null;
+        mCallback = null;
+    }
+
     private final class CityWeatherSubscriber extends Subscriber<WeatherEntity> {
         @Override
         public void onCompleted() {
