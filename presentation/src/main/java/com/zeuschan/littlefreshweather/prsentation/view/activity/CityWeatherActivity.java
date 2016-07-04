@@ -110,6 +110,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private UIHandler mHandler = new UIHandler();
     private Unbinder mUnbinder = null;
     private boolean mBackPressed = false;
+    private int mAnimationType = 1;
 
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
@@ -282,6 +283,11 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                 navigateToCitiesActivity();
             } break;
             case R.id.ib_city_weather_toolbar_menu: {
+                mAnimationType *= 2;
+                if (mAnimationType > ANIMATION_SUNSHINE) {
+                    mAnimationType = 1;
+                }
+                startAnimation(new WeatherEntity());
             } break;
         }
     }
@@ -586,6 +592,8 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                     || weatherDesc.equalsIgnoreCase(getString(R.string.hail))) {
                 animationType |= ANIMATION_LIGHTNING;
             }
+
+            animationType = mAnimationType;
 
             if ((animationType & ANIMATION_RAIN_L) != 0) {
                 mRainIconId = R.drawable.raindrop_l;
