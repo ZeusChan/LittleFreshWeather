@@ -2,7 +2,9 @@ package com.zeuschan.littlefreshweather.prsentation.presenter;
 
 
 import android.graphics.drawable.BitmapDrawable;
+import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zeuschan.littlefreshweather.domain.usecase.GetBitmapUseCase;
 import com.zeuschan.littlefreshweather.domain.usecase.GetCityWeatherUseCase;
@@ -20,14 +22,13 @@ public class CityWeatherPresenter implements Presenter {
 
     private CityWeatherView mView;
     private GetCityWeatherUseCase mUseCase;
-    private GetBitmapUseCase mBitmapUseCase;
+    private SparseArray<GetBitmapUseCase> mBitmapUsecases = new SparseArray<>();
     private String mCityId;
 
     public void attachView(CityWeatherView view, String cityId) {
         mView = view;
         mCityId = cityId;
         mUseCase = new GetCityWeatherUseCase(mView.getContext().getApplicationContext(), mCityId, false);
-        mBitmapUseCase = new GetBitmapUseCase(mView.getContext().getApplicationContext());
     }
 
     public void setCityId(String cityId) {
@@ -47,22 +48,42 @@ public class CityWeatherPresenter implements Presenter {
         if (mUseCase != null) {
             mUseCase.unsubscribe();
         }
-        if (mBitmapUseCase != null) {
-            mBitmapUseCase.unsubscribe();
+
+        for (int index = 0; index != mBitmapUsecases.size(); ++index) {
+            GetBitmapUseCase bitmapUseCase = mBitmapUsecases.valueAt(index);
+            if (bitmapUseCase != null) {
+                bitmapUseCase.unsubscribe();
+            }
         }
     }
 
     @Override
     public void destroy() {
         mUseCase = null;
-        mBitmapUseCase = null;
+        mBitmapUsecases.clear();
+        mBitmapUsecases = null;
         mView = null;
     }
 
     public void getBackgroundImage(View view, int resId) {
-        if (mBitmapUseCase != null) {
-            mBitmapUseCase.setResourceId(resId);
-            mBitmapUseCase.execute(new BitmapSubscriber(view, resId));
+        GetBitmapUseCase bitmapUseCase = mBitmapUsecases.get(resId);
+        if (bitmapUseCase == null) {
+            mBitmapUsecases.put(resId, new GetBitmapUseCase(mView.getContext().getApplicationContext(), resId));
+        }
+        bitmapUseCase = mBitmapUsecases.get(resId);
+        if (bitmapUseCase != null) {
+            bitmapUseCase.execute(new BitmapSubscriber(view, BitmapSubscriber.VIEW_TYPE_VIEW));
+        }
+    }
+
+    public void getImageViewSrc(View view, int resId) {
+        GetBitmapUseCase bitmapUseCase = mBitmapUsecases.get(resId);
+        if (bitmapUseCase == null) {
+            mBitmapUsecases.put(resId, new GetBitmapUseCase(mView.getContext().getApplicationContext(), resId));
+        }
+        bitmapUseCase = mBitmapUsecases.get(resId);
+        if (bitmapUseCase != null) {
+            bitmapUseCase.execute(new BitmapSubscriber(view, BitmapSubscriber.VIEW_TYPE_IMAGEVIEW));
         }
     }
 
@@ -77,12 +98,15 @@ public class CityWeatherPresenter implements Presenter {
     }
 
     private final class BitmapSubscriber extends Subscriber<BitmapCacheWrapper> {
-        View view;
-        int resId;
+        public static final int VIEW_TYPE_VIEW = 0;
+        public static final int VIEW_TYPE_IMAGEVIEW = 1;
 
-        public BitmapSubscriber(View view, int resId) {
+        private View view;
+        private int viewType;
+
+        public BitmapSubscriber(View view, int viewType) {
             this.view = view;
-            this.resId = resId;
+            this.viewType = viewType;
         }
 
         @Override
@@ -98,7 +122,11 @@ public class CityWeatherPresenter implements Presenter {
         @Override
         public void onNext(BitmapCacheWrapper bitmapCacheWrapper) {
             if (view != null) {
-                view.setBackground(new BitmapDrawable(view.getContext().getResources(), bitmapCacheWrapper.getBitmap()));
+                if (viewType == VIEW_TYPE_VIEW) {
+                    view.setBackground(new BitmapDrawable(view.getContext().getResources(), bitmapCacheWrapper.getBitmap()));
+                } else if (viewType == VIEW_TYPE_IMAGEVIEW) {
+                    ((ImageView)view).setImageDrawable(new BitmapDrawable(view.getContext().getResources(), bitmapCacheWrapper.getBitmap()));
+                }
             }
         }
     }

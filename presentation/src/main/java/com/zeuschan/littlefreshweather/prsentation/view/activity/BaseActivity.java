@@ -21,6 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         clearMemory();
     }
 
+    protected abstract void initView();
+
     protected abstract void clearMemory();
 
     @Override

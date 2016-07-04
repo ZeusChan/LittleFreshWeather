@@ -15,11 +15,8 @@ public class GetBitmapUseCase extends UseCase<BitmapCacheWrapper> {
     Context mContext;
     int mResId;
 
-    public GetBitmapUseCase(Context context) {
+    public GetBitmapUseCase(Context context, int resId) {
         mContext = context;
-    }
-
-    public void setResourceId(int resId) {
         mResId = resId;
     }
 

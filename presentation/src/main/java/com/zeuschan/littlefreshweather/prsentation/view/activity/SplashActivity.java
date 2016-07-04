@@ -1,15 +1,24 @@
 package com.zeuschan.littlefreshweather.prsentation.view.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.SplashPresenter;
 import com.zeuschan.littlefreshweather.prsentation.view.SplashView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 public class SplashActivity extends BaseActivity implements SplashView {
@@ -25,12 +34,20 @@ public class SplashActivity extends BaseActivity implements SplashView {
     String mCityId;
     String mLocateCityId;
     boolean mIsLocateSucceeded = false;
+    Unbinder mUnbinder;
+
+    @BindView(R.id.iv_splash_icon) ImageView ivSplashIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        initView();
+    }
 
+    @Override
+    protected void initView() {
+        setContentView(R.layout.activity_splash);
+        mUnbinder = ButterKnife.bind(this);
         mPresenter = new SplashPresenter();
     }
 
@@ -51,16 +68,19 @@ public class SplashActivity extends BaseActivity implements SplashView {
     protected void onStop() {
         super.onStop();
         mPresenter.stop();
+        stopAnimation();
     }
 
     @Override
     protected void clearMemory() {
         mPresenter.destroy();
+        mUnbinder.unbind();
         mHandler.removeMessages(MSG_START);
         mHandler.removeMessages(MSG_NAVIGATE_CITY_WEATHER);
         mHandler.removeMessages(MSG_NAVIGATE_CITIES);
         mHandler = null;
         mPresenter = null;
+        mUnbinder = null;
         setContentView(new FrameLayout(this));
     }
 
@@ -87,6 +107,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
                 case MSG_START: {
                     mPresenter.attachView(SplashActivity.this);
                     mPresenter.start();
+                    startAnimation();
                 } break;
                 case MSG_NAVIGATE_CITY_WEATHER: {
                     Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CityWeatherActivity.class);
@@ -105,5 +126,18 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
             super.handleMessage(msg);
         }
+    }
+
+    private void startAnimation() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(ivSplashIcon, "translationY", 0, -(ivSplashIcon.getHeight() >> 1));
+        animator.setDuration(800);
+        animator.setRepeatCount(ObjectAnimator.INFINITE);
+        animator.setRepeatMode(ObjectAnimator.RESTART);
+        animator.setInterpolator(new CycleInterpolator(0.5f));
+        animator.start();
+    }
+
+    private void stopAnimation() {
+        ivSplashIcon.clearAnimation();
     }
 }

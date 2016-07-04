@@ -52,31 +52,37 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+
+        mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
+        lvCandidates.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initView() {
         setContentView(R.layout.activity_cities);
         mUnbinder = ButterKnife.bind(this);
+        lvCandidates.setOnItemClickListener(this);
+        ibToolbarBack.setOnClickListener(this);
+        btLocatedCityName.setOnClickListener(this);
+        btFailedRetry.setOnClickListener(this);
+        etCityName.addTextChangedListener(this);
+        tvToolbarTitle.setText(R.string.city_selection);
 
         Intent intent = getIntent();
         mLocateCityId = intent.getStringExtra(CITY_ID);
         mIsLocateSucceeded = intent.getBooleanExtra(LOCATE_RESULT, false);
 
-        btFailedRetry.setOnClickListener(this);
-        etCityName.addTextChangedListener(this);
-        tvToolbarTitle.setText(R.string.city_selection);
-
         mPresenter = new CitiesPresenter(this);
+        mPresenter.getBackgroundImage(llCitiesRoot, R.mipmap.city);
+        mPresenter.getImageViewSrc(ibToolbarBack, R.drawable.ic_arrow_back_white_24dp);
         mPresenter.setLocatedCityId(mLocateCityId);
-        mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
-        lvCandidates.setAdapter(mAdapter);
-        lvCandidates.setOnItemClickListener(this);
-        ibToolbarBack.setOnClickListener(this);
-        btLocatedCityName.setOnClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mPresenter.start();
-        mPresenter.getBackgroundImage(llCitiesRoot, R.mipmap.city);
     }
 
     @Override

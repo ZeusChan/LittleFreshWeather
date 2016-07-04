@@ -1,6 +1,7 @@
 package com.zeuschan.littlefreshweather.model.restapi;
 
 import android.text.TextUtils;
+import android.util.ArrayMap;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.model.datasource.DataSource;
@@ -13,7 +14,6 @@ import com.zeuschan.littlefreshweather.model.response.CitysResponse;
 import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +40,7 @@ public class ServicesManager implements DataSource {
 
     private final WeatherInfoService weatherInfoService;
 
-    private Map<String, String> mNameMap = new HashMap<>();
+    private Map<String, String> mNameMap = new android.support.v4.util.ArrayMap<>(6);
     private List<CityEntity> mCityEntities = new ArrayList<>();
     private List<WeatherConditionEntity> mWeatherCondtionEntities = new ArrayList<>();
     private List<WeatherEntity.Forecast> mForecasts = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ServicesManager implements DataSource {
 
     @Override
     public Observable<List<CityEntity>> getCityEntities() {
-        HashMap<String, String> params = new HashMap<>(2);
+        Map<String, String> params = new android.support.v4.util.ArrayMap<>(2);
         params.put("search", Constants.SEARCH_ALL_CITY);
         params.put("key", Constants.WEATHER_KEY);
 
@@ -107,7 +107,7 @@ public class ServicesManager implements DataSource {
 
     @Override
     public Observable<List<WeatherConditionEntity>> getWeatherConditionEntities() {
-        HashMap<String, String> params = new HashMap<>(2);
+        Map<String, String> params = new android.support.v4.util.ArrayMap<>(2);
         params.put("search", Constants.SEARCH_ALL_COND);
         params.put("key", Constants.WEATHER_KEY);
 
@@ -142,7 +142,7 @@ public class ServicesManager implements DataSource {
 
     @Override
     public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
-        HashMap<String, String> params = new HashMap<>(2);
+        Map<String, String> params = new android.support.v4.util.ArrayMap<>(2);
         params.put("cityid", cityId);
         params.put("key", Constants.WEATHER_KEY);
 

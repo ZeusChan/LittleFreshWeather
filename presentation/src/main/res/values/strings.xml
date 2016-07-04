@@ -5,6 +5,7 @@
     <string name="retry">重试</string>
     <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
     <string name="server_unavailable">天气服务不可用，请稍后再试</string>
+    <string name="press_to_quit">再按一次，退出清新小天气</string>
     <string name="centigrade">℃</string>
     <string name="forecast_title">天气预报</string>
     <string name="current_weather_info">实时气象信息</string>
@@ -28,6 +29,7 @@
     <string name="permission_send_update_desc">发送更新的天气数据，用于刷新天气小工具的显示</string>
     <string name="permission_recv_update_label">接收更新数据</string>
     <string name="permission_recv_update_desc">接收更新的天气数据，用于刷新天气小工具的显示</string>
+    <string name="overcast">阴</string>
     <string name="shower_rain">阵雨</string>
     <string name="heavy_shower_rain">强阵雨</string>
     <string name="thunder_shower">雷阵雨</string>
@@ -43,4 +45,24 @@
     <string name="heavy_storm">大暴雨</string>
     <string name="severe_storm">特大暴雨</string>
     <string name="freezing_rain">冻雨</string>
+    <string name="light_snow">小雪</string>
+    <string name="moderate_snow">中雪</string>
+    <string name="heavy_snow">大雪</string>
+    <string name="snow_storm">暴雪</string>
+    <string name="sleet">雨夹雪</string>
+    <string name="rain_snow">雨雪天气</string>
+    <string name="shower_snow">阵雨夹雪</string>
+    <string name="snow_flurry">阵雪</string>
+    <string name="cloudy">多云</string>
+    <string name="few_cloud">少云</string>
+    <string name="partly_cloudy">晴间多云</string>
+    <string name="mist">薄雾</string>
+    <string name="foggy">雾</string>
+    <string name="sunny">晴</string>
+    <string name="haze">霾</string>
+    <string name="sand">扬沙</string>
+    <string name="dust">浮尘</string>
+    <string name="volcanic_ash">火山灰</string>
+    <string name="dust_storm">沙尘暴</string>
+    <string name="sand_storm">强沙尘暴</string>
 </resources>

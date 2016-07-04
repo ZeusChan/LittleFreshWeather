@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="@dimen/material_16dp"
+        android:layout_margin="@dimen/material_8dp"
         android:gravity="center"
         android:text="@string/app_name"
         android:textSize="@dimen/material_12sp"/>
