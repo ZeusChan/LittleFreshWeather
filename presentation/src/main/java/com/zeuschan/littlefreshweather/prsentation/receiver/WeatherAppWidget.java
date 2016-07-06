@@ -55,8 +55,10 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.stop();
+            mPresenter.destroy();
+        }
     }
 
     @Override

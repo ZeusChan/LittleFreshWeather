@@ -61,14 +61,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name1"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -76,7 +83,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -85,18 +99,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper1"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper1"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -114,14 +121,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name2"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -129,7 +143,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -138,18 +159,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper2"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper2"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -167,14 +181,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name3"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -182,7 +203,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -191,18 +219,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper3"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper3"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -220,14 +241,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name4"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -235,7 +263,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -244,18 +279,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper4"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper4"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -273,14 +301,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name5"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -288,7 +323,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -297,23 +339,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper5"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper5"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
@@ -326,14 +361,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp">
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_icon6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_8dp"/>
 
                 <TextView
                     android:id="@+id/tv_city_weather_life_index_name6"
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
 
                 <TextView
@@ -341,7 +383,14 @@
                     android:layout_weight="1"
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorLightGray"/>
+
+                <ImageView
+                    android:id="@+id/iv_city_weather_life_index_arrow6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -350,18 +399,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_city_weather_life_index_upper6"
-                android:layout_alignLeft="@id/ll_city_weather_life_index_upper6"
+                android:layout_marginLeft="@dimen/material_32dp"
+                android:layout_marginTop="@dimen/material_8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorLightGray"
-                android:paddingTop="@dimen/material_8dp"
-                android:paddingBottom="@dimen/material_8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/material_1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorSemiTransLightGray"/>
-
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </LinearLayout>

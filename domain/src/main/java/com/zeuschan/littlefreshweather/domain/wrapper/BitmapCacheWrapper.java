@@ -32,10 +32,13 @@ public class BitmapCacheWrapper implements MemoryCacheItem {
     @Override
     public void release() {
         mBitmap.recycle();
+        mContext = null;
     }
 
     @Override
     public void inflate() {
-        mBitmap = BitmapFactory.decodeResource(mContext.getResources(), mResId);
+        if (mContext != null) {
+            mBitmap = BitmapFactory.decodeResource(mContext.getResources(), mResId);
+        }
     }
 }

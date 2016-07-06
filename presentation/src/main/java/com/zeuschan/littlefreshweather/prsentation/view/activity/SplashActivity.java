@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public static final int MSG_NAVIGATE_CITY_WEATHER = 1;
     public static final int MSG_NAVIGATE_CITIES = 2;
 
-    private static final int FIRE_DELAY = 200;
+    private static final int FIRE_DELAY = 1000;
 
     SplashPresenter mPresenter;
     UIHandler mHandler = new UIHandler();
@@ -54,14 +54,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Message message = mHandler.obtainMessage(MSG_START);
-                message.sendToTarget();
-            }
-        }, FIRE_DELAY);
+        mHandler.postDelayed(delayStartProc, FIRE_DELAY);
     }
 
     @Override
@@ -78,6 +71,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
         mHandler.removeMessages(MSG_START);
         mHandler.removeMessages(MSG_NAVIGATE_CITY_WEATHER);
         mHandler.removeMessages(MSG_NAVIGATE_CITIES);
+        mHandler.removeCallbacks(delayStartProc);
         mHandler = null;
         mPresenter = null;
         mUnbinder = null;
@@ -92,8 +86,9 @@ public class SplashActivity extends BaseActivity implements SplashView {
     }
 
     @Override
-    public void navigateToCitiesActivity(String cityId, boolean locateSucceeded) {
-        mLocateCityId = cityId;
+    public void navigateToCitiesActivity(String locCityId, boolean locateSucceeded, String cityId) {
+        mCityId = cityId;
+        mLocateCityId = locCityId;
         mIsLocateSucceeded = locateSucceeded;
         Message message = mHandler.obtainMessage(MSG_NAVIGATE_CITIES);
         message.sendToTarget();
@@ -105,9 +100,9 @@ public class SplashActivity extends BaseActivity implements SplashView {
             int what = msg.what;
             switch (what) {
                 case MSG_START: {
+                    startAnimation();
                     mPresenter.attachView(SplashActivity.this);
                     mPresenter.start();
-                    startAnimation();
                 } break;
                 case MSG_NAVIGATE_CITY_WEATHER: {
                     Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CityWeatherActivity.class);
@@ -117,7 +112,8 @@ public class SplashActivity extends BaseActivity implements SplashView {
                 } break;
                 case MSG_NAVIGATE_CITIES: {
                     Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CitiesActivity.class);
-                    intent.putExtra(CitiesActivity.CITY_ID, mLocateCityId);
+                    intent.putExtra(CitiesActivity.LOC_CITY_ID, mLocateCityId);
+                    intent.putExtra(CitiesActivity.CITY_ID, mCityId);
                     intent.putExtra(CitiesActivity.LOCATE_RESULT, mIsLocateSucceeded);
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
@@ -127,6 +123,14 @@ public class SplashActivity extends BaseActivity implements SplashView {
             super.handleMessage(msg);
         }
     }
+
+    private Runnable delayStartProc = new Runnable() {
+        @Override
+        public void run() {
+            Message message = mHandler.obtainMessage(MSG_START);
+            message.sendToTarget();
+        }
+    };
 
     private void startAnimation() {
         ObjectAnimator animator = ObjectAnimator.ofFloat(ivSplashIcon, "translationY", 0, -(ivSplashIcon.getHeight() >> 1));

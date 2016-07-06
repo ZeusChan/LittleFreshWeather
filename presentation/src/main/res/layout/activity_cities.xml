@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorDarkBlue">
+    android:background="@color/colorDarkGreen">
 
     <include layout="@layout/rl_cities_toolbar"/>
 
@@ -44,31 +44,48 @@
             android:layout_marginLeft="@dimen/material_2dp"
             android:background="@color/colorSemiTransLightGray"/>
 
-        <Button
-            android:id="@+id/bt_cities_located"
+        <LinearLayout
+            android:id="@+id/ll_cities_located"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_16dp"
-            android:layout_marginBottom="@dimen/material_0dp"
-            android:layout_marginLeft="@dimen/material_16dp"
-            android:layout_marginRight="@dimen/material_16dp"
             android:layout_below="@id/v_cities_divider"
+            android:layout_marginTop="@dimen/material_16dp"
             android:paddingLeft="@dimen/material_16dp"
             android:paddingRight="@dimen/material_16dp"
-            android:paddingTop="@dimen/material_16dp"
-            android:paddingBottom="@dimen/material_16dp"
-            android:gravity="center_vertical|left"
-            android:textSize="@dimen/material_16sp"
-            android:textColor="@color/colorLightGray"
-            android:drawableLeft="@drawable/ic_location_on_white_24dp"
-            android:background="@drawable/toolbar_button_background_selector"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/bt_cities_located"
+                android:layout_weight="1"
+                android:layout_width="@dimen/material_0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/material_8dp"
+                android:gravity="center_vertical|left"
+                android:textSize="@dimen/material_16sp"
+                android:textColor="@color/colorLightGray"
+                android:drawableLeft="@drawable/ic_location_on_white_24dp"
+                android:background="@drawable/toolbar_button_background_selector" />
+
+            <Button
+                android:id="@+id/bt_cities_cur"
+                android:layout_weight="1"
+                android:layout_width="@dimen/material_0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/material_8dp"
+                android:gravity="center_vertical|left"
+                android:textSize="@dimen/material_16sp"
+                android:textColor="@color/colorLightGray"
+                android:drawableLeft="@drawable/ic_location_city_white_24dp"
+                android:background="@drawable/toolbar_button_background_selector" />
+
+        </LinearLayout>
 
         <ListView
             android:id="@+id/lv_cities_candidates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bt_cities_located"
+            android:layout_below="@id/ll_cities_located"
             android:layout_marginTop="@dimen/material_16dp"
             android:layout_marginBottom="@dimen/material_16dp"
             android:layout_marginLeft="@dimen/material_16dp"

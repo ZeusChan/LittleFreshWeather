@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 /**
  * Created by chenxiong on 2016/6/12.
  */
-public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VIEW_MAIN = 0;
     public static final int VIEW_FORECAST = 1;
     public static final int VIEW_CURRENT_WEATHER_INFO = 2;
@@ -36,14 +37,25 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private WeatherEntity mWeatherEntity = null;
     private Context mContext = null;
     private CityWeatherPresenter mPresenter = null;
+    private ViewGroup mParent = null;
+    private View mMainView = null;
+    private View mForecastView = null;
+    private View mCurWeatherView = null;
+    private View mLifeIndexView = null;
 
     private List<CurWeatherInfoWrapper> mListWeatherInfo = new ArrayList<>();
     private List<LifeIndexWrapper> mListLifeIndex = new ArrayList<>();
     private List<WeatherEntity.Forecast> mListForecasts = new ArrayList<>();
 
-    public CityWeatherAdapter(Context mContext, CityWeatherPresenter presenter) {
+    public CityWeatherAdapter(Context mContext, CityWeatherPresenter presenter, ViewGroup parent) {
         this.mContext = mContext;
         mPresenter = presenter;
+        mParent = parent;
+
+        mMainView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_main, parent, false);
+        mForecastView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_forecast, parent, false);
+        mCurWeatherView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_cur_weather_info, parent, false);
+        mLifeIndexView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_life_index, parent, false);
     }
 
     public void setWeatherEntity(WeatherEntity mWeatherEntity) {
@@ -91,14 +103,16 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (VIEW_MAIN == viewType) {
-            return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_main, parent, false));
-        } else if (VIEW_FORECAST == viewType) {
-            return new ForecastViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_forecast, parent, false));
-        } else if (VIEW_CURRENT_WEATHER_INFO == viewType) {
-            return new CurWeatherInfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_cur_weather_info, parent, false));
+        if (VIEW_MAIN == viewType && mMainView != null) {
+            return new MainViewHolder(mMainView);
+        } else if (VIEW_FORECAST == viewType && mForecastView != null) {
+            return new ForecastViewHolder(mForecastView);
+        } else if (VIEW_CURRENT_WEATHER_INFO == viewType && mCurWeatherView != null) {
+            return new CurWeatherInfoViewHolder(mCurWeatherView);
+        } else if (mLifeIndexView != null) {
+            return new LifeIndexViewHolder(mLifeIndexView, mPresenter);
         } else {
-            return new LifeIndexViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_life_index, parent, false));
+            return null;
         }
     }
 
@@ -192,22 +206,27 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ++index;
                 switch (index) {
                     case 1: {
+                        mPresenter.getImageViewSrc(curWeatherInfoViewHolder.ivIcon1, R.drawable.ic_winddirect);
                         curWeatherInfoViewHolder.tvName1.setText(info.getWeatherInfoName());
                         curWeatherInfoViewHolder.tvValue1.setText(info.getWeatherInfoValue());
                     } break;
                     case 2: {
+                        mPresenter.getImageViewSrc(curWeatherInfoViewHolder.ivIcon2, R.drawable.ic_windspeed);
                         curWeatherInfoViewHolder.tvName2.setText(info.getWeatherInfoName());
                         curWeatherInfoViewHolder.tvValue2.setText(info.getWeatherInfoValue());
                     } break;
                     case 3: {
+                        mPresenter.getImageViewSrc(curWeatherInfoViewHolder.ivIcon3, R.drawable.ic_sun_rise);
                         curWeatherInfoViewHolder.tvName3.setText(info.getWeatherInfoName());
                         curWeatherInfoViewHolder.tvValue3.setText(info.getWeatherInfoValue());
                     } break;
                     case 4: {
+                        mPresenter.getImageViewSrc(curWeatherInfoViewHolder.ivIcon4, R.drawable.ic_sunset);
                         curWeatherInfoViewHolder.tvName4.setText(info.getWeatherInfoName());
                         curWeatherInfoViewHolder.tvValue4.setText(info.getWeatherInfoValue());
                     } break;
                     case 5: {
+                        mPresenter.getImageViewSrc(curWeatherInfoViewHolder.ivIcon5, R.drawable.ic_sun_rise);
                         curWeatherInfoViewHolder.tvName5.setText(info.getWeatherInfoName());
                         curWeatherInfoViewHolder.tvValue5.setText(info.getWeatherInfoValue());
                     } break;
@@ -223,38 +242,69 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ++index;
                 switch (index) {
                     case 1: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon1, R.drawable.ic_life_info_chuanyi);
                         lifeIndexViewHolder.tvName1.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief1.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc1.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow1, R.drawable.arrow_close);
                     } break;
                     case 2: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon2, R.drawable.ic_life_info_ziwaixian);
                         lifeIndexViewHolder.tvName2.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief2.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc2.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow2, R.drawable.arrow_close);
                     } break;
                     case 3: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon3, R.drawable.ic_life_info_xiche);
                         lifeIndexViewHolder.tvName3.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief3.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc3.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow3, R.drawable.arrow_close);
                     } break;
                     case 4: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon4, R.drawable.ic_life_info_diaoyu);
                         lifeIndexViewHolder.tvName4.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief4.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc4.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow4, R.drawable.arrow_close);
                     } break;
                     case 5: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon5, R.drawable.ic_life_info_ganmao);
                         lifeIndexViewHolder.tvName5.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief5.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc5.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow5, R.drawable.arrow_close);
                     } break;
                     case 6: {
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivIcon6, R.drawable.ic_life_info_yundong);
                         lifeIndexViewHolder.tvName6.setText(lifeIndex.getLifeIndexName());
                         lifeIndexViewHolder.tvBrief6.setText(lifeIndex.getLifeIndexBrief());
                         lifeIndexViewHolder.tvDesc6.setText(lifeIndex.getLifeIndexDesc());
+                        mPresenter.getImageViewSrc(lifeIndexViewHolder.ivArrow6, R.drawable.arrow_close);
                     } break;
                 }
             }
         }
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mPresenter = null;
+        mParent = null;
+        mMainView = null;
+        mForecastView = null;
+        mCurWeatherView = null;
+        mLifeIndexView = null;
+        mContext = null;
+        mWeatherEntity = null;
+        mListForecasts.clear();
+        mListForecasts = null;
+        mListLifeIndex.clear();
+        mListLifeIndex = null;
+        mListWeatherInfo.clear();
+        mListWeatherInfo = null;
     }
 
     private int getWeatherIconId(final String desc) {
@@ -320,51 +370,186 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return R.drawable.iclockweather_w2;
     }
 
-    public static class LifeIndexViewHolder extends RecyclerView.ViewHolder {
+    public static class LifeIndexViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
         //@BindView(R.id.lv_city_weather_life_index) ListView lvLifeIndex;
+
+        @BindView(R.id.iv_city_weather_life_index_icon1) ImageView ivIcon1;
         @BindView(R.id.tv_city_weather_life_index_name1) TextView tvName1;
         @BindView(R.id.tv_city_weather_life_index_brief1) TextView tvBrief1;
+        @BindView(R.id.iv_city_weather_life_index_arrow1) ImageView ivArrow1;
+        @BindView(R.id.ll_city_weather_life_index_upper1) LinearLayout llUpper1;
         @BindView(R.id.tv_city_weather_life_index_desc1) TextView tvDesc1;
+
+        @BindView(R.id.iv_city_weather_life_index_icon2) ImageView ivIcon2;
         @BindView(R.id.tv_city_weather_life_index_name2) TextView tvName2;
         @BindView(R.id.tv_city_weather_life_index_brief2) TextView tvBrief2;
+        @BindView(R.id.iv_city_weather_life_index_arrow2) ImageView ivArrow2;
+        @BindView(R.id.ll_city_weather_life_index_upper2) LinearLayout llUpper2;
         @BindView(R.id.tv_city_weather_life_index_desc2) TextView tvDesc2;
+
+        @BindView(R.id.iv_city_weather_life_index_icon3) ImageView ivIcon3;
         @BindView(R.id.tv_city_weather_life_index_name3) TextView tvName3;
         @BindView(R.id.tv_city_weather_life_index_brief3) TextView tvBrief3;
+        @BindView(R.id.iv_city_weather_life_index_arrow3) ImageView ivArrow3;
+        @BindView(R.id.ll_city_weather_life_index_upper3) LinearLayout llUpper3;
         @BindView(R.id.tv_city_weather_life_index_desc3) TextView tvDesc3;
+
+        @BindView(R.id.iv_city_weather_life_index_icon4) ImageView ivIcon4;
         @BindView(R.id.tv_city_weather_life_index_name4) TextView tvName4;
         @BindView(R.id.tv_city_weather_life_index_brief4) TextView tvBrief4;
+        @BindView(R.id.iv_city_weather_life_index_arrow4) ImageView ivArrow4;
+        @BindView(R.id.ll_city_weather_life_index_upper4) LinearLayout llUpper4;
         @BindView(R.id.tv_city_weather_life_index_desc4) TextView tvDesc4;
+
+        @BindView(R.id.iv_city_weather_life_index_icon5) ImageView ivIcon5;
         @BindView(R.id.tv_city_weather_life_index_name5) TextView tvName5;
         @BindView(R.id.tv_city_weather_life_index_brief5) TextView tvBrief5;
+        @BindView(R.id.iv_city_weather_life_index_arrow5) ImageView ivArrow5;
+        @BindView(R.id.ll_city_weather_life_index_upper5) LinearLayout llUpper5;
         @BindView(R.id.tv_city_weather_life_index_desc5) TextView tvDesc5;
+
+        @BindView(R.id.iv_city_weather_life_index_icon6) ImageView ivIcon6;
         @BindView(R.id.tv_city_weather_life_index_name6) TextView tvName6;
         @BindView(R.id.tv_city_weather_life_index_brief6) TextView tvBrief6;
+        @BindView(R.id.iv_city_weather_life_index_arrow6) ImageView ivArrow6;
+        @BindView(R.id.ll_city_weather_life_index_upper6) LinearLayout llUpper6;
         @BindView(R.id.tv_city_weather_life_index_desc6) TextView tvDesc6;
 
-        public LifeIndexViewHolder(View itemView) {
+        public LifeIndexViewHolder(View itemView, CityWeatherPresenter presenter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            llUpper1.setOnClickListener(this);
+            llUpper1.setTag(presenter);
+            llUpper2.setOnClickListener(this);
+            llUpper2.setTag(presenter);
+            llUpper3.setOnClickListener(this);
+            llUpper3.setTag(presenter);
+            llUpper4.setOnClickListener(this);
+            llUpper4.setTag(presenter);
+            llUpper5.setOnClickListener(this);
+            llUpper5.setTag(presenter);
+            llUpper6.setOnClickListener(this);
+            llUpper6.setTag(presenter);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (llUpper1.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper1.getTag();
+                if (tvDesc1.getVisibility() == View.VISIBLE) {
+                    tvDesc1.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow1, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc1.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow1, R.drawable.arrow_open);
+                    }
+                }
+            }
+            if (llUpper2.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper2.getTag();
+                if (tvDesc2.getVisibility() == View.VISIBLE) {
+                    tvDesc2.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow2, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc2.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow2, R.drawable.arrow_open);
+                    }
+                }
+            }
+            if (llUpper3.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper3.getTag();
+                if (tvDesc3.getVisibility() == View.VISIBLE) {
+                    tvDesc3.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow3, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc3.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow3, R.drawable.arrow_open);
+                    }
+                }
+            }
+            if (llUpper4.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper4.getTag();
+                if (tvDesc4.getVisibility() == View.VISIBLE) {
+                    tvDesc4.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow4, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc4.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow4, R.drawable.arrow_open);
+                    }
+                }
+            }
+            if (llUpper5.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper5.getTag();
+                if (tvDesc5.getVisibility() == View.VISIBLE) {
+                    tvDesc5.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow5, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc5.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow5, R.drawable.arrow_open);
+                    }
+                }
+            }
+            if (llUpper6.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper6.getTag();
+                if (tvDesc6.getVisibility() == View.VISIBLE) {
+                    tvDesc6.setVisibility(View.GONE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow6, R.drawable.arrow_close);
+                    }
+                } else {
+                    tvDesc6.setVisibility(View.VISIBLE);
+                    if (presenter != null) {
+                        presenter.getImageViewSrc(ivArrow6, R.drawable.arrow_open);
+                    }
+                }
+            }
         }
     }
 
     public static class CurWeatherInfoViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
         //@BindView(R.id.gv_city_weather_cur_weather_info) GridView gvCurWeatherInfo;
+
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_icon1) ImageView ivIcon1;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_name1) TextView tvName1;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_value1) TextView tvValue1;
+
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_icon2) ImageView ivIcon2;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_name2) TextView tvName2;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_value2) TextView tvValue2;
+
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_icon3) ImageView ivIcon3;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_name3) TextView tvName3;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_value3) TextView tvValue3;
+
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_icon4) ImageView ivIcon4;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_name4) TextView tvName4;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_value4) TextView tvValue4;
+
+        @BindView(R.id.tv_city_weather_cur_weather_info_item_icon5) ImageView ivIcon5;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_name5) TextView tvName5;
         @BindView(R.id.tv_city_weather_cur_weather_info_item_value5) TextView tvValue5;
 
         public CurWeatherInfoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
     }
 

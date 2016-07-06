@@ -6,10 +6,14 @@
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorSemiTransparent">#5e000000</color>
+    <color name="colorSemiTransDark">#ae000000</color>
     <color name="colorSemiTransLightGray">#3ec1c1c1</color>
 
     <color name="colorLightGray">#f0f0f0</color>
     <color name="colorDarkGray">#c1c1c1</color>
-    <color name="colorLightGreen">#1daa16</color>
+    <color name="colorLightRed">#ff4081</color>
+    <color name="colorLigthBlue">#3f51b5</color>
+    <color name="colorLightGreen">#4caf50</color>
     <color name="colorDarkBlue">#3b6eb0</color>
+    <color name="colorDarkGreen">#114f62</color>
 </resources>

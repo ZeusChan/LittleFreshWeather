@@ -45,6 +45,10 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
     public void attachView(SplashView view) {
         mView = view;
+    }
+
+    @Override
+    public void start() {
         mDefaultCityId = FileUtil.getStringFromPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
         mIsFirstStartup = FileUtil.getBooleanFromPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_FIRST_STARTUP, true);
         FileUtil.putBooleanToPreferences(mView.getContext().getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_FIRST_STARTUP, false);
@@ -53,10 +57,7 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
             mUseCase = new GetCitiesUseCase(mView.getContext().getApplicationContext());
             initLocation();
         }
-    }
 
-    @Override
-    public void start() {
         if (!mIsNetworkAvailable) {
             gotoNext();
             return;
@@ -172,20 +173,19 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
         @Override
         public void onNext(List<CityEntity> cityEntities) {
-            if (mListCities != null)
                 mListCities = cityEntities;
         }
     }
 
     private void locateSucceeded() {
         if (mIsFirstStartup && mView != null) {
-            mView.navigateToCitiesActivity(mCityId, true);
+            mView.navigateToCitiesActivity(mCityId, true, mDefaultCityId);
         } else {
             if (mCityId.equalsIgnoreCase(mDefaultCityId) && mView != null) {
                 mView.navigateToCityWeatherActivity(mCityId);
             } else {
                 if (mView != null) {
-                    mView.navigateToCitiesActivity(mCityId, true);
+                    mView.navigateToCitiesActivity(mCityId, true, mDefaultCityId);
                 }
             }
         }
@@ -193,7 +193,7 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
     private void locateFailed() {
         if (mIsFirstStartup && mView != null) {
-            mView.navigateToCitiesActivity(mDefaultCityId, false);
+            mView.navigateToCitiesActivity(mDefaultCityId, false, mDefaultCityId);
         }
         else {
             if (mView != null)

@@ -31,6 +31,7 @@ public class CitiesPresenter implements Presenter {
     private List<CityEntity> mCities;
     private List<CityEntity> mCandidates = new ArrayList<>();
     private String mLocatedCityId;
+    private String mCurCityId;
 
     public CitiesPresenter(CitiesView view) {
         mView = view;
@@ -97,8 +98,9 @@ public class CitiesPresenter implements Presenter {
         mUseCase.execute(new CitiesSubscriber());
     }
 
-    public void setLocatedCityId(String locatedId) {
+    public void setLocatedCityId(String locatedId, String curCityId) {
         mLocatedCityId = locatedId;
+        mCurCityId = curCityId;
     }
 
     public void getCandidates(String keyWord) {
@@ -152,8 +154,9 @@ public class CitiesPresenter implements Presenter {
             mView.hideLoading();
             mView.showCityNameEdit();
             String cityName = getCityName(mLocatedCityId);
-            if (!TextUtils.isEmpty(cityName)) {
-                mView.setLocatedCityName(mView.getContext().getString(R.string.located_city) + cityName);
+            String curCityName = getCityName(mCurCityId);
+            if (!TextUtils.isEmpty(cityName) && !TextUtils.isEmpty(curCityName)) {
+                mView.setLocatedCityName(mView.getContext().getString(R.string.located_city) + cityName, mView.getContext().getString(R.string.cur_city) + curCityName);
                 mView.showLocatedCityName();
             } else {
                 mView.hideLocatedCityName();
@@ -176,7 +179,7 @@ public class CitiesPresenter implements Presenter {
             if (cityId != null) {
                 for (CityEntity entity : mCities) {
                     if (cityId.equalsIgnoreCase(entity.getCityId())) {
-                        return entity.getProvince() + " - " + entity.getCity();
+                        return entity.getCity();
                     }
                 }
             }

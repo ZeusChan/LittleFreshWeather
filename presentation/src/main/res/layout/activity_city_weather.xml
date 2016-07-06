@@ -18,13 +18,18 @@
         android:layout_height="match_parent"
         android:layout_below="@id/rl_city_weather_toolbar">
 
-        <android.support.v7.widget.RecyclerView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/rv_city_weather"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_city_weather"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            app:spanCount="4"/>
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <include layout="@layout/loading_progress_view"/>
         <include layout="@layout/failed_retry_view"/>

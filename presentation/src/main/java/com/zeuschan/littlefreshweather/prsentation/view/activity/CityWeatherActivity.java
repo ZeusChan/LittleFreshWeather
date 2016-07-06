@@ -6,19 +6,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener {
+public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
     public static final String CITY_ID = "city_id";
     public static final String WEATHER_UPDATE_ACTION = "com.zeuschan.littlefreshweather.prsentation.WEATHER_UPDATE";
@@ -59,7 +64,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private int mSpecialWeatherNumRain = 0;
     private int mSpecialWeatherNumLimitRain;
     private int mSpecialWeatherSpeedLimitRain;
-
 
     private static final int SNOW_GEN_INTERVAL = 150;
     private static final int SNOW_SPEED_H = 4500;
@@ -110,11 +114,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private UIHandler mHandler = new UIHandler();
     private Unbinder mUnbinder = null;
     private boolean mBackPressed = false;
-    private int mAnimationType = 1;
+    private int mAnimationType = 0;
+    private PopupWindow mPopupMenu;
 
     @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
     @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
-    @BindView(R.id.rv_city_weather) RecyclerView rvCityWeather;
+    @BindView(R.id.srl_city_weather) SwipeRefreshLayout srlCityWeather;
+    @BindView(android.R.id.list) RecyclerView rvCityWeather;
     @BindView(R.id.bt_failed_retry) Button btFailedRetry;
     @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
     @BindView(R.id.ib_city_weather_toolbar_cities) ImageButton ibToolbarCities;
@@ -137,6 +143,8 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         btFailedRetry.setOnClickListener(this);
         ibToolbarCities.setOnClickListener(this);
         ibToolbarMenu.setOnClickListener(this);
+        srlCityWeather.setOnRefreshListener(this);
+        srlCityWeather.setColorSchemeResources(R.color.colorLigthBlue, R.color.colorLightGreen, R.color.colorLightRed);
 
         Intent intent = getIntent();
         String cityId = intent.getStringExtra(CITY_ID);
@@ -144,32 +152,45 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
         mPresenter = new CityWeatherPresenter();
         mPresenter.attachView(this, cityId);
-        mPresenter.getBackgroundImage(rlBackgroundView, R.mipmap.night);
-        mPresenter.getImageViewSrc(ibToolbarCities, R.drawable.ic_edit_location_white_24dp);
-        mPresenter.getImageViewSrc(ibToolbarMenu, R.drawable.ic_menu_white_24dp);
 
+        rvCityWeather.setHasFixedSize(true);
         rvCityWeather.setLayoutManager(new LinearLayoutManager(this));
-        mCityWeatherAdapter = new CityWeatherAdapter(this, mPresenter);
+        mCityWeatherAdapter = new CityWeatherAdapter(this, mPresenter, rvCityWeather);
         rvCityWeather.setAdapter(mCityWeatherAdapter);
+        rvCityWeather.setItemViewCacheSize(4);
+
+        View popMenuView = getLayoutInflater().inflate(R.layout.ll_city_weather_pop_menu, null);
+        if (popMenuView != null) {
+            mPopupMenu = new PopupWindow(popMenuView, DensityUtil.dp2px(getApplicationContext(), 120), ViewGroup.LayoutParams.WRAP_CONTENT);
+            mPopupMenu.setBackgroundDrawable(new ColorDrawable(0));
+            mPopupMenu.setFocusable(true);
+            View refreshView = popMenuView.findViewById(R.id.ll_pop_menu_item_refresh);
+            refreshView.setOnClickListener(this);
+            View settingsView = popMenuView.findViewById(R.id.ll_pop_menu_item_settings);
+            settingsView.setOnClickListener(this);
+        }
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
+        mPresenter.stop();
         String cityId = intent.getStringExtra(CITY_ID);
         FileUtil.putStringToPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, cityId);
         mPresenter.setCityId(cityId);
-        mPresenter.stop();
-        mPresenter.start();
 
-        startServices();
+        updateData();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mPresenter.start();
+
+        mPresenter.getBackgroundImage(rlBackgroundView, R.mipmap.night);
+        mPresenter.getImageViewSrc(ibToolbarCities, R.drawable.ic_edit_location_white_24dp);
+        mPresenter.getImageViewSrc(ibToolbarMenu, R.drawable.ic_menu_white_24dp);
     }
 
     @Override
@@ -201,6 +222,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     protected void clearMemory() {
+        rvCityWeather.setAdapter(null);
         mPresenter.destroy();
         mHandler.removeMessages(MSG_WEATHER_UPDATE);
         mHandler.removeCallbacks(rainProc);
@@ -211,10 +233,10 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mHandler.removeCallbacks(quitProc);
         mHandler = null;
         mPresenter = null;
-        mUnbinder.unbind();
         mCityWeatherAdapter = null;
         mLocalBroadcastManager = null;
         mWeatherUpdateReceiver = null;
+        mUnbinder.unbind();
         setContentView(new FrameLayout(this));
 
         System.exit(0);
@@ -258,18 +280,23 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     public void showContent() {
-        rvCityWeather.setVisibility(View.VISIBLE);
+        srlCityWeather.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideContent() {
-        rvCityWeather.setVisibility(View.GONE);
+        srlCityWeather.setVisibility(View.GONE);
     }
 
     @Override
     public void navigateToCitiesActivity() {
         Intent intent = new Intent(this.getApplicationContext(), CitiesActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        updateData();
     }
 
     @Override
@@ -283,11 +310,23 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                 navigateToCitiesActivity();
             } break;
             case R.id.ib_city_weather_toolbar_menu: {
-                mAnimationType *= 2;
-                if (mAnimationType > ANIMATION_SUNSHINE) {
+                mPopupMenu.showAsDropDown(v);
+            } break;
+            case R.id.ll_pop_menu_item_refresh: {
+                updateData();
+                mPopupMenu.dismiss();
+            } break;
+            case R.id.ll_pop_menu_item_settings: {
+                if (mAnimationType == 0) {
                     mAnimationType = 1;
+                } else {
+                    mAnimationType *= 2;
+                }
+                if (mAnimationType > ANIMATION_SUNSHINE) {
+                    mAnimationType = 0;
                 }
                 startAnimation(new WeatherEntity());
+                mPopupMenu.dismiss();
             } break;
         }
     }
@@ -311,6 +350,10 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         public static final String WEATHER_ENTITY = "weather_entity";
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (srlCityWeather.isRefreshing()) {
+                srlCityWeather.setRefreshing(false);
+            }
+
             Message message = mHandler.obtainMessage(MSG_WEATHER_UPDATE);
             Bundle bundle = new Bundle();
             bundle.putParcelable(WEATHER_ENTITY, intent.getParcelableExtra(WEATHER_ENTITY));
@@ -319,9 +362,14 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         }
     }
 
-    private void startServices() {
+    private void updateData() {
+        srlCityWeather.setRefreshing(true);
         Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
         startService(intent1);
+    }
+
+    private void startServices() {
+        updateData();
 
         Intent intent2 = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
         startService(intent2);
@@ -487,7 +535,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                 mHandler.postDelayed(lightningProc, LIGHTNING_GEN_INTERVAL + mRandom.nextInt(LIGHTNING_GEN_INTERVAL));
             } else {
                 mSpecialWeatherNumLightning = 0;
-                mHandler.postDelayed(lightningProc, LIGHTNING_GEN_INTERVAL << 1 + mRandom.nextInt(LIGHTNING_GEN_INTERVAL));
+                mHandler.postDelayed(lightningProc, LIGHTNING_GEN_INTERVAL + mRandom.nextInt(LIGHTNING_GEN_INTERVAL));
             }
         }
     };
@@ -593,7 +641,8 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                 animationType |= ANIMATION_LIGHTNING;
             }
 
-            animationType = mAnimationType;
+            if (animationType == 0)
+                animationType = mAnimationType;
 
             if ((animationType & ANIMATION_RAIN_L) != 0) {
                 mRainIconId = R.drawable.raindrop_l;
