@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -144,7 +143,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         ibToolbarCities.setOnClickListener(this);
         ibToolbarMenu.setOnClickListener(this);
         srlCityWeather.setOnRefreshListener(this);
-        srlCityWeather.setColorSchemeResources(R.color.colorLigthBlue, R.color.colorLightGreen, R.color.colorLightRed);
+        srlCityWeather.setColorSchemeResources(R.color.colorLightGreen, R.color.colorLigthBlue, R.color.colorLightRed);
 
         Intent intent = getIntent();
         String cityId = intent.getStringExtra(CITY_ID);
@@ -152,6 +151,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
         mPresenter = new CityWeatherPresenter();
         mPresenter.attachView(this, cityId);
+        mPresenter.start();
 
         rvCityWeather.setHasFixedSize(true);
         rvCityWeather.setLayoutManager(new LinearLayoutManager(this));
@@ -179,15 +179,12 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         String cityId = intent.getStringExtra(CITY_ID);
         FileUtil.putStringToPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, cityId);
         mPresenter.setCityId(cityId);
-
-        updateData();
+        mPresenter.start();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.start();
-
         mPresenter.getBackgroundImage(rlBackgroundView, R.mipmap.night);
         mPresenter.getImageViewSrc(ibToolbarCities, R.drawable.ic_edit_location_white_24dp);
         mPresenter.getImageViewSrc(ibToolbarMenu, R.drawable.ic_menu_white_24dp);
@@ -289,6 +286,20 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    public void hideRefreshing() {
+        if (srlCityWeather != null) {
+            srlCityWeather.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showRefreshing() {
+        if (srlCityWeather != null) {
+            srlCityWeather.setRefreshing(true);
+        }
+    }
+
+    @Override
     public void navigateToCitiesActivity() {
         Intent intent = new Intent(this.getApplicationContext(), CitiesActivity.class);
         startActivity(intent);
@@ -350,10 +361,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         public static final String WEATHER_ENTITY = "weather_entity";
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (srlCityWeather.isRefreshing()) {
-                srlCityWeather.setRefreshing(false);
-            }
-
             Message message = mHandler.obtainMessage(MSG_WEATHER_UPDATE);
             Bundle bundle = new Bundle();
             bundle.putParcelable(WEATHER_ENTITY, intent.getParcelableExtra(WEATHER_ENTITY));
@@ -363,13 +370,14 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     private void updateData() {
-        srlCityWeather.setRefreshing(true);
-        Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
-        startService(intent1);
+        mPresenter.stop();
+        mPresenter.start();
     }
 
     private void startServices() {
-        updateData();
+        Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
+        intent1.putExtra(WeatherUpdateService.UPDATE_DATA_FLAG, false);
+        startService(intent1);
 
         Intent intent2 = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
         startService(intent2);

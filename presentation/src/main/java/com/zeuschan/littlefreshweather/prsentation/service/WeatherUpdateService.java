@@ -24,6 +24,8 @@ import rx.Subscriber;
  * Created by chenxiong on 2016/6/22.
  */
 public class WeatherUpdateService extends Service {
+    public static final String UPDATE_DATA_FLAG = "update_data_flag";
+
     private static final String TAG = WeatherUpdateService.class.getSimpleName();
     private GetCityWeatherUseCase mUseCase;
 
@@ -42,7 +44,14 @@ public class WeatherUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mUseCase.execute(new CityWeatherSubscriber());
+        boolean shouldUpdateData = true;
+        if (intent != null && !intent.getBooleanExtra(UPDATE_DATA_FLAG, true)) {
+            shouldUpdateData = false;
+        }
+
+        if (shouldUpdateData) {
+            mUseCase.execute(new CityWeatherSubscriber());
+        }
 
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
         Intent i = new Intent(this, AlarmReceiver.class);

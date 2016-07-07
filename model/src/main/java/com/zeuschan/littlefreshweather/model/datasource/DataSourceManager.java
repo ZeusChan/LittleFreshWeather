@@ -112,7 +112,7 @@ public class DataSourceManager implements DataSource {
                 .concatMap(new Func1<WeatherEntity, Observable<? extends WeatherEntity>>() {
                     @Override
                     public Observable<? extends WeatherEntity> call(WeatherEntity weatherEntity) {
-                        if (null == weatherEntity ) {
+                        if (null == weatherEntity) {
                             mIsWeatherEntityDiskCacheExists = false;
                             return mServiceManager.getCityWeather(id, false);
                         }

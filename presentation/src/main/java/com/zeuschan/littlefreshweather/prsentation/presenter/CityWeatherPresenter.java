@@ -65,6 +65,17 @@ public class CityWeatherPresenter implements Presenter {
         mView = null;
     }
 
+    public void loadData() {
+        if (mView != null) {
+            mView.hideRetry();
+            mView.showLoading();
+            mView.showRefreshing();
+        }
+        if (mUseCase != null) {
+            mUseCase.execute(new CityWeatherSubscriber());
+        }
+    }
+
     public void getBackgroundImage(View view, int resId) {
         GetBitmapUseCase bitmapUseCase = mBitmapUsecases.get(resId);
         if (bitmapUseCase == null) {
@@ -84,16 +95,6 @@ public class CityWeatherPresenter implements Presenter {
         bitmapUseCase = mBitmapUsecases.get(resId);
         if (bitmapUseCase != null) {
             bitmapUseCase.execute(new BitmapSubscriber(view, BitmapSubscriber.VIEW_TYPE_IMAGEVIEW));
-        }
-    }
-
-    public void loadData() {
-        if (mView != null) {
-            mView.hideRetry();
-            mView.showLoading();
-        }
-        if (mUseCase != null) {
-            mUseCase.execute(new CityWeatherSubscriber());
         }
     }
 
@@ -135,6 +136,7 @@ public class CityWeatherPresenter implements Presenter {
         @Override
         public void onCompleted() {
             if (mView != null) {
+                CityWeatherPresenter.this.mView.hideRefreshing();
                 CityWeatherPresenter.this.mView.hideLoading();
             }
         }
@@ -143,6 +145,7 @@ public class CityWeatherPresenter implements Presenter {
         public void onError(Throwable e) {
             e.printStackTrace();
             if (mView != null) {
+                CityWeatherPresenter.this.mView.hideRefreshing();
                 CityWeatherPresenter.this.mView.hideLoading();
                 CityWeatherPresenter.this.mView.showRetry();
             }

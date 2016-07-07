@@ -47,12 +47,14 @@
             android:divider="@color/colorTransparent"/-->
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper1"
@@ -60,8 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon1"
@@ -107,12 +108,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper2"
@@ -120,8 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon2"
@@ -167,12 +169,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper3"
@@ -180,8 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon3"
@@ -227,12 +230,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper4"
@@ -240,8 +245,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon4"
@@ -287,12 +291,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper5"
@@ -300,8 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon5"
@@ -347,12 +352,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_city_weather_life_index_6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:clickable="true">
 
             <LinearLayout
                 android:id="@+id/ll_city_weather_life_index_upper6"
@@ -360,8 +367,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:clickable="true">
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/iv_city_weather_life_index_icon6"

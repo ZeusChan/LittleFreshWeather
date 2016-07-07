@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
@@ -307,136 +308,73 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mListWeatherInfo = null;
     }
 
-    private int getWeatherIconId(final String desc) {
-        if (!TextUtils.isEmpty(desc)) {
-            if (desc.equalsIgnoreCase(mContext.getString(R.string.sunny))) {
-                return R.drawable.iclockweather_w1;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.partly_cloudy))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.cloudy))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.few_cloud))) {
-                return R.drawable.iclockweather_w2;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.overcast))) {
-                return R.drawable.iclockweather_w3;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.shower_rain))) {
-                return R.drawable.iclockweather_w8;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_shower_rain))) {
-                return R.drawable.iclockweather_w8;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.thunder_shower))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.heavy_thunderstorm))) {
-                return R.drawable.iclockweather_w9;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.hail))) {
-                return R.drawable.iclockweather_w18;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.light_rain))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.drizzle_rain))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.drizzle_rain_1))) {
-                return R.drawable.iclockweather_w4;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.moderate_rain))) {
-                return R.drawable.iclockweather_w5;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_rain))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.storm))) {
-                return R.drawable.iclockweather_w6;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.extreme_rain))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.heavy_storm))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.severe_storm))) {
-                return R.drawable.iclockweather_w7;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.freezing_rain))) {
-                return R.drawable.iclockweather_w15;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.light_snow))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.snow_flurry))) {
-                return R.drawable.iclockweather_w11;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.moderate_snow))) {
-                return R.drawable.iclockweather_w12;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_snow))) {
-                return R.drawable.iclockweather_w13;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.snow_storm))) {
-                return R.drawable.iclockweather_w14;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.sleet))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.rain_snow))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.shower_snow))) {
-                return R.drawable.iclockweather_w10;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.mist))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.foggy))) {
-                return R.drawable.iclockweather_w16;
-            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.haze))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.sand))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.dust))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.volcanic_ash))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.dust_storm))
-                    || desc.equalsIgnoreCase(mContext.getString(R.string.sand_storm))) {
-                return R.drawable.iclockweather_w17;
-            }
-        }
-
-        return R.drawable.iclockweather_w2;
-    }
-
     public static class LifeIndexViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_cv_title_name) TextView tvTitleName;
         //@BindView(R.id.lv_city_weather_life_index) ListView lvLifeIndex;
 
+        @BindView(R.id.rl_city_weather_life_index_1) RelativeLayout rlLifeIndex1;
         @BindView(R.id.iv_city_weather_life_index_icon1) ImageView ivIcon1;
         @BindView(R.id.tv_city_weather_life_index_name1) TextView tvName1;
         @BindView(R.id.tv_city_weather_life_index_brief1) TextView tvBrief1;
         @BindView(R.id.iv_city_weather_life_index_arrow1) ImageView ivArrow1;
-        @BindView(R.id.ll_city_weather_life_index_upper1) LinearLayout llUpper1;
         @BindView(R.id.tv_city_weather_life_index_desc1) TextView tvDesc1;
 
+        @BindView(R.id.rl_city_weather_life_index_2) RelativeLayout rlLifeIndex2;
         @BindView(R.id.iv_city_weather_life_index_icon2) ImageView ivIcon2;
         @BindView(R.id.tv_city_weather_life_index_name2) TextView tvName2;
         @BindView(R.id.tv_city_weather_life_index_brief2) TextView tvBrief2;
         @BindView(R.id.iv_city_weather_life_index_arrow2) ImageView ivArrow2;
-        @BindView(R.id.ll_city_weather_life_index_upper2) LinearLayout llUpper2;
         @BindView(R.id.tv_city_weather_life_index_desc2) TextView tvDesc2;
 
+        @BindView(R.id.rl_city_weather_life_index_3) RelativeLayout rlLifeIndex3;
         @BindView(R.id.iv_city_weather_life_index_icon3) ImageView ivIcon3;
         @BindView(R.id.tv_city_weather_life_index_name3) TextView tvName3;
         @BindView(R.id.tv_city_weather_life_index_brief3) TextView tvBrief3;
         @BindView(R.id.iv_city_weather_life_index_arrow3) ImageView ivArrow3;
-        @BindView(R.id.ll_city_weather_life_index_upper3) LinearLayout llUpper3;
         @BindView(R.id.tv_city_weather_life_index_desc3) TextView tvDesc3;
 
+        @BindView(R.id.rl_city_weather_life_index_4) RelativeLayout rlLifeIndex4;
         @BindView(R.id.iv_city_weather_life_index_icon4) ImageView ivIcon4;
         @BindView(R.id.tv_city_weather_life_index_name4) TextView tvName4;
         @BindView(R.id.tv_city_weather_life_index_brief4) TextView tvBrief4;
         @BindView(R.id.iv_city_weather_life_index_arrow4) ImageView ivArrow4;
-        @BindView(R.id.ll_city_weather_life_index_upper4) LinearLayout llUpper4;
         @BindView(R.id.tv_city_weather_life_index_desc4) TextView tvDesc4;
 
+        @BindView(R.id.rl_city_weather_life_index_5) RelativeLayout rlLifeIndex5;
         @BindView(R.id.iv_city_weather_life_index_icon5) ImageView ivIcon5;
         @BindView(R.id.tv_city_weather_life_index_name5) TextView tvName5;
         @BindView(R.id.tv_city_weather_life_index_brief5) TextView tvBrief5;
         @BindView(R.id.iv_city_weather_life_index_arrow5) ImageView ivArrow5;
-        @BindView(R.id.ll_city_weather_life_index_upper5) LinearLayout llUpper5;
         @BindView(R.id.tv_city_weather_life_index_desc5) TextView tvDesc5;
 
+        @BindView(R.id.rl_city_weather_life_index_6) RelativeLayout rlLifeIndex6;
         @BindView(R.id.iv_city_weather_life_index_icon6) ImageView ivIcon6;
         @BindView(R.id.tv_city_weather_life_index_name6) TextView tvName6;
         @BindView(R.id.tv_city_weather_life_index_brief6) TextView tvBrief6;
         @BindView(R.id.iv_city_weather_life_index_arrow6) ImageView ivArrow6;
-        @BindView(R.id.ll_city_weather_life_index_upper6) LinearLayout llUpper6;
         @BindView(R.id.tv_city_weather_life_index_desc6) TextView tvDesc6;
 
         public LifeIndexViewHolder(View itemView, CityWeatherPresenter presenter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            llUpper1.setOnClickListener(this);
-            llUpper1.setTag(presenter);
-            llUpper2.setOnClickListener(this);
-            llUpper2.setTag(presenter);
-            llUpper3.setOnClickListener(this);
-            llUpper3.setTag(presenter);
-            llUpper4.setOnClickListener(this);
-            llUpper4.setTag(presenter);
-            llUpper5.setOnClickListener(this);
-            llUpper5.setTag(presenter);
-            llUpper6.setOnClickListener(this);
-            llUpper6.setTag(presenter);
+            rlLifeIndex1.setOnClickListener(this);
+            rlLifeIndex1.setTag(presenter);
+            rlLifeIndex2.setOnClickListener(this);
+            rlLifeIndex2.setTag(presenter);
+            rlLifeIndex3.setOnClickListener(this);
+            rlLifeIndex3.setTag(presenter);
+            rlLifeIndex4.setOnClickListener(this);
+            rlLifeIndex4.setTag(presenter);
+            rlLifeIndex5.setOnClickListener(this);
+            rlLifeIndex5.setTag(presenter);
+            rlLifeIndex6.setOnClickListener(this);
+            rlLifeIndex6.setTag(presenter);
         }
 
         @Override
         public void onClick(View v) {
-            if (llUpper1.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper1.getTag();
+            if (rlLifeIndex1.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex1.getTag();
                 if (tvDesc1.getVisibility() == View.VISIBLE) {
                     tvDesc1.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -449,8 +387,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }
-            if (llUpper2.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper2.getTag();
+            if (rlLifeIndex2.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex2.getTag();
                 if (tvDesc2.getVisibility() == View.VISIBLE) {
                     tvDesc2.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -463,8 +401,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }
-            if (llUpper3.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper3.getTag();
+            if (rlLifeIndex3.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex3.getTag();
                 if (tvDesc3.getVisibility() == View.VISIBLE) {
                     tvDesc3.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -477,8 +415,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }
-            if (llUpper4.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper4.getTag();
+            if (rlLifeIndex4.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex4.getTag();
                 if (tvDesc4.getVisibility() == View.VISIBLE) {
                     tvDesc4.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -491,8 +429,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }
-            if (llUpper5.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper5.getTag();
+            if (rlLifeIndex5.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex5.getTag();
                 if (tvDesc5.getVisibility() == View.VISIBLE) {
                     tvDesc5.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -505,8 +443,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }
-            if (llUpper6.equals(v)) {
-                CityWeatherPresenter presenter = (CityWeatherPresenter)llUpper6.getTag();
+            if (rlLifeIndex6.equals(v)) {
+                CityWeatherPresenter presenter = (CityWeatherPresenter)rlLifeIndex6.getTag();
                 if (tvDesc6.getVisibility() == View.VISIBLE) {
                     tvDesc6.setVisibility(View.GONE);
                     if (presenter != null) {
@@ -623,5 +561,68 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private int getWeatherIconId(final String desc) {
+        if (!TextUtils.isEmpty(desc)) {
+            if (desc.equalsIgnoreCase(mContext.getString(R.string.sunny))) {
+                return R.drawable.iclockweather_w1;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.partly_cloudy))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.cloudy))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.few_cloud))) {
+                return R.drawable.iclockweather_w2;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.overcast))) {
+                return R.drawable.iclockweather_w3;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.shower_rain))) {
+                return R.drawable.iclockweather_w8;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_shower_rain))) {
+                return R.drawable.iclockweather_w8;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.thunder_shower))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.heavy_thunderstorm))) {
+                return R.drawable.iclockweather_w9;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.hail))) {
+                return R.drawable.iclockweather_w18;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.light_rain))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.drizzle_rain))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.drizzle_rain_1))) {
+                return R.drawable.iclockweather_w4;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.moderate_rain))) {
+                return R.drawable.iclockweather_w5;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_rain))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.storm))) {
+                return R.drawable.iclockweather_w6;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.extreme_rain))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.heavy_storm))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.severe_storm))) {
+                return R.drawable.iclockweather_w7;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.freezing_rain))) {
+                return R.drawable.iclockweather_w15;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.light_snow))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.snow_flurry))) {
+                return R.drawable.iclockweather_w11;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.moderate_snow))) {
+                return R.drawable.iclockweather_w12;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.heavy_snow))) {
+                return R.drawable.iclockweather_w13;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.snow_storm))) {
+                return R.drawable.iclockweather_w14;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.sleet))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.rain_snow))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.shower_snow))) {
+                return R.drawable.iclockweather_w10;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.mist))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.foggy))) {
+                return R.drawable.iclockweather_w16;
+            } else if (desc.equalsIgnoreCase(mContext.getString(R.string.haze))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.sand))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.dust))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.volcanic_ash))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.dust_storm))
+                    || desc.equalsIgnoreCase(mContext.getString(R.string.sand_storm))) {
+                return R.drawable.iclockweather_w17;
+            }
+        }
+
+        return R.drawable.iclockweather_w2;
     }
 }
