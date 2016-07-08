@@ -10,6 +10,7 @@ import com.zeuschan.littlefreshweather.domain.usecase.GetBitmapUseCase;
 import com.zeuschan.littlefreshweather.domain.usecase.GetCityWeatherUseCase;
 import com.zeuschan.littlefreshweather.domain.wrapper.BitmapCacheWrapper;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
+import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.view.CityWeatherView;
 
 import rx.Subscriber;
@@ -138,6 +139,7 @@ public class CityWeatherPresenter implements Presenter {
             if (mView != null) {
                 CityWeatherPresenter.this.mView.hideRefreshing();
                 CityWeatherPresenter.this.mView.hideLoading();
+                CityWeatherPresenter.this.mView.showError(mView.getContext().getApplicationContext().getString(R.string.weather_updated));
             }
         }
 
@@ -148,6 +150,7 @@ public class CityWeatherPresenter implements Presenter {
                 CityWeatherPresenter.this.mView.hideRefreshing();
                 CityWeatherPresenter.this.mView.hideLoading();
                 CityWeatherPresenter.this.mView.showRetry();
+                CityWeatherPresenter.this.mView.showError(mView.getContext().getApplicationContext().getString(R.string.weather_update_failed));
             }
         }
 

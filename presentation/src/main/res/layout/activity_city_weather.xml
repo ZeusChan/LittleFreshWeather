@@ -31,8 +31,8 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <include layout="@layout/loading_progress_view"/>
-        <include layout="@layout/failed_retry_view"/>
+        <include layout="@layout/rl_loading_progress_view"/>
+        <include layout="@layout/rl_failed_retry_view"/>
 
     </RelativeLayout>
 

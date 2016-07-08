@@ -5,20 +5,19 @@
 
     <permission
         android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"
-        android:label="@string/permission_send_update_label"
         android:description="@string/permission_send_update_desc"
+        android:label="@string/permission_send_update_label"
         android:permissionGroup="android.permission-group.PERSONAL_INFO"
-        android:protectionLevel="normal"/>
-
+        android:protectionLevel="normal" />
     <permission
         android:name="com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE"
-        android:label="@string/permission_recv_update_label"
         android:description="@string/permission_recv_update_desc"
+        android:label="@string/permission_recv_update_label"
         android:permissionGroup="android.permission-group.PERSONAL_INFO"
-        android:protectionLevel="normal"/>
+        android:protectionLevel="normal" />
 
-    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"/>
-    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE"/>
+    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE" />
+    <uses-permission android:name="com.zeuschan.littlefreshweather.prsentation.RECV_WEATHER_UPDATE" />
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -44,15 +43,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--key1"a84d0277a1addeb4511ebe4107002f48"-->
-        <!--key2"ca6505f5e3760f0910630f6bcd298b40"-->
+
+        <!-- key1"a84d0277a1addeb4511ebe4107002f48" -->
+        <!-- key2"ca6505f5e3760f0910630f6bcd298b40" -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="a84d0277a1addeb4511ebe4107002f48" />
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".view.activity.SplashActivity"
+        <activity
+            android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,29 +61,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.CityWeatherActivity"
+        <activity
+            android:name=".view.activity.CityWeatherActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".view.activity.CitiesActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
-        </activity>
-        <service android:name=".service.WeatherUpdateService"/>
-        <service android:name=".service.WeatherNotificationService"/>
-        <receiver android:name=".receiver.AlarmReceiver"/>
-        <receiver android:name=".receiver.WeatherAppWidget"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.CitiesActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".view.activity.SettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".service.WeatherUpdateService" />
+        <service android:name=".service.WeatherNotificationService" />
+
+        <receiver android:name=".receiver.AlarmReceiver" />
+        <receiver
+            android:name=".receiver.WeatherAppWidget"
             android:label="@string/app_name"
             android:permission="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE">
-            <intent-filter >
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.zeuschan.littlefreshweather.prsentation.UPDATE_WIDGET"/>
+                <action android:name="com.zeuschan.littlefreshweather.prsentation.UPDATE_WIDGET" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_provider_info"/>
+                android:resource="@xml/app_widget_provider_info" />
         </receiver>
     </application>
 

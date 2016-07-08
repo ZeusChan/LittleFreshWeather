@@ -44,7 +44,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CityWeatherActivity extends BaseActivity implements CityWeatherView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class CityWeatherActivity extends BaseActivity implements CityWeatherView
+        , View.OnClickListener
+        , SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = CityWeatherActivity.class.getSimpleName();
     public static final String CITY_ID = "city_id";
     public static final String WEATHER_UPDATE_ACTION = "com.zeuschan.littlefreshweather.prsentation.WEATHER_UPDATE";
@@ -158,6 +160,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mCityWeatherAdapter = new CityWeatherAdapter(this, mPresenter, rvCityWeather);
         rvCityWeather.setAdapter(mCityWeatherAdapter);
         rvCityWeather.setItemViewCacheSize(4);
+        rvCityWeather.addOnScrollListener(new CityWeatherScrollListener());
 
         View popMenuView = getLayoutInflater().inflate(R.layout.ll_city_weather_pop_menu, null);
         if (popMenuView != null) {
@@ -200,7 +203,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     protected void onPause() {
         super.onPause();
         mLocalBroadcastManager.unregisterReceiver(mWeatherUpdateReceiver);
-        stopAnimation();
     }
 
     @Override
@@ -219,7 +221,9 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     protected void clearMemory() {
+        stopAnimation();
         rvCityWeather.setAdapter(null);
+        rvCityWeather.clearOnScrollListeners();
         mPresenter.destroy();
         mHandler.removeMessages(MSG_WEATHER_UPDATE);
         mHandler.removeCallbacks(rainProc);
@@ -236,7 +240,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mUnbinder.unbind();
         setContentView(new FrameLayout(this));
 
-        System.exit(0);
+        //System.exit(0);
     }
 
     @Override
@@ -257,12 +261,12 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     public void showLoading() {
-        rlLoadingProgress.setVisibility(View.VISIBLE);
+        //rlLoadingProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        rlLoadingProgress.setVisibility(View.GONE);
+        //rlLoadingProgress.setVisibility(View.GONE);
     }
 
     @Override
@@ -306,6 +310,12 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    public void navigateToSettingsActivity() {
+        Intent intent = new Intent(this.getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onRefresh() {
         updateData();
     }
@@ -328,15 +338,17 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
                 mPopupMenu.dismiss();
             } break;
             case R.id.ll_pop_menu_item_settings: {
-                if (mAnimationType == 0) {
-                    mAnimationType = 1;
-                } else {
-                    mAnimationType *= 2;
-                }
-                if (mAnimationType > ANIMATION_SUNSHINE) {
-                    mAnimationType = 0;
-                }
-                startAnimation(new WeatherEntity());
+//                if (mAnimationType == 0) {
+//                    mAnimationType = 1;
+//                } else {
+//                    mAnimationType *= 2;
+//                }
+//                if (mAnimationType > ANIMATION_SUNSHINE) {
+//                    mAnimationType = 0;
+//                }
+//                startAnimation(new WeatherEntity());
+
+                navigateToSettingsActivity();
                 mPopupMenu.dismiss();
             } break;
         }
@@ -366,6 +378,43 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
             bundle.putParcelable(WEATHER_ENTITY, intent.getParcelableExtra(WEATHER_ENTITY));
             message.setData(bundle);
             message.sendToTarget();
+        }
+    }
+
+    private final class CityWeatherScrollListener extends RecyclerView.OnScrollListener {
+        boolean mScrollDown = true;
+//        int mScreenHeight = 0;
+        public CityWeatherScrollListener() {
+            super();
+//            mScreenHeight = DensityUtil.getScreenHeight(CityWeatherActivity.this.getApplicationContext());
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (dy > 0) {
+                mScrollDown = true;
+            } else if (dy < 0) {
+                mScrollDown = false;
+            }
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (RecyclerView.SCROLL_STATE_IDLE == newState) {
+                View view = recyclerView.getChildAt(0);
+//                Rect rect = new Rect();
+//                Point point = new Point();
+//                recyclerView.getChildVisibleRect(view, rect, point);
+                if ((int)view.getTag() == CityWeatherAdapter.VIEW_MAIN) {
+                    if (mScrollDown) {
+                        recyclerView.smoothScrollToPosition(1);
+                    } else {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                }
+            }
         }
     }
 

@@ -6,11 +6,15 @@
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorSemiTransparent">#5e000000</color>
-    <color name="colorSemiTransDark">#ae000000</color>
     <color name="colorSemiTransLightGray">#3ec1c1c1</color>
 
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorLightGray">#f0f0f0</color>
     <color name="colorDarkGray">#c1c1c1</color>
+    <color name="colorDeepGray">#222222</color>
+    <color name="colorDarkGray600">#757575</color>
+    <color name="colorDarkGray700">#616161</color>
     <color name="colorLightRed">#ff4081</color>
     <color name="colorLigthBlue">#3f51b5</color>
     <color name="colorLightGreen">#4caf50</color>

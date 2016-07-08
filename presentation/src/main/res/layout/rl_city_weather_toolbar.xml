@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/toolbar_button_background_selector"/>
+        android:background="@drawable/selector_button_rect_semitrans"/>
 
     <ImageButton
         android:id="@+id/ib_city_weather_toolbar_cities"
@@ -33,6 +33,6 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/ib_city_weather_toolbar_menu"
-        android:background="@drawable/toolbar_button_background_selector"/>
+        android:background="@drawable/selector_button_rect_semitrans"/>
 
 </RelativeLayout>

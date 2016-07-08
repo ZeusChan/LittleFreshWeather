@@ -54,9 +54,13 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mParent = parent;
 
         mMainView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_main, parent, false);
+        mMainView.setTag(VIEW_MAIN);
         mForecastView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_forecast, parent, false);
+        mForecastView.setTag(VIEW_FORECAST);
         mCurWeatherView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_cur_weather_info, parent, false);
+        mCurWeatherView.setTag(VIEW_CURRENT_WEATHER_INFO);
         mLifeIndexView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_city_weather_life_index, parent, false);
+        mLifeIndexView.setTag(VIEW_LIFE_INDEX);
     }
 
     public void setWeatherEntity(WeatherEntity mWeatherEntity) {
@@ -129,6 +133,18 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mainViewHolder.tvCurTemp.setText(mWeatherEntity.getCurrentTemperature());
             mainViewHolder.tvUpdateTime.setText(mWeatherEntity.getDataUpdateTime() + " 发布");
             mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
+
+            if (mListForecasts.size() >= 3) {
+                mainViewHolder.tvForecastDate1.setText(mListForecasts.get(0).getDate());
+                mainViewHolder.tvForecastTemp1.setText(mListForecasts.get(0).getMinTemperature() + " ~ " + mListForecasts.get(0).getMaxTemperature() + "℃");
+                mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon1, getWeatherIconId(mListForecasts.get(0).getWeatherDescriptionDaytime()));
+                mainViewHolder.tvForecastDate2.setText(mListForecasts.get(1).getDate());
+                mainViewHolder.tvForecastTemp2.setText(mListForecasts.get(1).getMinTemperature() + " ~ " + mListForecasts.get(1).getMaxTemperature() + "℃");
+                mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon2, getWeatherIconId(mListForecasts.get(1).getWeatherDescriptionDaytime()));
+                mainViewHolder.tvForecastDate3.setText(mListForecasts.get(2).getDate());
+                mainViewHolder.tvForecastTemp3.setText(mListForecasts.get(2).getMinTemperature() + " ~ " + mListForecasts.get(2).getMaxTemperature() + "℃");
+                mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon3, getWeatherIconId(mListForecasts.get(2).getWeatherDescriptionDaytime()));
+            }
         } else if (1 == position) {
             ForecastViewHolder forecastViewHolder = (ForecastViewHolder)holder;
             forecastViewHolder.tvTitleName.setText(R.string.forecast_title);
@@ -556,6 +572,15 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.tv_city_weather_main_weather_desc) TextView tvWeatherDesc;
         @BindView(R.id.tv_city_weather_main_cur_temp) TextView tvCurTemp;
         @BindView(R.id.tv_city_weather_main_update_time) TextView tvUpdateTime;
+        @BindView(R.id.tv_city_weather_main_forecast_date1) TextView tvForecastDate1;
+        @BindView(R.id.tv_city_weather_main_forecast_temp1) TextView tvForecastTemp1;
+        @BindView(R.id.iv_city_weather_main_forecast_icon1) ImageView ivForecastIcon1;
+        @BindView(R.id.tv_city_weather_main_forecast_date2) TextView tvForecastDate2;
+        @BindView(R.id.tv_city_weather_main_forecast_temp2) TextView tvForecastTemp2;
+        @BindView(R.id.iv_city_weather_main_forecast_icon2) ImageView ivForecastIcon2;
+        @BindView(R.id.tv_city_weather_main_forecast_date3) TextView tvForecastDate3;
+        @BindView(R.id.tv_city_weather_main_forecast_temp3) TextView tvForecastTemp3;
+        @BindView(R.id.iv_city_weather_main_forecast_icon3) ImageView ivForecastIcon3;
 
         public MainViewHolder(View itemView) {
             super(itemView);

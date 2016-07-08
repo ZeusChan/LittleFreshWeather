@@ -5,6 +5,8 @@
     <string name="retry">重试</string>
     <string name="refresh">刷新</string>
     <string name="settings">设置</string>
+    <string name="basic_settings">基本设置</string>
+    <string name="other_settings">其它</string>
     <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
     <string name="server_unavailable">天气服务不可用，请稍后再试</string>
     <string name="press_to_quit">再按一次，退出清新小天气</string>
@@ -26,6 +28,7 @@
     <string name="city_selection">选择城市</string>
     <string name="input_city_name">请输入城市名称</string>
     <string name="weather_updated">天气已更新</string>
+    <string name="weather_update_failed">天气更新失败，请稍后再试</string>
     <string name="located_city">自动定位： </string>
     <string name="cur_city">当前设置：</string>
     <string name="permission_send_update_label">发送更新数据</string>

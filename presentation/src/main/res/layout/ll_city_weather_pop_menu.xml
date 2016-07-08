@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/barrage_popupwindow_bg">
 
     <LinearLayout
         android:id="@+id/ll_pop_menu_item_refresh"
@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/material_8dp"
         android:paddingLeft="@dimen/material_16dp"
         android:paddingRight="@dimen/material_16dp"
-        android:background="@drawable/toolbar_button_background_selector"
+        android:background="@drawable/selector_button_rect_semitrans"
         android:clickable="true">
 
         <ImageView
@@ -50,7 +50,7 @@
         android:paddingBottom="@dimen/material_8dp"
         android:paddingLeft="@dimen/material_16dp"
         android:paddingRight="@dimen/material_16dp"
-        android:background="@drawable/toolbar_button_background_selector"
+        android:background="@drawable/selector_button_rect_semitrans"
         android:clickable="true">
 
         <ImageView

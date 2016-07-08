@@ -32,7 +32,7 @@
             android:hint="@string/input_city_name"
             android:textColorHint="@color/colorDarkGray"
             android:maxLines="1"
-            android:background="@drawable/edit_background_selector"
+            android:background="@drawable/selector_edit_round_rect_semitrans"
             android:visibility="invisible"/>
 
         <View
@@ -65,7 +65,7 @@
                 android:textSize="@dimen/material_16sp"
                 android:textColor="@color/colorLightGray"
                 android:drawableLeft="@drawable/ic_location_on_white_24dp"
-                android:background="@drawable/toolbar_button_background_selector" />
+                android:background="@drawable/selector_button_rect_semitrans" />
 
             <Button
                 android:id="@+id/bt_cities_cur"
@@ -77,7 +77,7 @@
                 android:textSize="@dimen/material_16sp"
                 android:textColor="@color/colorLightGray"
                 android:drawableLeft="@drawable/ic_location_city_white_24dp"
-                android:background="@drawable/toolbar_button_background_selector" />
+                android:background="@drawable/selector_button_rect_semitrans" />
 
         </LinearLayout>
 
@@ -92,8 +92,8 @@
             android:layout_marginRight="@dimen/material_16dp"
             android:divider="@color/colorTransparent"/>
 
-        <include layout="@layout/loading_progress_view"/>
-        <include layout="@layout/failed_retry_view"/>
+        <include layout="@layout/rl_loading_progress_view"/>
+        <include layout="@layout/rl_failed_retry_view"/>
 
     </RelativeLayout>
 

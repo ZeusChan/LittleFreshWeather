@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/retry"
         android:textColor="@color/colorLightGray"
-        android:background="@drawable/button_background_selector"/>
+        android:background="@drawable/selector_button_round_rect_semitrans"/>
 
     <TextView
         android:id="@+id/tv_failed_retry"

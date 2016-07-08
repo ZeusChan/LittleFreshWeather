@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/toolbar_button_background_selector"/>
+        android:background="@drawable/selector_button_rect_semitrans"/>
 
     <TextView
         android:id="@+id/tv_cities_toolbar_title"
