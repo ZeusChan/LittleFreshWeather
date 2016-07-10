@@ -32,13 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorSemiTransLightGray">
+        android:background="@color/colorSemiTransparent">
 
         <RelativeLayout
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_16dp">
+            android:padding="@dimen/material_8dp">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date1"
@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_16dp">
+            android:padding="@dimen/material_8dp">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date2"
@@ -114,7 +114,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_16dp">
+            android:padding="@dimen/material_8dp">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date3"
