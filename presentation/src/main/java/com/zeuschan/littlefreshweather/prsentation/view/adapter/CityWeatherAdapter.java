@@ -133,7 +133,9 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mainViewHolder.tvAirQualityIndex.setText(mWeatherEntity.getAirQulityIndex());
             mainViewHolder.tvAirQualityType.setText("空气" + mWeatherEntity.getAirQulityType());
             mainViewHolder.tvCurTemp.setText(mWeatherEntity.getCurrentTemperature());
-            mainViewHolder.tvUpdateTime.setText(mWeatherEntity.getDataUpdateTime() + " 发布");
+            String[] dateAndTime = mWeatherEntity.getDataUpdateTime().split(" ");
+            Date date = StringUtil.stringToDate("yyyy-MM-dd", dateAndTime[0]);
+            mainViewHolder.tvUpdateTime.setText(StringUtil.getFriendlyDateString(date) + " " + dateAndTime[1] + " 发布");
             mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
 
             if (mListForecasts.size() >= 3) {
@@ -162,7 +164,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ++index;
                 switch (index) {
                     case 1: {
-                        forecastViewHolder.tvDate1.setText(forecast.getDate());
+                        Date date1 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate1.setText(StringUtil.getFriendlyDateString(date1));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon1, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc1.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade1.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -170,7 +173,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir1.setText(forecast.getWindDirection());
                     } break;
                     case 2: {
-                        forecastViewHolder.tvDate2.setText(forecast.getDate());
+                        Date date2 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate2.setText(StringUtil.getFriendlyDateString(date2));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon2, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc2.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade2.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -178,7 +182,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir2.setText(forecast.getWindDirection());
                     } break;
                     case 3: {
-                        forecastViewHolder.tvDate3.setText(forecast.getDate());
+                        Date date3 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate3.setText(StringUtil.getFriendlyDateString(date3));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon3, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc3.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade3.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -186,7 +191,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir3.setText(forecast.getWindDirection());
                     } break;
                     case 4: {
-                        forecastViewHolder.tvDate4.setText(forecast.getDate());
+                        Date date4 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate4.setText(StringUtil.getFriendlyDateString(date4));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon4, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc4.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade4.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -194,7 +200,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir4.setText(forecast.getWindDirection());
                     } break;
                     case 5: {
-                        forecastViewHolder.tvDate5.setText(forecast.getDate());
+                        Date date5 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate5.setText(StringUtil.getFriendlyDateString(date5));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon5, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc5.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade5.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -202,7 +209,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir5.setText(forecast.getWindDirection());
                     } break;
                     case 6: {
-                        forecastViewHolder.tvDate6.setText(forecast.getDate());
+                        Date date6 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate6.setText(StringUtil.getFriendlyDateString(date6));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon6, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc6.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade6.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");
@@ -210,7 +218,8 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         forecastViewHolder.tvWindDir6.setText(forecast.getWindDirection());
                     } break;
                     case 7: {
-                        forecastViewHolder.tvDate7.setText(forecast.getDate());
+                        Date date7 = StringUtil.stringToDate("yyyy-MM-dd", forecast.getDate());
+                        forecastViewHolder.tvDate7.setText(StringUtil.getFriendlyDateString(date7));
                         mPresenter.getImageViewSrc(forecastViewHolder.ivIcon7, getWeatherIconId(forecast.getWeatherDescriptionDaytime()));
                         forecastViewHolder.tvDesc7.setText(forecast.getWeatherDescriptionDaytime());
                         forecastViewHolder.tvCentigrade7.setText(forecast.getMinTemperature() + " ~ " + forecast.getMaxTemperature() + "℃");

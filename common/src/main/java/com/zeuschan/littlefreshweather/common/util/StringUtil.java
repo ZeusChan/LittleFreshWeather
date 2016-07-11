@@ -70,8 +70,12 @@ public class StringUtil {
             return "今天";
         } else if (dst - now == 1) {
             return "明天";
+        } else if (dst - now == 2) {
+            return "后天";
         } else if (dst - now == -1) {
             return "昨天";
+        } else if (dst - now == -2) {
+            return "前天";
         } else {
             SimpleDateFormat simpleDateFormat = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
             simpleDateFormat.applyPattern("M月d日");
