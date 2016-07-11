@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zeuschan.littlefreshweather.common.util.StringUtil;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.CityWeatherPresenter;
@@ -21,6 +22,7 @@ import com.zeuschan.littlefreshweather.prsentation.wrapper.CurWeatherInfoWrapper
 import com.zeuschan.littlefreshweather.prsentation.wrapper.LifeIndexWrapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -135,13 +137,18 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mainViewHolder.tvWeatherDesc.setText(mWeatherEntity.getWeatherDescription());
 
             if (mListForecasts.size() >= 3) {
-                mainViewHolder.tvForecastDate1.setText(mListForecasts.get(0).getDate());
+                Date date0 = StringUtil.stringToDate("yyyy-MM-dd", mListForecasts.get(0).getDate());
+                mainViewHolder.tvForecastDate1.setText(StringUtil.getFriendlyDateString(date0));
                 mainViewHolder.tvForecastTemp1.setText(mListForecasts.get(0).getMinTemperature() + " ~ " + mListForecasts.get(0).getMaxTemperature() + "℃");
                 mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon1, getWeatherIconId(mListForecasts.get(0).getWeatherDescriptionDaytime()));
-                mainViewHolder.tvForecastDate2.setText(mListForecasts.get(1).getDate());
+
+                Date date1 = StringUtil.stringToDate("yyyy-MM-dd", mListForecasts.get(1).getDate());
+                mainViewHolder.tvForecastDate2.setText(StringUtil.getFriendlyDateString(date1));
                 mainViewHolder.tvForecastTemp2.setText(mListForecasts.get(1).getMinTemperature() + " ~ " + mListForecasts.get(1).getMaxTemperature() + "℃");
                 mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon2, getWeatherIconId(mListForecasts.get(1).getWeatherDescriptionDaytime()));
-                mainViewHolder.tvForecastDate3.setText(mListForecasts.get(2).getDate());
+
+                Date date2 = StringUtil.stringToDate("yyyy-MM-dd", mListForecasts.get(2).getDate());
+                mainViewHolder.tvForecastDate3.setText(StringUtil.getFriendlyDateString(date2));
                 mainViewHolder.tvForecastTemp3.setText(mListForecasts.get(2).getMinTemperature() + " ~ " + mListForecasts.get(2).getMaxTemperature() + "℃");
                 mPresenter.getImageViewSrc(mainViewHolder.ivForecastIcon3, getWeatherIconId(mListForecasts.get(2).getWeatherDescriptionDaytime()));
             }

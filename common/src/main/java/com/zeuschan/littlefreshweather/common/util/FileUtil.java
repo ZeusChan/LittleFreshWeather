@@ -45,4 +45,16 @@ public class FileUtil {
         SharedPreferences preferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return preferences.getBoolean(key, defValue);
     }
+
+    public static void putIntToPreferences(Context context, String prefName, String key, int value) {
+        SharedPreferences preferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public static int getIntFromPreferences(Context context, String prefName, String key, int defValue) {
+        SharedPreferences preferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        return preferences.getInt(key, defValue);
+    }
 }

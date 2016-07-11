@@ -3,6 +3,7 @@ package com.zeuschan.littlefreshweather.prsentation.service;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -25,6 +26,7 @@ import rx.Subscriber;
  */
 public class WeatherUpdateService extends Service {
     public static final String UPDATE_DATA_FLAG = "update_data_flag";
+    private static final int ONE_HOUR = 60 * 60 * 1000;
 
     private static final String TAG = WeatherUpdateService.class.getSimpleName();
     private GetCityWeatherUseCase mUseCase;
@@ -53,10 +55,8 @@ public class WeatherUpdateService extends Service {
             mUseCase.execute(new CityWeatherSubscriber());
         }
 
-        AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        Intent i = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);
-        manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + Constants.DEFAULT_UPDATE_FREQUENCY, pendingIntent);
+        int updateFreq = FileUtil.getIntFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_UPDATE_FREQUENCY, Constants.DEFAULT_UPDATE_FREQUENCY);
+        setUpdateServiceAlarm(getApplicationContext(), updateFreq);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -66,6 +66,24 @@ public class WeatherUpdateService extends Service {
         super.onDestroy();
         mUseCase.unsubscribe();
         mUseCase = null;
+    }
+
+    public static void setUpdateServiceAlarm(Context context, int updateFreq) {
+        Intent i = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
+        AlarmManager manager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
+        if (updateFreq != 0) {
+            manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateFreq * ONE_HOUR, pendingIntent);
+        } else {
+            manager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+    }
+
+    public static boolean isUpdateServeceAlarmOn(Context context) {
+        Intent i = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_NO_CREATE);
+        return pendingIntent != null;
     }
 
     private final class CityWeatherSubscriber extends Subscriber<WeatherEntity> {
@@ -86,7 +104,11 @@ public class WeatherUpdateService extends Service {
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
 
             sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
-            startService(new Intent(WeatherUpdateService.this, WeatherNotificationService.class));
+
+            boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
+            if (shouldNotify) {
+                startService(new Intent(WeatherUpdateService.this, WeatherNotificationService.class));
+            }
         }
     }
 }

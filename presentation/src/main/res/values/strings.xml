@@ -6,7 +6,11 @@
     <string name="refresh">刷新</string>
     <string name="settings">设置</string>
     <string name="basic_settings">基本设置</string>
+    <string name="auto_update_frequency">自动更新频率</string>
+    <string name="notification_weather">通知栏展示天气</string>
     <string name="other_settings">其它</string>
+    <string name="about">关于</string>
+    <string name="about_content">清新小天气\n作者：zeuschan@126.com</string>
     <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
     <string name="server_unavailable">天气服务不可用，请稍后再试</string>
     <string name="press_to_quit">再按一次，退出清新小天气</string>
@@ -71,4 +75,7 @@
     <string name="volcanic_ash">火山灰</string>
     <string name="dust_storm">沙尘暴</string>
     <string name="sand_storm">强沙尘暴</string>
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="tomorrow">明天</string>
 </resources>

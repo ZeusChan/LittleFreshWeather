@@ -20,16 +20,96 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_8dp"
             android:textColor="@color/colorDarkGray600"
+            android:textSize="@dimen/material_14sp"
             android:text="@string/basic_settings"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/material_180dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_16dp"
             android:padding="@dimen/material_16dp"
             android:background="@drawable/shape_round_rect_semitrans_gray">
 
+            <RelativeLayout
+                android:id="@+id/rl_settings_auto_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/material_16dp"
+                android:paddingTop="@dimen/material_16dp"
+                android:background="@drawable/selector_button_rect_semitrans"
+                android:clickable="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/material_16sp"
+                        android:textColor="@color/colorDarkGray700"
+                        android:text="@string/auto_update_frequency"/>
+
+                    <TextView
+                        android:id="@+id/tv_settings_auto_update_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_4dp"
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/material_12sp"
+                        android:text="2小时"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/preference_screen_button"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:background="@color/colorDarkGray"/>
+
+            <LinearLayout
+                android:id="@+id/ll_settings_notification_weather"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/material_16dp"
+                android:paddingTop="@dimen/material_16dp"
+                android:background="@drawable/selector_button_rect_semitrans"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/material_16sp"
+                    android:textColor="@color/colorDarkGray700"
+                    android:text="@string/notification_weather"/>
+
+                <ImageView
+                    android:id="@+id/iv_settings_notification_weather_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/preference_checkbox_on"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:background="@color/colorDarkGray"/>
 
         </LinearLayout>
 
@@ -39,14 +119,47 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_8dp"
             android:textColor="@color/colorDarkGray600"
+            android:textSize="@dimen/material_14sp"
             android:text="@string/other_settings"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/material_150dp"
+            android:layout_height="wrap_content"
             android:padding="@dimen/material_16dp"
             android:background="@drawable/shape_round_rect_semitrans_gray">
+
+            <LinearLayout
+                android:id="@+id/ll_settings_about"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/material_16dp"
+                android:paddingTop="@dimen/material_16dp"
+                android:background="@drawable/selector_button_rect_semitrans"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/material_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/material_16sp"
+                    android:textColor="@color/colorDarkGray700"
+                    android:text="@string/about"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/preference_screen_button"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_1dp"
+                android:background="@color/colorDarkGray"/>
 
         </LinearLayout>
 

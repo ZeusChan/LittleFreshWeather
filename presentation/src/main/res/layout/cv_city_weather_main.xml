@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_8dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date1"
@@ -60,8 +60,9 @@
                 android:id="@+id/iv_city_weather_main_forecast_icon1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_toRightOf="@id/tv_city_weather_main_forecast_date1"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/material_6dp"/>
 
         </RelativeLayout>
 
@@ -76,7 +77,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_8dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date2"
@@ -98,8 +99,9 @@
                 android:id="@+id/iv_city_weather_main_forecast_icon2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_toRightOf="@id/tv_city_weather_main_forecast_date2"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/material_6dp"/>
 
         </RelativeLayout>
 
@@ -114,7 +116,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_8dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_city_weather_main_forecast_date3"
@@ -136,8 +138,9 @@
                 android:id="@+id/iv_city_weather_main_forecast_icon3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_toRightOf="@id/tv_city_weather_main_forecast_date3"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/material_6dp"/>
 
         </RelativeLayout>
 

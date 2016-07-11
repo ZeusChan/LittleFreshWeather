@@ -32,7 +32,9 @@ public class Constants {
     public static final String PRF_KEY_CITY_ID = "city_id";
     public static final String PRF_KEY_FIRST_STARTUP = "first_startup";
     public static final String PRF_KEY_UPDATE_FREQUENCY = "update_frequency";
+    public static final String PRF_KEY_NOTIFY_WEATHER = "notify_weather";
     // Preferences values
     public static final String DEFAULT_CITY_ID = "CN101010100";
-    public static final int DEFAULT_UPDATE_FREQUENCY = 60 * 60 * 1000;
+    public static final int DEFAULT_UPDATE_FREQUENCY = 2; // 单位：小时
+    public static final boolean DEFAULT_NOTIFY_WEATHER = true;
 }
