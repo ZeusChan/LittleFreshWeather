@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatDelegate;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.CycleInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -16,9 +13,9 @@ import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.SplashPresenter;
 import com.zeuschan.littlefreshweather.prsentation.view.SplashView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 
 
 public class SplashActivity extends BaseActivity implements SplashView {
@@ -34,9 +31,10 @@ public class SplashActivity extends BaseActivity implements SplashView {
     String mCityId;
     String mLocateCityId;
     boolean mIsLocateSucceeded = false;
-    Unbinder mUnbinder;
+    //Unbinder mUnbinder;
 
-    @BindView(R.id.iv_splash_icon) ImageView ivSplashIcon;
+    //@BindView(R.id.iv_splash_icon) ImageView ivSplashIcon;
+    ImageView ivSplashIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +45,16 @@ public class SplashActivity extends BaseActivity implements SplashView {
     @Override
     protected void initView() {
         setContentView(R.layout.activity_splash);
-        mUnbinder = ButterKnife.bind(this);
+        //mUnbinder = ButterKnife.bind(this);
+
+        ivSplashIcon = (ImageView)findViewById(R.id.iv_splash_icon);
+
         mPresenter = new SplashPresenter();
+    }
+
+    @Override
+    protected void uninitView() {
+        ivSplashIcon = null;
     }
 
     @Override
@@ -67,14 +73,16 @@ public class SplashActivity extends BaseActivity implements SplashView {
     @Override
     protected void clearMemory() {
         mPresenter.destroy();
-        mUnbinder.unbind();
         mHandler.removeMessages(MSG_START);
         mHandler.removeMessages(MSG_NAVIGATE_CITY_WEATHER);
         mHandler.removeMessages(MSG_NAVIGATE_CITIES);
         mHandler.removeCallbacks(delayStartProc);
         mHandler = null;
         mPresenter = null;
-        mUnbinder = null;
+
+        uninitView();
+        //mUnbinder.unbind();
+        //mUnbinder = null;
         setContentView(new FrameLayout(this));
     }
 

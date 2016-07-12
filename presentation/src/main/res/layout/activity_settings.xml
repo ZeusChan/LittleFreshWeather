@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_16dp"
-            android:padding="@dimen/material_16dp"
+            android:paddingTop="@dimen/material_16dp"
+            android:paddingBottom="@dimen/material_16dp"
             android:background="@drawable/shape_round_rect_semitrans_gray">
 
             <RelativeLayout
@@ -44,7 +45,8 @@
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/material_16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -69,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/material_16dp"
                     android:src="@drawable/preference_screen_button"/>
 
             </RelativeLayout>
@@ -93,6 +96,7 @@
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/material_16dp"
                     android:textSize="@dimen/material_16sp"
                     android:textColor="@color/colorDarkGray700"
                     android:text="@string/notification_weather"/>
@@ -102,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_16dp"
                     android:src="@drawable/preference_checkbox_on"/>
 
             </LinearLayout>
@@ -126,7 +131,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/material_16dp"
+            android:paddingTop="@dimen/material_16dp"
+            android:paddingBottom="@dimen/material_16dp"
             android:background="@drawable/shape_round_rect_semitrans_gray">
 
             <LinearLayout
@@ -144,6 +150,7 @@
                     android:layout_width="@dimen/material_0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/material_16dp"
                     android:textSize="@dimen/material_16sp"
                     android:textColor="@color/colorDarkGray700"
                     android:text="@string/about"/>
@@ -152,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_16dp"
                     android:src="@drawable/preference_screen_button"/>
 
             </LinearLayout>

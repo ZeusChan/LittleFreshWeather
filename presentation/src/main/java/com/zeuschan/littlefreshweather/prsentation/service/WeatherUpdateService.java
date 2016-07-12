@@ -103,11 +103,11 @@ public class WeatherUpdateService extends Service {
             intent.putExtra(CityWeatherActivity.WeatherUpdateReceiver.WEATHER_ENTITY, weatherEntity);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
 
-            sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
+            getApplicationContext().sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
 
             boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
             if (shouldNotify) {
-                startService(new Intent(WeatherUpdateService.this, WeatherNotificationService.class));
+                getApplicationContext().startService(new Intent(getApplicationContext(), WeatherNotificationService.class));
             }
         }
     }

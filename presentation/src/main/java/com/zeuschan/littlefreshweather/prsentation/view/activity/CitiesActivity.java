@@ -24,9 +24,9 @@ import com.zeuschan.littlefreshweather.prsentation.view.adapter.CitiesCandidates
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 
 public class CitiesActivity extends BaseActivity implements CitiesView, View.OnClickListener, TextWatcher, ListView.OnItemClickListener {
     public static final String CITY_ID = "city_id";
@@ -39,19 +39,31 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     String mLocateCityId;
     String mCurCityId;
     boolean mIsLocateSucceeded = false;
-    Unbinder mUnbinder;
+    //Unbinder mUnbinder;
 
-    @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
-    @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
-    @BindView(R.id.bt_failed_retry) Button btFailedRetry;
-    @BindView(R.id.et_cities_city_name) EditText etCityName;
-    @BindView(R.id.lv_cities_candidates) ListView lvCandidates;
-    @BindView(R.id.tv_cities_toolbar_title) TextView tvToolbarTitle;
-    @BindView(R.id.ib_cities_toolbar_back) ImageButton ibToolbarBack;
-    @BindView(R.id.bt_cities_located) Button btLocatedCityName;
-    @BindView(R.id.bt_cities_cur) Button btCurCityName;
-    @BindView(R.id.ll_cities_located) LinearLayout llLocated;
-    @BindView(R.id.ll_cities_root) LinearLayout llCitiesRoot;
+//    @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
+//    @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
+//    @BindView(R.id.bt_failed_retry) Button btFailedRetry;
+//    @BindView(R.id.et_cities_city_name) EditText etCityName;
+//    @BindView(R.id.lv_cities_candidates) ListView lvCandidates;
+//    @BindView(R.id.tv_cities_toolbar_title) TextView tvToolbarTitle;
+//    @BindView(R.id.ib_cities_toolbar_back) ImageButton ibToolbarBack;
+//    @BindView(R.id.bt_cities_located) Button btLocatedCityName;
+//    @BindView(R.id.bt_cities_cur) Button btCurCityName;
+//    @BindView(R.id.ll_cities_located) LinearLayout llLocated;
+//    @BindView(R.id.ll_cities_root) LinearLayout llCitiesRoot;
+
+    RelativeLayout rlLoadingProgress;
+    RelativeLayout rlFailedRetry;
+    Button btFailedRetry;
+    EditText etCityName;
+    ListView lvCandidates;
+    TextView tvToolbarTitle;
+    ImageButton ibToolbarBack;
+    Button btLocatedCityName;
+    Button btCurCityName;
+    LinearLayout llLocated;
+    LinearLayout llCitiesRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +77,20 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @Override
     protected void initView() {
         setContentView(R.layout.activity_cities);
-        mUnbinder = ButterKnife.bind(this);
+
+        rlLoadingProgress = (RelativeLayout)findViewById(R.id.rl_loading_progress);
+        rlFailedRetry = (RelativeLayout)findViewById(R.id.rl_failed_retry);
+        btFailedRetry = (Button)findViewById(R.id.bt_failed_retry);
+        etCityName = (EditText)findViewById(R.id.et_cities_city_name);
+        lvCandidates = (ListView)findViewById(R.id.lv_cities_candidates);
+        tvToolbarTitle = (TextView)findViewById(R.id.tv_cities_toolbar_title);
+        ibToolbarBack = (ImageButton)findViewById(R.id.ib_cities_toolbar_back);
+        btLocatedCityName = (Button)findViewById(R.id.bt_cities_located);
+        btCurCityName = (Button)findViewById(R.id.bt_cities_cur);
+        llLocated = (LinearLayout)findViewById(R.id.ll_cities_located);
+        llCitiesRoot = (LinearLayout)findViewById(R.id.ll_cities_root);
+
+        //mUnbinder = ButterKnife.bind(this);
         lvCandidates.setOnItemClickListener(this);
         ibToolbarBack.setOnClickListener(this);
         btLocatedCityName.setOnClickListener(this);
@@ -80,9 +105,24 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
         mIsLocateSucceeded = intent.getBooleanExtra(LOCATE_RESULT, false);
 
         mPresenter = new CitiesPresenter(this);
-        mPresenter.getBackgroundImage(llCitiesRoot, R.mipmap.city);
+        mPresenter.getBackgroundImage(llCitiesRoot, R.drawable.city);
         mPresenter.getImageViewSrc(ibToolbarBack, R.drawable.ic_arrow_back_white_24dp);
         mPresenter.setLocatedCityId(mLocateCityId, mCurCityId);
+    }
+
+    @Override
+    protected void uninitView() {
+        rlLoadingProgress = null;
+        rlFailedRetry = null;
+        btFailedRetry = null;
+        etCityName = null;
+        lvCandidates = null;
+        tvToolbarTitle = null;
+        ibToolbarBack = null;
+        btLocatedCityName = null;
+        btCurCityName = null;
+        llLocated = null;
+        llCitiesRoot = null;
     }
 
     @Override
@@ -100,11 +140,13 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     @Override
     protected void clearMemory() {
         mPresenter.destroy();
-        mUnbinder.unbind();
         mCandidates.clear();
         mCandidates = null;
         mPresenter = null;
-        mUnbinder = null;
+
+        uninitView();
+        //mUnbinder.unbind();
+        //mUnbinder = null;
         setContentView(new FrameLayout(this));
     }
 

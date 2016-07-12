@@ -6,6 +6,12 @@
     android:padding="@dimen/material_16dp">
 
     <TextView
+        android:id="@+id/tv_city_weather_main_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightGray"/>
+
+    <TextView
         android:id="@+id/tv_city_weather_main_air_quality_index"
         android:layout_width="@dimen/material_72dp"
         android:layout_height="@dimen/material_32dp"

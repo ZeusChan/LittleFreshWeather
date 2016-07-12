@@ -23,6 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     protected abstract void initView();
+    protected abstract void uninitView();
 
     protected abstract void clearMemory();
 

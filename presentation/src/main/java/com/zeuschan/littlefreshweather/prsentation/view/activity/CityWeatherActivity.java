@@ -40,9 +40,9 @@ import com.zeuschan.littlefreshweather.prsentation.view.adapter.CityWeatherAdapt
 
 import java.util.Random;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 
 public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         , View.OnClickListener
@@ -113,20 +113,30 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private LocalBroadcastManager mLocalBroadcastManager;
     private WeatherUpdateReceiver mWeatherUpdateReceiver;
     private UIHandler mHandler = new UIHandler();
-    private Unbinder mUnbinder = null;
+    //private Unbinder mUnbinder = null;
     private boolean mBackPressed = false;
     private int mAnimationType = 0;
     private PopupWindow mPopupMenu;
 
-    @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
-    @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
-    @BindView(R.id.srl_city_weather) SwipeRefreshLayout srlCityWeather;
-    @BindView(android.R.id.list) RecyclerView rvCityWeather;
-    @BindView(R.id.bt_failed_retry) Button btFailedRetry;
-    @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
-    @BindView(R.id.ib_city_weather_toolbar_cities) ImageButton ibToolbarCities;
-    @BindView(R.id.ib_city_weather_toolbar_menu) ImageButton ibToolbarMenu;
-    @BindView(R.id.rl_city_weather_background_view) RelativeLayout rlBackgroundView;
+//    @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
+//    @BindView(R.id.rl_failed_retry) RelativeLayout rlFailedRetry;
+//    @BindView(R.id.srl_city_weather) SwipeRefreshLayout srlCityWeather;
+//    @BindView(android.R.id.list) RecyclerView rvCityWeather;
+//    @BindView(R.id.bt_failed_retry) Button btFailedRetry;
+//    @BindView(R.id.tv_city_weather_toolbar_title) TextView tvToolbarTitle;
+//    @BindView(R.id.ib_city_weather_toolbar_cities) ImageButton ibToolbarCities;
+//    @BindView(R.id.ib_city_weather_toolbar_menu) ImageButton ibToolbarMenu;
+//    @BindView(R.id.rl_city_weather_background_view) RelativeLayout rlBackgroundView;
+
+    RelativeLayout rlLoadingProgress;
+    RelativeLayout rlFailedRetry;
+    SwipeRefreshLayout srlCityWeather;
+    RecyclerView rvCityWeather;
+    Button btFailedRetry;
+    TextView tvToolbarTitle;
+    ImageButton ibToolbarCities;
+    ImageButton ibToolbarMenu;
+    RelativeLayout rlBackgroundView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +150,18 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void initView() {
         setContentView(R.layout.activity_city_weather);
-        mUnbinder = ButterKnife.bind(this);
+        //mUnbinder = ButterKnife.bind(this);
+
+        rlLoadingProgress = (RelativeLayout)findViewById(R.id.rl_loading_progress);
+        rlFailedRetry = (RelativeLayout)findViewById(R.id.rl_failed_retry);
+        srlCityWeather = (SwipeRefreshLayout)findViewById(R.id.srl_city_weather);
+        rvCityWeather = (RecyclerView)findViewById(android.R.id.list);
+        btFailedRetry = (Button)findViewById(R.id.bt_failed_retry);
+        tvToolbarTitle = (TextView)findViewById(R.id.tv_city_weather_toolbar_title);
+        ibToolbarCities = (ImageButton)findViewById(R.id.ib_city_weather_toolbar_cities);
+        ibToolbarMenu = (ImageButton)findViewById(R.id.ib_city_weather_toolbar_menu);
+        rlBackgroundView = (RelativeLayout)findViewById(R.id.rl_city_weather_background_view);
+
         btFailedRetry.setOnClickListener(this);
         ibToolbarCities.setOnClickListener(this);
         ibToolbarMenu.setOnClickListener(this);
@@ -175,6 +196,19 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    protected void uninitView() {
+        rlLoadingProgress = null;
+        rlFailedRetry = null;
+        srlCityWeather = null;
+        rvCityWeather = null;
+        btFailedRetry = null;
+        tvToolbarTitle = null;
+        ibToolbarCities = null;
+        ibToolbarMenu = null;
+        rlBackgroundView = null;
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
@@ -188,7 +222,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.getBackgroundImage(rlBackgroundView, R.mipmap.night);
+        mPresenter.getBackgroundImage(rlBackgroundView, R.drawable.night);
         mPresenter.getImageViewSrc(ibToolbarCities, R.drawable.ic_edit_location_white_24dp);
         mPresenter.getImageViewSrc(ibToolbarMenu, R.drawable.ic_menu_white_24dp);
     }
@@ -237,10 +271,14 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mCityWeatherAdapter = null;
         mLocalBroadcastManager = null;
         mWeatherUpdateReceiver = null;
-        mUnbinder.unbind();
+        mPopupMenu = null;
+        //mUnbinder.unbind();
+        //mUnbinder = null;
+
+        uninitView();
         setContentView(new FrameLayout(this));
 
-        System.exit(0);
+        //System.exit(0);
     }
 
     @Override
@@ -428,13 +466,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         if (updateFreq != 0) {
             Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
             intent1.putExtra(WeatherUpdateService.UPDATE_DATA_FLAG, false);
-            startService(intent1);
+            getApplicationContext().startService(intent1);
         }
 
         boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
         if (shouldNotify) {
             Intent intent2 = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
-            startService(intent2);
+            getApplicationContext().startService(intent2);
         }
     }
 

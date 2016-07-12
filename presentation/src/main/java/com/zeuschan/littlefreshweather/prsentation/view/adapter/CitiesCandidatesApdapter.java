@@ -12,8 +12,8 @@ import com.zeuschan.littlefreshweather.prsentation.R;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
 
 /**
  * Created by chenxiong on 2016/6/21.
@@ -46,10 +46,12 @@ public class CitiesCandidatesApdapter extends ArrayAdapter<CityEntity> {
     }
 
     public static class ViewHolder {
-        @BindView(R.id.tv_cities_canditate_name) TextView tvCandidateName;
+        //@BindView(R.id.tv_cities_canditate_name) TextView tvCandidateName;
+        TextView tvCandidateName;
 
         public ViewHolder(View itemView) {
-            ButterKnife.bind(this, itemView);
+            //ButterKnife.bind(this, itemView);
+            tvCandidateName = (TextView)itemView.findViewById(R.id.tv_cities_canditate_name);
         }
     }
 }

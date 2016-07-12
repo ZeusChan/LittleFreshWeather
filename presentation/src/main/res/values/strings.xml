@@ -49,7 +49,7 @@
     <string name="moderate_rain">中雨</string>
     <string name="heavy_rain">大雨</string>
     <string name="extreme_rain">极端降雨</string>
-    <string name="drizzle_rain">毛毛雨</string>
+    <string name="drizzle_rain">毛毛雨/细雨</string>
     <string name="drizzle_rain_1">细雨</string>
     <string name="storm">暴雨</string>
     <string name="heavy_storm">大暴雨</string>

@@ -21,23 +21,30 @@ import com.zeuschan.littlefreshweather.prsentation.view.SettingsView;
 import com.zeuschan.littlefreshweather.prsentation.view.fragment.AboutDialogFragment;
 import com.zeuschan.littlefreshweather.prsentation.view.fragment.UpdateFrequencyDialogFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 
 public class SettingsActivity extends BaseActivity implements SettingsView, View.OnClickListener, UpdateFrequencyDialogFragment.UpdateFrequencyDialogListener {
     private static final String UPDATE_FREQ_DIALOG_TAG = "update_freq_dialog";
     private static final String ABOUT_DIALOG_TAG = "about_dialog";
 
     private SettingsPresenter mPresenter;
-    private Unbinder mUnbinder;
+    //private Unbinder mUnbinder;
 
-    @BindView(R.id.ib_settings_toolbar_back) ImageButton ibToolbarBack;
-    @BindView(R.id.rl_settings_auto_update) RelativeLayout rlAutoUpdate;
-    @BindView(R.id.tv_settings_auto_update_value) TextView tvAutoUpdateVal;
-    @BindView(R.id.ll_settings_notification_weather) LinearLayout llNotificationWeather;
-    @BindView(R.id.iv_settings_notification_weather_value) ImageView ivShouldNotify;
-    @BindView(R.id.ll_settings_about) LinearLayout llAbout;
+//    @BindView(R.id.ib_settings_toolbar_back) ImageButton ibToolbarBack;
+//    @BindView(R.id.rl_settings_auto_update) RelativeLayout rlAutoUpdate;
+//    @BindView(R.id.tv_settings_auto_update_value) TextView tvAutoUpdateVal;
+//    @BindView(R.id.ll_settings_notification_weather) LinearLayout llNotificationWeather;
+//    @BindView(R.id.iv_settings_notification_weather_value) ImageView ivShouldNotify;
+//    @BindView(R.id.ll_settings_about) LinearLayout llAbout;
+
+    ImageButton ibToolbarBack;
+    RelativeLayout rlAutoUpdate;
+    TextView tvAutoUpdateVal;
+    LinearLayout llNotificationWeather;
+    ImageView ivShouldNotify;
+    LinearLayout llAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,14 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
     @Override
     protected void initView() {
         setContentView(R.layout.activity_settings);
-        mUnbinder = ButterKnife.bind(this);
+        //mUnbinder = ButterKnife.bind(this);
+
+        ibToolbarBack = (ImageButton)findViewById(R.id.ib_settings_toolbar_back);
+        rlAutoUpdate = (RelativeLayout)findViewById(R.id.rl_settings_auto_update);
+        tvAutoUpdateVal = (TextView)findViewById(R.id.tv_settings_auto_update_value);
+        llNotificationWeather = (LinearLayout)findViewById(R.id.ll_settings_notification_weather);
+        ivShouldNotify = (ImageView)findViewById(R.id.iv_settings_notification_weather_value);
+        llAbout = (LinearLayout)findViewById(R.id.ll_settings_about);
 
         ibToolbarBack.setOnClickListener(this);
         rlAutoUpdate.setOnClickListener(this);
@@ -56,6 +70,16 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         llAbout.setOnClickListener(this);
 
         mPresenter = new SettingsPresenter(this);
+    }
+
+    @Override
+    protected void uninitView() {
+        ibToolbarBack = null;
+        rlAutoUpdate = null;
+        tvAutoUpdateVal = null;
+        llNotificationWeather = null;
+        ivShouldNotify = null;
+        llAbout = null;
     }
 
     @Override
@@ -77,7 +101,10 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         if (mPresenter != null) {
             mPresenter.destroy();
         }
-        mUnbinder.unbind();
+
+        uninitView();
+        //mUnbinder.unbind();
+        //mUnbinder = null;
         setContentView(new FrameLayout(this));
     }
 
@@ -92,8 +119,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         if (!shouldNotify) {
             getApplicationContext().stopService(new Intent(getApplicationContext(), WeatherNotificationService.class));
         } else {
-            Intent intent = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
-            startService(intent);
+            getApplicationContext().startService(new Intent(this.getApplicationContext(), WeatherNotificationService.class));
         }
     }
 
@@ -112,6 +138,9 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
             WeatherUpdateService.setUpdateServiceAlarm(getApplicationContext(), 0);
         }
         WeatherUpdateService.setUpdateServiceAlarm(getApplicationContext(), which);
+        if (0 == which) {
+            getApplicationContext().stopService(new Intent(this.getApplicationContext(), WeatherUpdateService.class));
+        }
     }
 
     @Override

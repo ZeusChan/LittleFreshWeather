@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#222222</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#4caf50</color>
+    <color name="colorAccent">#ffffff</color>
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorSemiTransparent">#5e000000</color>
@@ -20,4 +20,11 @@
     <color name="colorLightGreen">#4caf50</color>
     <color name="colorDarkBlue">#3b6eb0</color>
     <color name="colorDarkGreen">#114f62</color>
+
+    <color name="colorAirOne">#1daa16</color>
+    <color name="colorAirTwo">#eb9c05</color>
+    <color name="colorAirThree">#ff6c00</color>
+    <color name="colorAirFour">#dc2226</color>
+    <color name="colorAirFive">#610199</color>
+    <color name="colorAirSix">#580547</color>
 </resources>

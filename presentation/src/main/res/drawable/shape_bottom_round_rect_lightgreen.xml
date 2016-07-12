@@ -8,6 +8,6 @@
         android:bottomRightRadius="@dimen/material_4dp"/>
 
     <solid
-        android:color="@color/colorLightGreen"/>
+        android:color="@color/colorAirOne"/>
 
 </shape>

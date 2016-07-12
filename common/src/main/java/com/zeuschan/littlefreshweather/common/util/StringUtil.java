@@ -1,15 +1,11 @@
 package com.zeuschan.littlefreshweather.common.util;
 
-import android.content.Context;
-
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 /**
  * Created by chenxiong on 2016/6/17.
@@ -54,9 +50,12 @@ public class StringUtil {
         return retDate;
     }
 
-    public static String getFriendlyDateString(Date date) {
+    public static String getFriendlyDateString(Date date, boolean showDayOfWeek) {
         if (date == null) {
-            return "--月--日";
+            if (showDayOfWeek)
+                return "--月--日 周--";
+            else
+                return "--月--日";
         }
 
         GregorianCalendar nowCalender = new GregorianCalendar();
@@ -65,21 +64,74 @@ public class StringUtil {
 
         int now = nowCalender.get(GregorianCalendar.DAY_OF_YEAR);
         int dst = dstCalender.get(GregorianCalendar.DAY_OF_YEAR);
+        int dstDayOfWeek = dstCalender.get(GregorianCalendar.DAY_OF_WEEK);
+        String dstDayOfWeekString = "周--";
+        if (showDayOfWeek) {
+            switch (dstDayOfWeek) {
+                case 1: {
+                    dstDayOfWeekString = "周日";
+                } break;
+                case 2: {
+                    dstDayOfWeekString = "周一";
+                } break;
+                case 3: {
+                    dstDayOfWeekString = "周二";
+                } break;
+                case 4: {
+                    dstDayOfWeekString = "周三";
+                } break;
+                case 5: {
+                    dstDayOfWeekString = "周四";
+                } break;
+                case 6: {
+                    dstDayOfWeekString = "周五";
+                } break;
+                case 7: {
+                    dstDayOfWeekString = "周六";
+                } break;
+            }
+        }
 
         if (dst - now == 0) {
-            return "今天";
+            if (showDayOfWeek)
+                return "今天" + " " + dstDayOfWeekString;
+            else
+                return "今天";
         } else if (dst - now == 1) {
-            return "明天";
+            if (showDayOfWeek)
+                return "明天" + " " + dstDayOfWeekString;
+            else
+                return "明天";
         } else if (dst - now == 2) {
-            return "后天";
+            if (showDayOfWeek)
+                return "后天" + " " + dstDayOfWeekString;
+            else
+                return "后天";
         } else if (dst - now == -1) {
-            return "昨天";
+            if (showDayOfWeek)
+                return "昨天" + " " + dstDayOfWeekString;
+            else
+                return "昨天";
         } else if (dst - now == -2) {
-            return "前天";
+            if (showDayOfWeek)
+                return "前天" + " " + dstDayOfWeekString;
+            else
+                return "前天";
         } else {
             SimpleDateFormat simpleDateFormat = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
-            simpleDateFormat.applyPattern("M月d日");
+            if (showDayOfWeek)
+                simpleDateFormat.applyPattern("M月d日 EE");
+            else
+                simpleDateFormat.applyPattern("M月d日");
             return simpleDateFormat.format(date);
         }
+    }
+
+    public static String getCurrentDateTime(String pattern) {
+        GregorianCalendar currentCalendar = new GregorianCalendar();
+        SimpleDateFormat simpleDateFormat = (SimpleDateFormat)SimpleDateFormat.getDateTimeInstance();
+        simpleDateFormat.applyPattern(pattern);
+
+        return simpleDateFormat.format(currentCalendar.getTime());
     }
 }
