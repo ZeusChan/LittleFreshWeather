@@ -64,17 +64,19 @@
         <activity
             android:name=".view.activity.CityWeatherActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CitiesActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <service android:name=".service.WeatherUpdateService" />
-        <service android:name=".service.WeatherNotificationService" />
+        <service android:name=".service.WeatherUpdateService"
+            android:process=":WeatherUpdateService"/>
+        <service android:name=".service.WeatherNotificationService"
+            android:process=":WeatherNotificationService"/>
 
         <receiver android:name=".receiver.AlarmReceiver" />
         <receiver

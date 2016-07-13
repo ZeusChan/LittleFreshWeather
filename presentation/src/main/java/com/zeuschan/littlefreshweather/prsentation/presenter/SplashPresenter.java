@@ -79,17 +79,11 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
 
     @Override
     public void destroy() {
-        mView = null;
-        mUseCase = null;
-        mLocationClient = null;
-        mLocationClientOption = null;
+        mUseCase.clear();
         if (mListCities != null) {
             mListCities.clear();
-            mListCities = null;
         }
-        if (mLocationEntity != null) {
-            mLocationEntity = null;
-        }
+        mLocationEntity = null;
     }
 
     @Override

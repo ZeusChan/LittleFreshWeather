@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -197,15 +196,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     protected void uninitView() {
-        rlLoadingProgress = null;
-        rlFailedRetry = null;
-        srlCityWeather = null;
-        rvCityWeather = null;
-        btFailedRetry = null;
-        tvToolbarTitle = null;
-        ibToolbarCities = null;
-        ibToolbarMenu = null;
-        rlBackgroundView = null;
+        rvCityWeather.clearOnScrollListeners();
     }
 
     @Override
@@ -256,8 +247,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void clearMemory() {
         stopAnimation();
-        rvCityWeather.setAdapter(null);
-        rvCityWeather.clearOnScrollListeners();
         mPresenter.destroy();
         mHandler.removeMessages(MSG_WEATHER_UPDATE);
         mHandler.removeCallbacks(rainProc);
@@ -266,17 +255,9 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         mHandler.removeCallbacks(lightningProc);
         mHandler.removeCallbacks(sunshaineProc);
         mHandler.removeCallbacks(quitProc);
-        mHandler = null;
-        mPresenter = null;
-        mCityWeatherAdapter = null;
-        mLocalBroadcastManager = null;
-        mWeatherUpdateReceiver = null;
-        mPopupMenu = null;
         //mUnbinder.unbind();
-        //mUnbinder = null;
 
         uninitView();
-        setContentView(new FrameLayout(this));
 
         //System.exit(0);
     }
@@ -466,13 +447,13 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         if (updateFreq != 0) {
             Intent intent1 = new Intent(this.getApplicationContext(), WeatherUpdateService.class);
             intent1.putExtra(WeatherUpdateService.UPDATE_DATA_FLAG, false);
-            getApplicationContext().startService(intent1);
+            startService(intent1);
         }
 
         boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
         if (shouldNotify) {
             Intent intent2 = new Intent(this.getApplicationContext(), WeatherNotificationService.class);
-            getApplicationContext().startService(intent2);
+            startService(intent2);
         }
     }
 

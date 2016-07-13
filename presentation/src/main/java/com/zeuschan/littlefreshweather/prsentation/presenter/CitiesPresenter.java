@@ -2,12 +2,10 @@ package com.zeuschan.littlefreshweather.prsentation.presenter;
 
 
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.InsetDrawable;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.zeuschan.littlefreshweather.domain.usecase.GetBitmapUseCase;
 import com.zeuschan.littlefreshweather.domain.usecase.GetCitiesUseCase;
@@ -58,14 +56,10 @@ public class CitiesPresenter implements Presenter {
     public void destroy() {
         if (mCities != null) {
             mCities.clear();
-            mCities = null;
         }
         mCandidates.clear();
-        mCandidates = null;
-        mUseCase = null;
+        mUseCase.clear();
         mBitmapUsecases.clear();
-        mBitmapUsecases = null;
-        mView = null;
     }
 
     public void getBackgroundImage(View view, int resId) {

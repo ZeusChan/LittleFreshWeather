@@ -15,7 +15,7 @@ public abstract class UseCase<T> {
 
     protected abstract Observable<T> buildUseCaseObservable();
 
-    //protected abstract void clear();
+    public abstract void clear();
 
     public void execute(Subscriber<T> useCaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()

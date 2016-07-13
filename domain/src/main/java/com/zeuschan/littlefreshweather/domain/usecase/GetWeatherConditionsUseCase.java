@@ -21,6 +21,12 @@ public class GetWeatherConditionsUseCase extends UseCase<List<WeatherConditionEn
     }
 
     @Override
+    public void clear() {
+        DataSourceManager.getInstance(mContext).clear();
+        mContext = null;
+    }
+
+    @Override
     protected Observable<List<WeatherConditionEntity>> buildUseCaseObservable() {
         return DataSourceManager.getInstance(mContext).getWeatherConditionEntities();
     }

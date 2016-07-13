@@ -21,6 +21,13 @@ public class GetCityWeatherUseCase extends UseCase<WeatherEntity> {
         mFromCache = fromCache;
     }
 
+    @Override
+    public void clear() {
+        DataSourceManager.getInstance(mContext).clear();
+        mContext = null;
+        mCityId = null;
+    }
+
     public void setCityId(String cityId) {
         mCityId = cityId;
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,12 +38,12 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
 //    @BindView(R.id.iv_settings_notification_weather_value) ImageView ivShouldNotify;
 //    @BindView(R.id.ll_settings_about) LinearLayout llAbout;
 
-    ImageButton ibToolbarBack;
-    RelativeLayout rlAutoUpdate;
-    TextView tvAutoUpdateVal;
-    LinearLayout llNotificationWeather;
-    ImageView ivShouldNotify;
-    LinearLayout llAbout;
+    private ImageButton ibToolbarBack;
+    private RelativeLayout rlAutoUpdate;
+    private TextView tvAutoUpdateVal;
+    private LinearLayout llNotificationWeather;
+    private ImageView ivShouldNotify;
+    private LinearLayout llAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +73,6 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
 
     @Override
     protected void uninitView() {
-        ibToolbarBack = null;
-        rlAutoUpdate = null;
-        tvAutoUpdateVal = null;
-        llNotificationWeather = null;
-        ivShouldNotify = null;
-        llAbout = null;
     }
 
     @Override
@@ -104,8 +97,6 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
 
         uninitView();
         //mUnbinder.unbind();
-        //mUnbinder = null;
-        setContentView(new FrameLayout(this));
     }
 
     @Override
@@ -117,9 +108,9 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
     public void showNotificationWeather(boolean shouldNotify) {
         ivShouldNotify.setImageResource(shouldNotify ? R.drawable.preference_checkbox_on : R.drawable.preference_checkbox_off);
         if (!shouldNotify) {
-            getApplicationContext().stopService(new Intent(getApplicationContext(), WeatherNotificationService.class));
+            stopService(new Intent(getApplicationContext(), WeatherNotificationService.class));
         } else {
-            getApplicationContext().startService(new Intent(this.getApplicationContext(), WeatherNotificationService.class));
+            startService(new Intent(this.getApplicationContext(), WeatherNotificationService.class));
         }
     }
 
@@ -139,7 +130,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         }
         WeatherUpdateService.setUpdateServiceAlarm(getApplicationContext(), which);
         if (0 == which) {
-            getApplicationContext().stopService(new Intent(this.getApplicationContext(), WeatherUpdateService.class));
+            stopService(new Intent(this.getApplicationContext(), WeatherUpdateService.class));
         }
     }
 

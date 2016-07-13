@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Process;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -37,17 +38,21 @@ public class WeatherNotificationService extends Service implements WidgetPresent
 
     @Override
     public void onCreate() {
+        Log.e(TAG, "onCreate");
+        Log.e(TAG, "pid=" + Process.myPid());
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand");
         startUpdateWeather();
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
+        Log.e(TAG, "onDestroy");
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.stop();

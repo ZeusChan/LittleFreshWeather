@@ -6,9 +6,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.common.util.FileUtil;
@@ -33,6 +35,8 @@ public class WeatherUpdateService extends Service {
 
     @Override
     public void onCreate() {
+        Log.e(TAG, "onCreate");
+        Log.e(TAG, "pid=" + Process.myPid());
         super.onCreate();
         String cityId = FileUtil.getStringFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
         mUseCase = new GetCityWeatherUseCase(getApplicationContext(), cityId, false);
@@ -46,6 +50,7 @@ public class WeatherUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand");
         boolean shouldUpdateData = true;
         if (intent != null && !intent.getBooleanExtra(UPDATE_DATA_FLAG, true)) {
             shouldUpdateData = false;
@@ -63,9 +68,10 @@ public class WeatherUpdateService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.e(TAG, "onDestroy");
         super.onDestroy();
         mUseCase.unsubscribe();
-        mUseCase = null;
+        mUseCase.clear();
     }
 
     public static void setUpdateServiceAlarm(Context context, int updateFreq) {
@@ -103,11 +109,11 @@ public class WeatherUpdateService extends Service {
             intent.putExtra(CityWeatherActivity.WeatherUpdateReceiver.WEATHER_ENTITY, weatherEntity);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
 
-            getApplicationContext().sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
+            sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
 
             boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
             if (shouldNotify) {
-                getApplicationContext().startService(new Intent(getApplicationContext(), WeatherNotificationService.class));
+                startService(new Intent(getApplicationContext(), WeatherNotificationService.class));
             }
         }
     }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,12 +32,12 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     public static final String LOC_CITY_ID = "loc_city_id";
     public static final String LOCATE_RESULT = "locate_result";
 
-    CitiesPresenter mPresenter;
-    CitiesCandidatesApdapter mAdapter;
-    List<CityEntity> mCandidates = new ArrayList<>();
-    String mLocateCityId;
-    String mCurCityId;
-    boolean mIsLocateSucceeded = false;
+    private CitiesPresenter mPresenter;
+    private CitiesCandidatesApdapter mAdapter;
+    private List<CityEntity> mCandidates = new ArrayList<>();
+    private String mLocateCityId;
+    private String mCurCityId;
+    private boolean mIsLocateSucceeded = false;
     //Unbinder mUnbinder;
 
 //    @BindView(R.id.rl_loading_progress) RelativeLayout rlLoadingProgress;
@@ -53,24 +52,24 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 //    @BindView(R.id.ll_cities_located) LinearLayout llLocated;
 //    @BindView(R.id.ll_cities_root) LinearLayout llCitiesRoot;
 
-    RelativeLayout rlLoadingProgress;
-    RelativeLayout rlFailedRetry;
-    Button btFailedRetry;
-    EditText etCityName;
-    ListView lvCandidates;
-    TextView tvToolbarTitle;
-    ImageButton ibToolbarBack;
-    Button btLocatedCityName;
-    Button btCurCityName;
-    LinearLayout llLocated;
-    LinearLayout llCitiesRoot;
+    private RelativeLayout rlLoadingProgress;
+    private RelativeLayout rlFailedRetry;
+    private Button btFailedRetry;
+    private EditText etCityName;
+    private ListView lvCandidates;
+    private TextView tvToolbarTitle;
+    private ImageButton ibToolbarBack;
+    private Button btLocatedCityName;
+    private Button btCurCityName;
+    private LinearLayout llLocated;
+    private LinearLayout llCitiesRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
 
-        mAdapter = new CitiesCandidatesApdapter(this, R.layout.ll_cities_candidates_item, mCandidates);
+        mAdapter = new CitiesCandidatesApdapter(this.getApplicationContext(), R.layout.ll_cities_candidates_item, mCandidates);
         lvCandidates.setAdapter(mAdapter);
     }
 
@@ -112,17 +111,7 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
     @Override
     protected void uninitView() {
-        rlLoadingProgress = null;
-        rlFailedRetry = null;
-        btFailedRetry = null;
-        etCityName = null;
-        lvCandidates = null;
-        tvToolbarTitle = null;
-        ibToolbarBack = null;
-        btLocatedCityName = null;
-        btCurCityName = null;
-        llLocated = null;
-        llCitiesRoot = null;
+        etCityName.removeTextChangedListener(this);
     }
 
     @Override
@@ -141,13 +130,10 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
     protected void clearMemory() {
         mPresenter.destroy();
         mCandidates.clear();
-        mCandidates = null;
-        mPresenter = null;
 
         uninitView();
         //mUnbinder.unbind();
-        //mUnbinder = null;
-        setContentView(new FrameLayout(this));
+        //setContentView(new FrameLayout(this));
     }
 
     @Override

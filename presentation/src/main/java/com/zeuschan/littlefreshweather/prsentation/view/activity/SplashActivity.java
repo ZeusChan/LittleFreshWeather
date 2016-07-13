@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.animation.CycleInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.zeuschan.littlefreshweather.prsentation.R;
@@ -26,15 +25,15 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     private static final int FIRE_DELAY = 1000;
 
-    SplashPresenter mPresenter;
-    UIHandler mHandler = new UIHandler();
-    String mCityId;
-    String mLocateCityId;
-    boolean mIsLocateSucceeded = false;
+    private SplashPresenter mPresenter;
+    private UIHandler mHandler = new UIHandler();
+    private String mCityId;
+    private String mLocateCityId;
+    private boolean mIsLocateSucceeded = false;
     //Unbinder mUnbinder;
 
     //@BindView(R.id.iv_splash_icon) ImageView ivSplashIcon;
-    ImageView ivSplashIcon;
+    private ImageView ivSplashIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     protected void uninitView() {
-        ivSplashIcon = null;
+
     }
 
     @Override
@@ -77,13 +76,9 @@ public class SplashActivity extends BaseActivity implements SplashView {
         mHandler.removeMessages(MSG_NAVIGATE_CITY_WEATHER);
         mHandler.removeMessages(MSG_NAVIGATE_CITIES);
         mHandler.removeCallbacks(delayStartProc);
-        mHandler = null;
-        mPresenter = null;
-
         uninitView();
         //mUnbinder.unbind();
-        //mUnbinder = null;
-        setContentView(new FrameLayout(this));
+        //setContentView(new FrameLayout(this));
     }
 
     @Override
@@ -113,13 +108,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
                     mPresenter.start();
                 } break;
                 case MSG_NAVIGATE_CITY_WEATHER: {
-                    Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CityWeatherActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, CityWeatherActivity.class);
                     intent.putExtra(CityWeatherActivity.CITY_ID, mCityId);
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
                 } break;
                 case MSG_NAVIGATE_CITIES: {
-                    Intent intent = new Intent(SplashActivity.this.getApplicationContext(), CitiesActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, CitiesActivity.class);
                     intent.putExtra(CitiesActivity.LOC_CITY_ID, mLocateCityId);
                     intent.putExtra(CitiesActivity.CITY_ID, mCityId);
                     intent.putExtra(CitiesActivity.LOCATE_RESULT, mIsLocateSucceeded);

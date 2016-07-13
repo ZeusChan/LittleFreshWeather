@@ -21,6 +21,12 @@ public class GetBitmapUseCase extends UseCase<BitmapCacheWrapper> {
     }
 
     @Override
+    public void clear() {
+        MemoryCacheManager.getInstance().clear();
+        mContext = null;
+    }
+
+    @Override
     protected Observable<BitmapCacheWrapper> buildUseCaseObservable() {
         return Observable.create(new Observable.OnSubscribe<BitmapCacheWrapper>() {
             @Override

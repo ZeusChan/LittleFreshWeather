@@ -48,6 +48,12 @@ public class DataSourceManager implements DataSource {
     }
 
     @Override
+    public void clear() {
+        mDiskCacheManager.clear();
+        mServiceManager.clear();
+    }
+
+    @Override
     public Observable<List<CityEntity>> getCityEntities() {
         return mDiskCacheManager.getCityEntities()
                 .concatMap(new Func1<List<CityEntity>, Observable<? extends List<CityEntity>>>() {

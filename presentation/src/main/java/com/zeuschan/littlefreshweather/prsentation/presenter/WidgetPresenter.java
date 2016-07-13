@@ -44,8 +44,7 @@ public class WidgetPresenter implements Presenter {
 
     @Override
     public void destroy() {
-        mUseCase = null;
-        mCallback = null;
+        mUseCase.clear();
     }
 
     private final class CityWeatherSubscriber extends Subscriber<WeatherEntity> {

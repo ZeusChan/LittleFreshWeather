@@ -20,6 +20,12 @@ public class GetCitiesUseCase extends UseCase<List<CityEntity>> {
     }
 
     @Override
+    public void clear() {
+        DataSourceManager.getInstance(mContext).clear();
+        mContext = null;
+    }
+
+    @Override
     protected Observable<List<CityEntity>> buildUseCaseObservable() {
         return DataSourceManager.getInstance(mContext).getCityEntities();
     }

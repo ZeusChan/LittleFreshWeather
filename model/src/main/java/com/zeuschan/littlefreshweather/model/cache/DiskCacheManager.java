@@ -50,6 +50,11 @@ public class DiskCacheManager implements DataSource {
         }
     }
 
+    @Override
+    public void clear() {
+
+    }
+
     public void putCityEntities(List<CityEntity> cityEntities) {
         if (null == mDiskLruCache || null == cityEntities)
             return;

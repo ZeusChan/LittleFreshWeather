@@ -45,7 +45,6 @@ public class ServicesManager implements DataSource {
     private List<WeatherConditionEntity> mWeatherCondtionEntities = new ArrayList<>();
     private List<WeatherEntity.Forecast> mForecasts = new ArrayList<>();
 
-
     private ServicesManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -64,6 +63,13 @@ public class ServicesManager implements DataSource {
         mNameMap.put("CN10104", "重庆");
         mNameMap.put("CN10132", "香港");
         mNameMap.put("CN10133", "澳门");
+    }
+
+    @Override
+    public void clear() {
+        mCityEntities.clear();
+        mWeatherCondtionEntities.clear();
+        mForecasts.clear();
     }
 
     @Override
