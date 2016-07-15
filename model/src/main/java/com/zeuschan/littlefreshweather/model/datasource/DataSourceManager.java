@@ -1,6 +1,7 @@
 package com.zeuschan.littlefreshweather.model.datasource;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zeuschan.littlefreshweather.common.util.NetUtil;
 import com.zeuschan.littlefreshweather.model.cache.DiskCacheManager;
@@ -19,6 +20,7 @@ import rx.functions.Func1;
  * Created by chenxiong on 2016/6/17.
  */
 public class DataSourceManager implements DataSource {
+    private static final String TAG = DataSourceManager.class.getSimpleName();
     private static final String DATA_CACHE_DIR = "data";
 
     private static DataSourceManager ourInstance = null;
@@ -119,10 +121,12 @@ public class DataSourceManager implements DataSource {
                     @Override
                     public Observable<? extends WeatherEntity> call(WeatherEntity weatherEntity) {
                         if (null == weatherEntity) {
+                            Log.e(TAG, "Getting weather entity from disk cache failed.");
                             mIsWeatherEntityDiskCacheExists = false;
                             return mServiceManager.getCityWeather(id, false);
                         }
                         else {
+                            Log.e(TAG, "Getting weather entity from disk cache succeeded.");
                             mIsWeatherEntityDiskCacheExists = true;
                             return Observable.just(weatherEntity);
                         }

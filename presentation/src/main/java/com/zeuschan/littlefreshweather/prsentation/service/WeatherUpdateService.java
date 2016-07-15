@@ -9,14 +9,12 @@ import android.os.IBinder;
 import android.os.Process;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.common.util.FileUtil;
+import com.zeuschan.littlefreshweather.common.util.LogUtil;
 import com.zeuschan.littlefreshweather.domain.usecase.GetCityWeatherUseCase;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
-import com.zeuschan.littlefreshweather.prsentation.presenter.WidgetPresenter;
 import com.zeuschan.littlefreshweather.prsentation.receiver.AlarmReceiver;
 import com.zeuschan.littlefreshweather.prsentation.receiver.WeatherAppWidget;
 import com.zeuschan.littlefreshweather.prsentation.view.activity.CityWeatherActivity;
@@ -28,18 +26,22 @@ import rx.Subscriber;
  */
 public class WeatherUpdateService extends Service {
     public static final String UPDATE_DATA_FLAG = "update_data_flag";
-    private static final int ONE_HOUR = 60 * 60 * 1000;
+    public static final String UPDATE_CITY_ID = "update_city_id";
+    private static final int ONE_HOUR = /*60 * 6*/10 * 1000;
 
     private static final String TAG = WeatherUpdateService.class.getSimpleName();
     private GetCityWeatherUseCase mUseCase;
+    private String mCityId;
 
     @Override
     public void onCreate() {
-        Log.e(TAG, "onCreate");
-        Log.e(TAG, "pid=" + Process.myPid());
+        LogUtil.e(TAG, "onCreate");
+        LogUtil.e(TAG, "pid=" + Process.myPid());
+        LogUtil.e(TAG, "uid=" + Process.myUid());
         super.onCreate();
-        String cityId = FileUtil.getStringFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
-        mUseCase = new GetCityWeatherUseCase(getApplicationContext(), cityId, false);
+        mCityId = FileUtil.getStringFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
+        LogUtil.e(TAG, "cityid=" + mCityId);
+        mUseCase = new GetCityWeatherUseCase(getApplicationContext(), mCityId, false);
     }
 
     @Nullable
@@ -50,7 +52,20 @@ public class WeatherUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e(TAG, "onStartCommand");
+        LogUtil.e(TAG, "onStartCommand");
+        LogUtil.e(TAG, "pid=" + Process.myPid());
+        LogUtil.e(TAG, "uid=" + Process.myUid());
+
+        String cityId = null;
+        if (intent != null) {
+            cityId = intent.getStringExtra(UPDATE_CITY_ID);
+        }
+        if (cityId != null) {
+            mCityId = cityId;
+            mUseCase.setCityId(mCityId);
+            LogUtil.e(TAG, "upate cityid to " + cityId);
+        }
+
         boolean shouldUpdateData = true;
         if (intent != null && !intent.getBooleanExtra(UPDATE_DATA_FLAG, true)) {
             shouldUpdateData = false;
@@ -62,21 +77,26 @@ public class WeatherUpdateService extends Service {
 
         int updateFreq = FileUtil.getIntFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_UPDATE_FREQUENCY, Constants.DEFAULT_UPDATE_FREQUENCY);
         setUpdateServiceAlarm(getApplicationContext(), updateFreq);
+        LogUtil.e(TAG, "updateFreq=" + updateFreq);
 
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "onDestroy");
+        LogUtil.e(TAG, "onDestroy");
+        LogUtil.e(TAG, "pid=" + Process.myPid());
+        LogUtil.e(TAG, "uid=" + Process.myUid());
         super.onDestroy();
         mUseCase.unsubscribe();
         mUseCase.clear();
+
+        System.exit(0);
     }
 
     public static void setUpdateServiceAlarm(Context context, int updateFreq) {
-        Intent i = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, 0);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager manager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
         if (updateFreq != 0) {
             manager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateFreq * ONE_HOUR, pendingIntent);
@@ -87,8 +107,8 @@ public class WeatherUpdateService extends Service {
     }
 
     public static boolean isUpdateServeceAlarmOn(Context context) {
-        Intent i = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_NO_CREATE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
         return pendingIntent != null;
     }
 
@@ -105,15 +125,23 @@ public class WeatherUpdateService extends Service {
 
         @Override
         public void onNext(WeatherEntity weatherEntity) {
+            // 更新主界面
             Intent intent = new Intent(CityWeatherActivity.WEATHER_UPDATE_ACTION);
             intent.putExtra(CityWeatherActivity.WeatherUpdateReceiver.WEATHER_ENTITY, weatherEntity);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            //LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            sendBroadcast(intent, Constants.RECV_WEATHER_UPDATE);
 
-            sendBroadcast(new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION), Constants.RECV_WEATHER_UPDATE);
+            // 更新appwidget
+            Intent intent1 = new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION);
+            intent1.putExtra(WeatherAppWidget.WEATHER_ENTITY, weatherEntity);
+            sendBroadcast(intent1, Constants.RECV_WEATHER_UPDATE);
 
+            // 更新通知栏
             boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
             if (shouldNotify) {
-                startService(new Intent(getApplicationContext(), WeatherNotificationService.class));
+                Intent notifyIntent = new Intent(getApplicationContext(), WeatherNotificationService.class);
+                notifyIntent.putExtra(WeatherNotificationService.WEATHER_ENTITY, weatherEntity);
+                startService(notifyIntent);
             }
         }
     }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--注意：appWidget的布局中不能包含View！！！-->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/app_widget_layout"
-    android:minWidth="@dimen/material_400dp"
-    android:minHeight="@dimen/material_56dp"
+    android:minWidth="@dimen/material_360dp"
+    android:minHeight="@dimen/material_48dp"
     android:label="@string/app_name"
     android:updatePeriodMillis="8640000"
     android:resizeMode="none"/>

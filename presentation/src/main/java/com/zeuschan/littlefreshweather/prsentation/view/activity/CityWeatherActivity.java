@@ -32,6 +32,7 @@ import com.zeuschan.littlefreshweather.common.util.NetUtil;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.CityWeatherPresenter;
+import com.zeuschan.littlefreshweather.prsentation.receiver.WeatherAppWidget;
 import com.zeuschan.littlefreshweather.prsentation.service.WeatherNotificationService;
 import com.zeuschan.littlefreshweather.prsentation.service.WeatherUpdateService;
 import com.zeuschan.littlefreshweather.prsentation.view.CityWeatherView;
@@ -109,7 +110,7 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     private Random mRandom = new Random();
     private CityWeatherPresenter mPresenter;
     private CityWeatherAdapter mCityWeatherAdapter;
-    private LocalBroadcastManager mLocalBroadcastManager;
+    //private LocalBroadcastManager mLocalBroadcastManager;
     private WeatherUpdateReceiver mWeatherUpdateReceiver;
     private UIHandler mHandler = new UIHandler();
     //private Unbinder mUnbinder = null;
@@ -127,21 +128,21 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 //    @BindView(R.id.ib_city_weather_toolbar_menu) ImageButton ibToolbarMenu;
 //    @BindView(R.id.rl_city_weather_background_view) RelativeLayout rlBackgroundView;
 
-    RelativeLayout rlLoadingProgress;
-    RelativeLayout rlFailedRetry;
-    SwipeRefreshLayout srlCityWeather;
-    RecyclerView rvCityWeather;
-    Button btFailedRetry;
-    TextView tvToolbarTitle;
-    ImageButton ibToolbarCities;
-    ImageButton ibToolbarMenu;
-    RelativeLayout rlBackgroundView;
+    private RelativeLayout rlLoadingProgress;
+    private RelativeLayout rlFailedRetry;
+    private SwipeRefreshLayout srlCityWeather;
+    private RecyclerView rvCityWeather;
+    private Button btFailedRetry;
+    private TextView tvToolbarTitle;
+    private ImageButton ibToolbarCities;
+    private ImageButton ibToolbarMenu;
+    private RelativeLayout rlBackgroundView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        //mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mWeatherUpdateReceiver = new WeatherUpdateReceiver();
         startServices();
     }
@@ -221,18 +222,21 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     @Override
     protected void onResume() {
         super.onResume();
-        mLocalBroadcastManager.registerReceiver(mWeatherUpdateReceiver, new IntentFilter(WEATHER_UPDATE_ACTION));
+        //smLocalBroadcastManager.registerReceiver(mWeatherUpdateReceiver, new IntentFilter(WEATHER_UPDATE_ACTION));
+        registerReceiver(mWeatherUpdateReceiver, new IntentFilter(WEATHER_UPDATE_ACTION), Constants.SEND_WEATHER_UPDATE, null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mLocalBroadcastManager.unregisterReceiver(mWeatherUpdateReceiver);
+        //mLocalBroadcastManager.unregisterReceiver(mWeatherUpdateReceiver);
+        unregisterReceiver(mWeatherUpdateReceiver);
     }
 
     @Override
     public void renderCityWeather(WeatherEntity entity) {
         if (entity != null) {
+            setToolbarCity(entity.getCityName());
             mCityWeatherAdapter.setWeatherEntity(entity);
             startAnimation(entity);
         }
@@ -335,6 +339,30 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
     }
 
     @Override
+    public void updateNotification(WeatherEntity entity) {
+        // 更新appwidget
+        Intent intent = new Intent(WeatherAppWidget.UPDATE_WIDGET_ACTION);
+        intent.putExtra(WeatherAppWidget.WEATHER_ENTITY, entity);
+        sendBroadcast(intent, Constants.RECV_WEATHER_UPDATE);
+
+        // 更新通知栏
+        boolean shouldNotify = FileUtil.getBooleanFromPreferences(getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_NOTIFY_WEATHER, Constants.DEFAULT_NOTIFY_WEATHER);
+        if (shouldNotify) {
+            Intent notifyIntent = new Intent(getApplicationContext(), WeatherNotificationService.class);
+            notifyIntent.putExtra(WeatherNotificationService.WEATHER_ENTITY, entity);
+            startService(notifyIntent);
+        }
+    }
+
+    @Override
+    public void updateUpdateService(String cityId) {
+        // 更新WeatherUpdateService的城市
+        Intent intent = new Intent(getApplicationContext(), WeatherUpdateService.class);
+        intent.putExtra(WeatherUpdateService.UPDATE_CITY_ID, cityId);
+        startService(intent);
+    }
+
+    @Override
     public void onRefresh() {
         updateData();
     }
@@ -377,9 +405,6 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_WEATHER_UPDATE) {
-                if (!NetUtil.isNetworkAvailable(getApplication()))
-                    return;
-
                 showError(getString(R.string.weather_updated));
                 renderCityWeather((WeatherEntity)msg.getData().getParcelable(WeatherUpdateReceiver.WEATHER_ENTITY));
                 return;

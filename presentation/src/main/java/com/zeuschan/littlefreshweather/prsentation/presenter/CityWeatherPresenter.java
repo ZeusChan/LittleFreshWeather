@@ -34,6 +34,7 @@ public class CityWeatherPresenter implements Presenter {
 
     public void setCityId(String cityId) {
         mCityId = cityId;
+        mView.updateUpdateService(mCityId);
         if (mUseCase != null) {
             mUseCase.setCityId(mCityId);
         }
@@ -167,6 +168,7 @@ public class CityWeatherPresenter implements Presenter {
                 CityWeatherPresenter.this.mView.setToolbarCity(weatherEntity.getCityName());
                 CityWeatherPresenter.this.mView.showContent();
                 CityWeatherPresenter.this.mView.renderCityWeather(weatherEntity);
+                CityWeatherPresenter.this.mView.updateNotification(weatherEntity);
             }
         }
     }

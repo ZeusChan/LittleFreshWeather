@@ -23,7 +23,7 @@ import rx.Subscriber;
  * Created by chenxiong on 2016/6/17.
  */
 public class DiskCacheManager implements DataSource {
-    private static final int DISK_CACHE_SIZE = 20 * 1024 * 1024;
+    private static final int DISK_CACHE_SIZE = 5 * 1024 * 1024;
     private static final String CITY_ENTITIES_CACHE_KEY = "city_entities";
     private static final String WEATHER_CONDITION_ENTITIES_CACHE_KEY = "weather_condition_entities";
     private static final String CITY_WEATHER_ENTITY_CACHE_KEY = "city_weather_entity";

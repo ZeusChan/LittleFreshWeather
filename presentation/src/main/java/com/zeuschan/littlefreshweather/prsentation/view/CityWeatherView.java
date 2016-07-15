@@ -15,4 +15,6 @@ public interface CityWeatherView extends BaseView {
     void navigateToSettingsActivity();
     void showRefreshing();
     void hideRefreshing();
+    void updateNotification(WeatherEntity entity);
+    void updateUpdateService(String cityId);
 }

@@ -14,8 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.zeuschan.littlefreshweather.common.util.Constants;
-import com.zeuschan.littlefreshweather.common.util.FileUtil;
 import com.zeuschan.littlefreshweather.model.entity.WeatherEntity;
 import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.WidgetPresenter;
@@ -26,6 +24,10 @@ import com.zeuschan.littlefreshweather.prsentation.view.activity.SplashActivity;
  */
 public class WeatherNotificationService extends Service implements WidgetPresenter.DataCallback {
     private static final String TAG = WeatherNotificationService.class.getSimpleName();
+
+    public static final String NOTIFY_CITY_ID = "notify_city_id";
+    public static final String WEATHER_ENTITY = "weather_entity";
+
     private WidgetPresenter mPresenter;
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mNotificationBuilder;
@@ -40,28 +42,41 @@ public class WeatherNotificationService extends Service implements WidgetPresent
     public void onCreate() {
         Log.e(TAG, "onCreate");
         Log.e(TAG, "pid=" + Process.myPid());
+        Log.e(TAG, "uid=" + Process.myUid());
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
-        startUpdateWeather();
+        Log.e(TAG, "pid=" + Process.myPid());
+        Log.e(TAG, "uid=" + Process.myUid());
+
+        WeatherEntity weatherEntity = null;
+        if (intent != null) {
+            weatherEntity = intent.getParcelableExtra(WEATHER_ENTITY);
+        }
+        renderData(weatherEntity);
+
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         Log.e(TAG, "onDestroy");
+        Log.e(TAG, "pid=" + Process.myPid());
+        Log.e(TAG, "uid=" + Process.myUid());
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.stop();
             mPresenter.destroy();
         }
+
+        System.exit(0);
     }
 
-    private void startUpdateWeather() {
-        String cityId = FileUtil.getStringFromPreferences(this.getApplicationContext(), Constants.GLOBAL_SETTINGS, Constants.PRF_KEY_CITY_ID, Constants.DEFAULT_CITY_ID);
+    private void startUpdateWeather(String cityId) {
+        Log.e(TAG, "cityid=" + cityId);
         if (mPresenter == null) {
             mPresenter = new WidgetPresenter(this.getApplicationContext(), cityId, this);
         } else {
@@ -79,7 +94,7 @@ public class WeatherNotificationService extends Service implements WidgetPresent
 
         Intent intent = new Intent(this, SplashActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        RemoteViews views = new RemoteViews(getPackageName(), R.layout.app_widget_layout);
+        RemoteViews views = new RemoteViews(getPackageName(), R.layout.app_notification_layout);
         if (entity == null) {
             views.setViewVisibility(R.id.tv_widget_no_data, View.VISIBLE);
             views.setViewVisibility(R.id.rl_widget_city_weather, View.INVISIBLE);
