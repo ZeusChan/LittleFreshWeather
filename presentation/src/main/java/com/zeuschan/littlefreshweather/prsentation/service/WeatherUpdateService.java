@@ -27,7 +27,7 @@ import rx.Subscriber;
 public class WeatherUpdateService extends Service {
     public static final String UPDATE_DATA_FLAG = "update_data_flag";
     public static final String UPDATE_CITY_ID = "update_city_id";
-    private static final int ONE_HOUR = /*60 * 6*/10 * 1000;
+    private static final int ONE_HOUR = 60 * 60 * 1000;
 
     private static final String TAG = WeatherUpdateService.class.getSimpleName();
     private GetCityWeatherUseCase mUseCase;

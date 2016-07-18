@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_app_widget_root"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/material_64dp"
     android:background="@color/colorTransparent"
     android:clickable="true">
 
@@ -20,29 +19,30 @@
         android:id="@+id/rl_app_widget_weather_info"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_app_widget_weather_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/material_16dp"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:id="@+id/tv_app_widget_city_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_app_widget_weather_icon"
-            android:textColor="@color/colorLightGray" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/material_16dp" />
 
         <TextView
             android:id="@+id/tv_app_widget_weather_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_app_widget_city_name"
-            android:layout_alignLeft="@id/tv_app_widget_city_name"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_app_widget_weather_icon"
+            android:textColor="@color/colorLightGray" />
+
+        <TextView
+            android:id="@+id/tv_app_widget_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_app_widget_weather_desc"
+            android:layout_toRightOf="@id/iv_app_widget_weather_icon"
             android:textColor="@color/colorLightGray" />
 
         <TextView
@@ -50,16 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_app_widget_weather_desc"
-            android:layout_alignLeft="@id/tv_app_widget_weather_desc"
-            android:layout_marginRight="@dimen/material_4dp"
-            android:textColor="@color/colorLightGray" />
-
-        <TextView
-            android:id="@+id/tv_app_widget_air"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_app_widget_temp"
-            android:layout_alignTop="@id/tv_app_widget_temp"
+            android:layout_toRightOf="@id/iv_app_widget_weather_icon"
             android:textColor="@color/colorLightGray" />
 
     </RelativeLayout>
@@ -67,9 +58,8 @@
     <TextView
         android:id="@+id/rl_app_widget_divider"
         android:layout_width="@dimen/material_1dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/material_8dp"
-        android:layout_marginBottom="@dimen/material_8dp"
+        android:layout_height="@dimen/material_40dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/material_16dp"
         android:layout_marginRight="@dimen/material_16dp"
         android:background="@color/colorSemiTransLightGray" />
@@ -78,32 +68,40 @@
         android:id="@+id/rl_app_widget_datetime_info"
         android:layout_weight="2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tv_app_widget_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/material_16dp"
             android:textColor="@color/colorLightGray"
-            android:textSize="@dimen/material_40sp" />
-
-        <TextView
-            android:id="@+id/tv_app_widget_dayofweek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_app_widget_time"
-            android:layout_alignTop="@id/tv_app_widget_time"
-            android:textColor="@color/colorLightGray" />
+            android:textSize="@dimen/material_50sp" />
 
         <TextView
             android:id="@+id/tv_app_widget_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
-            android:layout_alignBottom="@id/tv_app_widget_time"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorLightGray" />
+
+        <TextView
+            android:id="@+id/tv_app_widget_dayofweek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_app_widget_time"
+            android:layout_above="@id/tv_app_widget_date"
+            android:textColor="@color/colorLightGray" />
+
+        <TextView
+            android:id="@+id/tv_app_widget_air"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_app_widget_time"
+            android:layout_below="@id/tv_app_widget_date"
             android:textColor="@color/colorLightGray" />
 
     </RelativeLayout>

@@ -22,20 +22,22 @@ import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.WidgetPresenter;
 import com.zeuschan.littlefreshweather.prsentation.view.activity.SplashActivity;
 
+import java.util.GregorianCalendar;
+
 
 /**
  * Created by chenxiong on 2016/6/27.
  */
 public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresenter.DataCallback {
     private static final String TAG = WeatherAppWidget.class.getSimpleName();
-    private static final int TIME_UPDATE_SEQUENCY = 10 * 1000;
 
     public static final String UPDATE_WIDGET_ACTION = "com.zeuschan.littlefreshweather.prsentation.UPDATE_WIDGET";
     public static final String WEATHER_ENTITY = "weather_entity";
+    public static final int ONE_SECOND = 1000;
 
-    public static final String UPDATE_TYPE = "update_type";
-    public static final int UPDATE_WEATHER = 0;
-    public static final int UPDATE_TIME = 1;
+    private static final String UPDATE_TYPE = "update_type";
+    private static final int UPDATE_WEATHER = 0;
+    private static final int UPDATE_TIME = 1;
 
     private WidgetPresenter mPresenter;
     private Context mContext;
@@ -76,15 +78,15 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     @Override
     public void onEnabled(Context context) {
         LogUtil.e(TAG, "onEnabled");
+        updateTimeSequence();
         super.onEnabled(context);
-        setUpdateTimeAlarm(context, true);
     }
 
     @Override
     public void onDisabled(Context context) {
         LogUtil.e(TAG, "onDisabled");
+        setUpdateTimeAlarm(context, false, 0);
         super.onDisabled(context);
-        setUpdateTimeAlarm(context, false);
         if (mPresenter != null) {
             mPresenter.stop();
             mPresenter.destroy();
@@ -138,11 +140,9 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         ComponentName thisWidget = new ComponentName(mContext, WeatherAppWidget.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-
         for (int i = 0; i < appWidgetIds.length; ++i) {
             int appWidgetId = appWidgetIds[i];
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_layout);
-
             views.setTextViewText(R.id.tv_app_widget_time, StringUtil.getCurrentDateTime("HH:mm"));
             views.setTextViewText(R.id.tv_app_widget_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
             views.setTextViewText(R.id.tv_app_widget_date, StringUtil.getCurrentDateTime("M月d日"));
@@ -150,6 +150,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
+        updateTimeSequence();
         LogUtil.e(TAG, "rendTime");
     }
 
@@ -173,7 +174,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         mPresenter.start();
     }
 
-    private static void setUpdateTimeAlarm(Context context, boolean on) {
+    private static void setUpdateTimeAlarm(Context context, boolean on, final int updateSequency) {
         LogUtil.e(TAG, "setUpdateTimeAlarm, on=" + on);
 
         Intent intent = new Intent(UPDATE_WIDGET_ACTION);
@@ -181,11 +182,34 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (on) {
-            manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), TIME_UPDATE_SEQUENCY, pendingIntent);
+            manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, updateSequency, pendingIntent);
         } else {
             manager.cancel(pendingIntent);
             pendingIntent.cancel();
         }
+    }
+
+    private static boolean isUpdateTimeAlarmOn(Context context) {
+        Intent intent = new Intent(UPDATE_WIDGET_ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
+        return pendingIntent != null;
+    }
+
+    private void updateTimeSequence() {
+        setUpdateTimeAlarm(mContext, false, 0);
+
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        int updateFrequence = gregorianCalendar.get(GregorianCalendar.SECOND);
+        updateFrequence *= ONE_SECOND;
+        LogUtil.e(TAG, "current second=" + updateFrequence);
+        if (updateFrequence > 5 * ONE_SECOND && updateFrequence < 55 * ONE_SECOND) {
+            updateFrequence = 5 * ONE_SECOND;
+        } else {
+            updateFrequence = ONE_SECOND >> 1;
+        }
+
+        LogUtil.e(TAG, "updateSequence=" + updateFrequence);
+        setUpdateTimeAlarm(mContext, true, updateFrequence);
     }
 
     private int getWeatherIconId(final String desc) {

@@ -53,9 +53,9 @@ public class StringUtil {
     public static String getFriendlyDateString(Date date, boolean showDayOfWeek) {
         if (date == null) {
             if (showDayOfWeek)
-                return "--月--日 周--";
+                return "--.--. 周--";
             else
-                return "--月--日";
+                return "--.--.";
         }
 
         GregorianCalendar nowCalender = new GregorianCalendar();
@@ -120,9 +120,9 @@ public class StringUtil {
         } else {
             SimpleDateFormat simpleDateFormat = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
             if (showDayOfWeek)
-                simpleDateFormat.applyPattern("M月d日 EE");
+                simpleDateFormat.applyPattern("M.d EE");
             else
-                simpleDateFormat.applyPattern("M月d日");
+                simpleDateFormat.applyPattern("M.d");
             return simpleDateFormat.format(date);
         }
     }

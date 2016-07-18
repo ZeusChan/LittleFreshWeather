@@ -85,7 +85,7 @@
             android:name=".receiver.WeatherAppWidget"
             android:label="@string/app_name"
             android:permission="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"
-            android:process=":update">
+            android:process="com.zeuschan.littlefreshweather.prsentation.appwidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
