@@ -3,8 +3,9 @@
     android:id="@+id/ll_app_notification_big_root"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@color/colorDeepGray">
+    android:layout_height="130dp"
+    android:background="@color/colorDeepGray"
+    android:clickable="true">
 
     <include layout="@layout/app_notification_layout_small"/>
 

@@ -3,7 +3,7 @@
     android:id="@+id/ll_app_notification_small_root"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="65dp"
     android:background="@color/colorDeepGray"
     android:clickable="true">
 

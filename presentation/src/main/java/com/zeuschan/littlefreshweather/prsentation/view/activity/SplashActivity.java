@@ -82,6 +82,11 @@ public class SplashActivity extends BaseActivity implements SplashView {
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public void navigateToCityWeatherActivity(String cityId) {
         mCityId = cityId;
         Message message = mHandler.obtainMessage(MSG_NAVIGATE_CITY_WEATHER);

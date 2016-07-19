@@ -22,6 +22,7 @@ import com.zeuschan.littlefreshweather.prsentation.R;
 import com.zeuschan.littlefreshweather.prsentation.presenter.WidgetPresenter;
 import com.zeuschan.littlefreshweather.prsentation.view.activity.SplashActivity;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -39,6 +40,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     private static final int UPDATE_WEATHER = 0;
     private static final int UPDATE_TIME = 1;
 
+    private static String mDataDate;
     private WidgetPresenter mPresenter;
     private Context mContext;
 
@@ -86,6 +88,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     public void onDisabled(Context context) {
         LogUtil.e(TAG, "onDisabled");
         setUpdateTimeAlarm(context, false, 0);
+        mDataDate = null;
         super.onDisabled(context);
         if (mPresenter != null) {
             mPresenter.stop();
@@ -100,6 +103,10 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
 
     @Override
     public void renderData(WeatherEntity entity) {
+        if (entity == null) {
+            return;
+        }
+
         ComponentName thisWidget = new ComponentName(mContext, WeatherAppWidget.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
@@ -108,32 +115,33 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
             int appWidgetId = appWidgetIds[i];
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_layout);
 
-            if (entity == null) {
-                //views.setViewVisibility(R.id.tv_app_widget_loading, View.VISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_weather_info, View.INVISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_divider, View.INVISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_datetime_info, View.INVISIBLE);
-            } else {
-                //views.setViewVisibility(R.id.tv_app_widget_loading, View.INVISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_weather_info, View.VISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_divider, View.VISIBLE);
-                views.setViewVisibility(R.id.rl_app_widget_datetime_info, View.VISIBLE);
-
-                views.setImageViewResource(R.id.iv_app_widget_weather_icon, getWeatherIconId(entity.getWeatherDescription()));
-                views.setTextViewText(R.id.tv_app_widget_city_name, entity.getCityName());
-                views.setTextViewText(R.id.tv_app_widget_temp, entity.getCurrentTemperature() + "℃");
-                views.setTextViewText(R.id.tv_app_widget_weather_desc, entity.getWeatherDescription());
-                views.setTextViewText(R.id.tv_app_widget_air, entity.getAirQulityType());
-
-                views.setTextViewText(R.id.tv_app_widget_time, StringUtil.getCurrentDateTime("HH:mm"));
-                views.setTextViewText(R.id.tv_app_widget_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
-                views.setTextViewText(R.id.tv_app_widget_date, StringUtil.getCurrentDateTime("M月d日"));
+            if (entity.getForecasts().size() > 0) {
+                mDataDate = entity.getForecasts().get(0).getDate();
             }
+
+            if (mDataDate != null && mDataDate.compareToIgnoreCase(StringUtil.getCurrentDateTime("yyyy-MM-dd")) != 0) {
+                views.setTextColor(R.id.tv_app_widget_weather_desc, mContext.getApplicationContext().getResources().getColor(R.color.colorAirFour));
+                views.setTextViewText(R.id.tv_app_widget_weather_desc, mContext.getApplicationContext().getString(R.string.data_out_of_date));
+            } else {
+                views.setTextColor(R.id.tv_app_widget_weather_desc, mContext.getApplicationContext().getResources().getColor(R.color.colorLightGray));
+                views.setTextViewText(R.id.tv_app_widget_weather_desc, entity.getWeatherDescription());
+            }
+            views.setImageViewResource(R.id.iv_app_widget_weather_icon, getWeatherIconId(entity.getWeatherDescription()));
+            views.setTextViewText(R.id.tv_app_widget_city_name, entity.getCityName());
+            views.setTextViewText(R.id.tv_app_widget_temp, entity.getCurrentTemperature() + "℃");
+            AirQulityRepresentation airQulityRepresentation = new AirQulityRepresentation();
+            getAirQualityTypeAndColor(entity.getAirQulityIndex(), airQulityRepresentation);
+            //views.setTextColor(R.id.tv_app_widget_air, airQulityRepresentation.getmAirQulityColorId());
+            views.setTextViewText(R.id.tv_app_widget_air, airQulityRepresentation.getmAirQulityType());
+
+            views.setTextViewText(R.id.tv_app_widget_time, StringUtil.getCurrentDateTime("HH:mm"));
+            views.setTextViewText(R.id.tv_app_widget_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
+            views.setTextViewText(R.id.tv_app_widget_date, StringUtil.getCurrentDateTime("M月d日"));
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
-        LogUtil.e(TAG, "rendData");
+        LogUtil.e(TAG, "renderData");
     }
 
     private void renderTime() {
@@ -143,6 +151,12 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         for (int i = 0; i < appWidgetIds.length; ++i) {
             int appWidgetId = appWidgetIds[i];
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_layout);
+
+            if (mDataDate != null && mDataDate.compareToIgnoreCase(StringUtil.getCurrentDateTime("yyyy-MM-dd")) != 0) {
+                views.setTextColor(R.id.tv_app_widget_weather_desc, mContext.getApplicationContext().getResources().getColor(R.color.colorAirFour));
+                views.setTextViewText(R.id.tv_app_widget_weather_desc, mContext.getApplicationContext().getString(R.string.data_out_of_date));
+            }
+
             views.setTextViewText(R.id.tv_app_widget_time, StringUtil.getCurrentDateTime("HH:mm"));
             views.setTextViewText(R.id.tv_app_widget_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
             views.setTextViewText(R.id.tv_app_widget_date, StringUtil.getCurrentDateTime("M月d日"));
@@ -151,7 +165,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         }
 
         updateTimeSequence();
-        LogUtil.e(TAG, "rendTime");
+        LogUtil.e(TAG, "renderTime");
     }
 
     private void startUpdateService(Context context) {
@@ -202,7 +216,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         int updateFrequence = gregorianCalendar.get(GregorianCalendar.SECOND);
         updateFrequence *= ONE_SECOND;
         LogUtil.e(TAG, "current second=" + updateFrequence);
-        if (updateFrequence > 5 * ONE_SECOND && updateFrequence < 55 * ONE_SECOND) {
+        if (updateFrequence > 8 * ONE_SECOND && updateFrequence < 52 * ONE_SECOND) {
             updateFrequence = 5 * ONE_SECOND;
         } else {
             updateFrequence = ONE_SECOND >> 1;
@@ -210,6 +224,62 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
 
         LogUtil.e(TAG, "updateSequence=" + updateFrequence);
         setUpdateTimeAlarm(mContext, true, updateFrequence);
+    }
+
+    private static class AirQulityRepresentation {
+        private String mAirQulityType;
+        private int mAirQulityColorId;
+
+        public int getmAirQulityColorId() {
+            return mAirQulityColorId;
+        }
+
+        public void setmAirQulityColorId(int mAirQulityColorId) {
+            this.mAirQulityColorId = mAirQulityColorId;
+        }
+
+        public String getmAirQulityType() {
+            return mAirQulityType;
+        }
+
+        public void setmAirQulityType(String mAirQulityType) {
+            this.mAirQulityType = mAirQulityType;
+        }
+    }
+
+    private boolean getAirQualityTypeAndColor(String airQulityIndexString, AirQulityRepresentation airQulityRepresentation) {
+        int airQulityIndex = 0;
+        boolean ret = true;
+        try {
+            airQulityIndex = Integer.parseInt(airQulityIndexString);
+        } catch (Exception e) {
+            ret = false;
+            airQulityRepresentation.setmAirQulityType("---");
+            airQulityRepresentation.setmAirQulityColorId(R.color.colorAirOne);
+        }
+
+        if (ret) {
+            if (airQulityIndex <= 50) {
+                airQulityRepresentation.setmAirQulityType("空气优");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirOne);
+            } else if (airQulityIndex <= 100) {
+                airQulityRepresentation.setmAirQulityType("空气良");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirTwo);
+            } else if (airQulityIndex <= 150) {
+                airQulityRepresentation.setmAirQulityType("轻度污染");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirThree);
+            } else if (airQulityIndex <= 200) {
+                airQulityRepresentation.setmAirQulityType("中度污染");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirFour);
+            } else if (airQulityIndex <= 300) {
+                airQulityRepresentation.setmAirQulityType("重度污染");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirFive);
+            } else {
+                airQulityRepresentation.setmAirQulityType("严重污染");
+                airQulityRepresentation.setmAirQulityColorId(R.color.colorAirSix);
+            }
+        }
+        return ret;
     }
 
     private int getWeatherIconId(final String desc) {

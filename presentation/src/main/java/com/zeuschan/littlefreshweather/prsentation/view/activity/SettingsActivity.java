@@ -110,7 +110,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         if (!shouldNotify) {
             stopService(new Intent(getApplicationContext(), WeatherNotificationService.class));
         } else {
-            startService(new Intent(this.getApplicationContext(), WeatherNotificationService.class));
+            startService(new Intent(getApplicationContext(), WeatherNotificationService.class));
         }
     }
 
@@ -130,7 +130,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         }
         WeatherUpdateService.setUpdateServiceAlarm(getApplicationContext(), which);
         if (0 == which) {
-            stopService(new Intent(this.getApplicationContext(), WeatherUpdateService.class));
+            stopService(new Intent(getApplicationContext(), WeatherUpdateService.class));
         }
     }
 

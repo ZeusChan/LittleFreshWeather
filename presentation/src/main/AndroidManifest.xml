@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".service.WeatherNotificationService"
-            android:process=":notification"/>
+            android:process="com.zeuschan.littlefreshweather.prsentation.notify"/>
 
         <service android:name=".service.WeatherUpdateService"
             android:process=":update"/>

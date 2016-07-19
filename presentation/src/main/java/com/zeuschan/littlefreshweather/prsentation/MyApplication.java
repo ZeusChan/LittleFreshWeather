@@ -2,7 +2,6 @@ package com.zeuschan.littlefreshweather.prsentation;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
 import com.zeuschan.littlefreshweather.common.util.LogUtil;
 
 /**

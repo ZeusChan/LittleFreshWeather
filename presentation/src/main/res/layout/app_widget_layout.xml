@@ -7,14 +7,6 @@
     android:background="@color/colorTransparent"
     android:clickable="true">
 
-    <!--TextView
-        android:id="@+id/tv_app_widget_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorLightGray"
-        android:text="@string/loading"
-        android:visibility="gone"/-->
-
     <RelativeLayout
         android:id="@+id/rl_app_widget_weather_info"
         android:layout_weight="1"
@@ -81,7 +73,7 @@
             android:textSize="@dimen/material_50sp" />
 
         <TextView
-            android:id="@+id/tv_app_widget_date"
+            android:id="@+id/tv_app_widget_dayofweek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
@@ -89,11 +81,11 @@
             android:textColor="@color/colorLightGray" />
 
         <TextView
-            android:id="@+id/tv_app_widget_dayofweek"
+            android:id="@+id/tv_app_widget_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
-            android:layout_above="@id/tv_app_widget_date"
+            android:layout_above="@id/tv_app_widget_dayofweek"
             android:textColor="@color/colorLightGray" />
 
         <TextView
@@ -101,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
-            android:layout_below="@id/tv_app_widget_date"
+            android:layout_below="@id/tv_app_widget_dayofweek"
             android:textColor="@color/colorLightGray" />
 
     </RelativeLayout>
