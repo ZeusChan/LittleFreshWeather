@@ -36,7 +36,7 @@
 
 采用了Bob蜀黍的[**The Clean Architecture**](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)(整洁架构)，架构的具体实现方案也是在拜读了诸多前辈文章的基础上完成的，此处表示感谢：
 *	[Architecting Android…The clean way? – Fernando Cejas](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
-*	[http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
+*	[Architecting Android…The evolution – Fernando Cejas](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
 *	[A useful stack on android #1, architecture · Saúl Molinero](http://saulmm.github.io/2015/02/02/A-useful-stack-on-android-1,-architecture/)
 
 
