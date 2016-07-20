@@ -2,28 +2,28 @@
 
 这是一款简洁的天气预报app--**`清新小天气`**，它能够支持国内绝大多数城市，提供包含实时天气、七天预报、实时气象信息及生活指数等预报信息。。。广告编不下去了-_-!!。。。直接上图：<br><br>
 
-*   启动画面
+*   启动画面<br>
 ![capture_splash](capture_splash.png "启动画面")
 <br><br>
-*   城市选择
+*   城市选择<br>
 ![capture_cities](capture_cities.png "城市选择")
 <br><br>
-*   当前天气
+*   当前天气<br>
 ![capture_cur](capture_cur.png "当前天气")
 <br><br>
-*   天气预报
+*   天气预报<br>
 ![capture_forecast](capture_forecast.png "天气预报")
 <br><br>
-*   气象信息及生活指数
+*   气象信息及生活指数<br>
 ![capture_lifeindex](capture_lifeindex.png "气象信息及生活指数")
 <br><br>
-*   设置
+*   设置<br>
 ![capture_settings](capture_settings.png "设置")
 <br><br>
-*   桌面小程序
+*   桌面小程序<br>
 ![capture_app_widget](capture_app_widget.png "桌面小程序")
 <br><br>
-*   通知栏
+*   通知栏<br>
 ![capture_app_notification](capture_app_notification.png "通知栏")
 
 
