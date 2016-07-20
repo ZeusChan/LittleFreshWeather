@@ -154,11 +154,13 @@ public class WeatherNotificationService extends Service implements WidgetPresent
         views.setImageViewResource(R.id.iv_app_notification_small_weather_icon, getWeatherIconId(entity.getWeatherDescription()));
         views.setTextViewText(R.id.tv_app_notification_small_temp, entity.getCurrentTemperature() + "℃");
         views.setTextViewText(R.id.tv_app_notification_small_city_name, entity.getCityName());
-        //views.setTextViewText(R.id.tv_app_notification_small_weather_desc, entity.getWeatherDescription());
         if (entity.getForecasts().size() > 0)
             views.setTextViewText(R.id.tv_app_notification_small_temp_span, entity.getForecasts().get(0).getMinTemperature() + " ~ " + entity.getForecasts().get(0).getMaxTemperature() + "℃");
         views.setTextViewText(R.id.tv_app_notification_small_date, StringUtil.getCurrentDateTime("yyyy-MM-dd"));
         views.setTextViewText(R.id.tv_app_notification_small_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
+        String[] dateAndTime = entity.getDataUpdateTime().split(" ");
+        Date date = StringUtil.stringToDate("yyyy-MM-dd", dateAndTime[0]);
+        views.setTextViewText(R.id.tv_app_notification_small_update_time, StringUtil.getFriendlyDateString(date, false) + " " + dateAndTime[1] + " 发布");
         views.setTextViewText(R.id.tv_app_notification_small_air_quality_index, entity.getAirQulityIndex());
         AirQulityRepresentation airQulityRepresentation = new AirQulityRepresentation();
         getAirQualityTypeAndColor(entity.getAirQulityIndex(), airQulityRepresentation);
@@ -168,11 +170,11 @@ public class WeatherNotificationService extends Service implements WidgetPresent
         bigViews.setImageViewResource(R.id.iv_app_notification_small_weather_icon, getWeatherIconId(entity.getWeatherDescription()));
         bigViews.setTextViewText(R.id.tv_app_notification_small_temp, entity.getCurrentTemperature() + "℃");
         bigViews.setTextViewText(R.id.tv_app_notification_small_city_name, entity.getCityName());
-        //bigViews.setTextViewText(R.id.tv_app_notification_small_weather_desc, entity.getWeatherDescription());
         if (entity.getForecasts().size() > 0)
             bigViews.setTextViewText(R.id.tv_app_notification_small_temp_span, entity.getForecasts().get(0).getMinTemperature() + " ~ " + entity.getForecasts().get(0).getMaxTemperature() + "℃");
         bigViews.setTextViewText(R.id.tv_app_notification_small_date, StringUtil.getCurrentDateTime("yyyy-MM-dd"));
         bigViews.setTextViewText(R.id.tv_app_notification_small_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
+        bigViews.setTextViewText(R.id.tv_app_notification_small_update_time, StringUtil.getFriendlyDateString(date, false) + " " + dateAndTime[1] + " 发布");
         bigViews.setTextViewText(R.id.tv_app_notification_small_air_quality_index, entity.getAirQulityIndex());
         //bigViews.setTextColor(R.id.tv_app_notification_small_air_quality_type, airQulityRepresentation.getmAirQulityColorId());
         bigViews.setTextViewText(R.id.tv_app_notification_small_air_quality_type, airQulityRepresentation.getmAirQulityType());

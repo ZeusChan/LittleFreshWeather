@@ -118,18 +118,33 @@ public class SplashPresenter implements Presenter, AMapLocationListener {
     }
 
     private boolean getCityIdFromLocation() {
-        if (mLocationEntity != null && mListCities != null) {
-            for (CityEntity cityEntity : mListCities) {
-                if (/*(mLocationEntity.getProvince().contains(cityEntity.getProvince()) || cityEntity.getProvince().contains(mLocationEntity.getProvince()))
-                        &&*/ ((mLocationEntity.getDistrict().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getDistrict()))
-                        || (mLocationEntity.getCity().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getCity())))) {
+        if (mLocationEntity == null && mListCities == null)
+            return false;
+
+        boolean ret = false;
+        for (CityEntity cityEntity : mListCities) {
+            if (mLocationEntity.getProvince().contains(cityEntity.getProvince()) || cityEntity.getProvince().contains(mLocationEntity.getProvince())) {
+                if (mLocationEntity.getDistrict().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getDistrict())) {
                     mCityId = cityEntity.getCityId();
-                    return true;
+                    ret = true;
+                    break;
                 }
             }
         }
 
-        return false;
+        if (!ret) {
+            for (CityEntity cityEntity : mListCities) {
+                if (mLocationEntity.getProvince().contains(cityEntity.getProvince()) || cityEntity.getProvince().contains(mLocationEntity.getProvince())) {
+                    if (mLocationEntity.getCity().contains(cityEntity.getCity()) || cityEntity.getCity().contains(mLocationEntity.getCity())) {
+                        mCityId = cityEntity.getCityId();
+                        ret = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return ret;
     }
 
     private void initLocation() {

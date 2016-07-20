@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Process;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -137,6 +138,9 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
             views.setTextViewText(R.id.tv_app_widget_time, StringUtil.getCurrentDateTime("HH:mm"));
             views.setTextViewText(R.id.tv_app_widget_dayofweek, StringUtil.getCurrentDateTime("EEEE"));
             views.setTextViewText(R.id.tv_app_widget_date, StringUtil.getCurrentDateTime("M月d日"));
+            String[] dateAndTime = entity.getDataUpdateTime().split(" ");
+            Date date = StringUtil.stringToDate("yyyy-MM-dd", dateAndTime[0]);
+            views.setTextViewText(R.id.tv_app_widget_update_time, StringUtil.getFriendlyDateString(date, false) + " " + dateAndTime[1] + " 发布");
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
@@ -196,7 +200,13 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (on) {
-            manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, updateSequency, pendingIntent);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                LogUtil.e(TAG, "setRepeating");
+                manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, updateSequency, pendingIntent);
+            } else {
+                LogUtil.e(TAG, "setExact");
+                manager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, pendingIntent);
+            }
         } else {
             manager.cancel(pendingIntent);
             pendingIntent.cancel();

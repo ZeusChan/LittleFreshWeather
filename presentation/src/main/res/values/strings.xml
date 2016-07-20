@@ -11,7 +11,7 @@
     <string name="notification_weather">通知栏展示天气</string>
     <string name="other_settings">其它</string>
     <string name="about">关于</string>
-    <string name="about_content">清新小天气\n作者：zeuschan@126.com</string>
+    <string name="about_content">清新小天气\n版本：v1.0\n作者：zeuschan@126.com</string>
     <string name="network_unavailable">检测到网络不可用，请打开网络开关后再试</string>
     <string name="server_unavailable">天气服务不可用，请稍后再试</string>
     <string name="press_to_quit">再按一次，退出清新小天气</string>
