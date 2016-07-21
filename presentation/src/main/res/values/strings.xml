@@ -2,7 +2,7 @@
     <string name="app_name">清新小天气</string>
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>
-    <string name="data_out_of_date">数据已过期</string>
+    <string name="data_out_of_date">数据过期</string>
     <string name="retry">重试</string>
     <string name="refresh">刷新</string>
     <string name="settings">设置</string>

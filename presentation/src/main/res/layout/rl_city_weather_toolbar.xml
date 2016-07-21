@@ -15,8 +15,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/material_16dp"
         android:gravity="center_vertical"
-        android:textColor="@color/colorLightGray"
-        android:textSize="@dimen/material_24sp"
+        android:textSize="@dimen/material_20dp"
         android:text="@string/app_name"/>
 
     <ImageButton

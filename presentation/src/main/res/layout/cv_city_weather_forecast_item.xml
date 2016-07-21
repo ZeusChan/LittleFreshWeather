@@ -15,8 +15,7 @@
         android:layout_width="@dimen/material_0dp"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="@color/colorLightGray"/>
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/tv_city_weather_forecast_item_centigrade"
@@ -24,8 +23,7 @@
         android:layout_width="@dimen/material_0dp"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="@color/colorLightGray"/>
+        android:gravity="left" />
 
     <TextView
         android:id="@+id/tv_city_weather_forecast_item_weather_desc"
@@ -33,7 +31,6 @@
         android:layout_width="@dimen/material_0dp"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:textColor="@color/colorLightGray"/>
+        android:gravity="right" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zeuschan.littlefreshweather.prsentation">
+    package="com.zeuschan.littlefreshweather.prsentation"
+    android:installLocation="internalOnly">
 
     <permission
         android:name="com.zeuschan.littlefreshweather.prsentation.SEND_WEATHER_UPDATE"
@@ -62,10 +63,12 @@
         </activity>
         <activity
             android:name=".view.activity.CityWeatherActivity"
+            android:theme="@style/AppTheme.Primary"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CitiesActivity"
+            android:theme="@style/AppTheme.Primary"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity

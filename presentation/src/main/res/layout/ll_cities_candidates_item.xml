@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/material_16dp"
         android:gravity="left|center_vertical"
-        android:textColor="@color/colorLightGray"
-        android:textSize="@dimen/material_16sp"/>
+        android:textSize="@dimen/material_16dp"/>
 
     <View
         android:layout_width="match_parent"

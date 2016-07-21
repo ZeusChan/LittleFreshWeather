@@ -27,8 +27,7 @@
             android:paddingTop="@dimen/material_16dp"
             android:paddingBottom="@dimen/material_16dp"
             android:gravity="center_vertical|left"
-            android:textColor="@color/colorLightGray"
-            android:textSize="@dimen/material_16sp"
+            android:textSize="@dimen/material_16dp"
             android:hint="@string/input_city_name"
             android:textColorHint="@color/colorDarkGray"
             android:maxLines="1"
@@ -62,8 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/material_8dp"
                 android:gravity="center_vertical|left"
-                android:textSize="@dimen/material_16sp"
-                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_16dp"
                 android:drawableLeft="@drawable/ic_location_on_white_24dp"
                 android:background="@drawable/selector_button_rect_semitrans" />
 
@@ -74,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/material_8dp"
                 android:gravity="center_vertical|left"
-                android:textSize="@dimen/material_16sp"
-                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_16dp"
                 android:drawableLeft="@drawable/ic_location_city_white_24dp"
                 android:background="@drawable/selector_button_rect_semitrans" />
 

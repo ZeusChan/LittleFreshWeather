@@ -18,6 +18,11 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
+    <style name="AppTheme.Primary">
+        <item name="android:textColor">@color/colorLightGray</item>
+        <item name="android:textSize">@dimen/material_12dp</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

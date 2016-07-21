@@ -25,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/material_2dp"
             android:layout_gravity="center_vertical|left"
-            android:textColor="@color/colorLightGray"
-            android:textSize="@dimen/material_24sp"/>
+            android:textSize="@dimen/material_20dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -53,63 +52,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date1"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc1"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade1"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -122,63 +107,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date2"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc2"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade2"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -191,63 +162,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date3"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc3"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade3"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -260,63 +217,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date4"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc4"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade4"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -329,63 +272,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date5"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc5"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade5"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -398,63 +327,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date6"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc6"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade6"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 
@@ -467,63 +382,49 @@
             android:paddingTop="@dimen/material_8dp"
             android:paddingBottom="@dimen/material_8dp"
             android:paddingLeft="@dimen/material_8dp"
-            android:paddingRight="@dimen/material_8dp">
+            android:paddingRight="@dimen/material_8dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_date7"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_city_weather_forecast_item_weather_icon7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/material_16dp"
-                android:layout_marginRight="@dimen/material_8dp"/>
+                android:layout_marginRight="@dimen/material_4dp"/>
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_weather_desc7"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_city_weather_forecast_item_centigrade7"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/colorLightGray"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="@dimen/material_0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_scale7"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorLightGray"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_city_weather_forecast_item_wind_dir7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/colorDarkGray"/>
+                    android:textSize="@dimen/material_8dp"/>
 
             </LinearLayout>
 

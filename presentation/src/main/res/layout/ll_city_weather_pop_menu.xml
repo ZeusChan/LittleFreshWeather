@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="left"
-            android:textColor="@color/colorLightGray"
             android:text="@string/refresh"/>
 
     </LinearLayout>
@@ -67,7 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="left"
-            android:textColor="@color/colorLightGray"
             android:text="@string/settings"/>
 
     </LinearLayout>

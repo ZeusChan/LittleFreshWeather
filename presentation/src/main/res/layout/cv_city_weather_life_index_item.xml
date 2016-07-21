@@ -22,15 +22,13 @@
             android:id="@+id/tv_city_weather_life_index_name"
             android:layout_weight="1"
             android:layout_width="@dimen/material_0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorLightGray"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_city_weather_life_index_brief"
             android:layout_weight="1"
             android:layout_width="@dimen/material_0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorLightGray"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -41,7 +39,6 @@
         android:layout_below="@id/ll_city_weather_life_index_upper"
         android:layout_alignLeft="@id/ll_city_weather_life_index_upper"
         android:gravity="center_vertical"
-        android:textColor="@color/colorLightGray"
         android:paddingTop="@dimen/material_8dp"
         android:paddingBottom="@dimen/material_8dp"/>
 

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_8dp"
             android:textColor="@color/colorDarkGray600"
-            android:textSize="@dimen/material_14sp"
+            android:textSize="@dimen/material_12dp"
             android:text="@string/basic_settings"/>
 
         <LinearLayout
@@ -51,7 +51,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/material_16sp"
+                        android:textSize="@dimen/material_16dp"
                         android:textColor="@color/colorDarkGray700"
                         android:text="@string/auto_update_frequency"/>
 
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/material_4dp"
                         android:textColor="@color/colorDarkGray"
-                        android:textSize="@dimen/material_12sp"
+                        android:textSize="@dimen/material_12dp"
                         android:text="2小时"/>
 
                 </LinearLayout>
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/material_16dp"
-                    android:textSize="@dimen/material_16sp"
+                    android:textSize="@dimen/material_16dp"
                     android:textColor="@color/colorDarkGray700"
                     android:text="@string/notification_weather"/>
 
@@ -123,8 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_8dp"
+            android:textSize="@dimen/material_12dp"
             android:textColor="@color/colorDarkGray600"
-            android:textSize="@dimen/material_14sp"
             android:text="@string/other_settings"/>
 
         <LinearLayout
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/material_16dp"
-                    android:textSize="@dimen/material_16sp"
+                    android:textSize="@dimen/material_16dp"
                     android:textColor="@color/colorDarkGray700"
                     android:text="@string/about"/>
 

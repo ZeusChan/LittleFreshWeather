@@ -42,14 +42,15 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     private static final int UPDATE_TIME = 1;
 
     private static String mDataDate;
+    private static WeatherEntity mEntity;
     private WidgetPresenter mPresenter;
     private Context mContext;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         LogUtil.e(TAG, "onReceive");
-        LogUtil.e(TAG, "pid=" + Process.myPid());
-        LogUtil.e(TAG, "uid=" + Process.myUid());
+        //LogUtil.e(TAG, "pid=" + Process.myPid());
+        //LogUtil.e(TAG, "uid=" + Process.myUid());
         mContext = context;
         super.onReceive(context, intent);
 
@@ -69,11 +70,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Intent intent = new Intent(context, SplashActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget_layout);
-        remoteViews.setOnClickPendingIntent(R.id.ll_app_widget_root, pendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+        LogUtil.e(TAG, "onUpdate");
 
         startUpdateService(context);
     }
@@ -108,6 +105,8 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
             return;
         }
 
+        mEntity = entity;
+
         ComponentName thisWidget = new ComponentName(mContext, WeatherAppWidget.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
@@ -115,6 +114,10 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         for (int i = 0; i < appWidgetIds.length; ++i) {
             int appWidgetId = appWidgetIds[i];
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.app_widget_layout);
+
+            Intent intent = new Intent(mContext, SplashActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+            views.setOnClickPendingIntent(R.id.ll_app_widget_root, pendingIntent);
 
             if (entity.getForecasts().size() > 0) {
                 mDataDate = entity.getForecasts().get(0).getDate();
@@ -168,12 +171,14 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
+        renderData(mEntity);
+
         updateTimeSequence();
         LogUtil.e(TAG, "renderTime");
     }
 
     private void startUpdateService(Context context) {
-        LogUtil.e(TAG, "startUpdateService");
+        //LogUtil.e(TAG, "startUpdateService");
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         context.sendBroadcast(intent, Constants.RECV_WEATHER_UPDATE);
@@ -193,7 +198,7 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
     }
 
     private static void setUpdateTimeAlarm(Context context, boolean on, final int updateSequency) {
-        LogUtil.e(TAG, "setUpdateTimeAlarm, on=" + on);
+        //LogUtil.e(TAG, "setUpdateTimeAlarm, on=" + on);
 
         Intent intent = new Intent(UPDATE_WIDGET_ACTION);
         intent.putExtra(UPDATE_TYPE, UPDATE_TIME);
@@ -201,10 +206,10 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (on) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                LogUtil.e(TAG, "setRepeating");
+                //LogUtil.e(TAG, "setRepeating");
                 manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, updateSequency, pendingIntent);
             } else {
-                LogUtil.e(TAG, "setExact");
+                //LogUtil.e(TAG, "setExact");
                 manager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + updateSequency, pendingIntent);
             }
         } else {
@@ -225,14 +230,14 @@ public class WeatherAppWidget extends AppWidgetProvider implements WidgetPresent
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         int updateFrequence = gregorianCalendar.get(GregorianCalendar.SECOND);
         updateFrequence *= ONE_SECOND;
-        LogUtil.e(TAG, "current second=" + updateFrequence);
+        //LogUtil.e(TAG, "current second=" + updateFrequence);
         if (updateFrequence > 8 * ONE_SECOND && updateFrequence < 52 * ONE_SECOND) {
             updateFrequence = 5 * ONE_SECOND;
         } else {
             updateFrequence = ONE_SECOND >> 1;
         }
 
-        LogUtil.e(TAG, "updateSequence=" + updateFrequence);
+        //LogUtil.e(TAG, "updateSequence=" + updateFrequence);
         setUpdateTimeAlarm(mContext, true, updateFrequence);
     }
 

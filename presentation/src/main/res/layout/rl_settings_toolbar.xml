@@ -22,6 +22,6 @@
         android:layout_marginLeft="@dimen/material_2dp"
         android:gravity="center"
         android:textColor="@color/colorLightGray"
-        android:textSize="@dimen/material_24sp"
+        android:textSize="@dimen/material_20dp"
         android:text="@string/settings"/>
 </RelativeLayout>

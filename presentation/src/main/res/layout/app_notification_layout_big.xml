@@ -25,15 +25,14 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/material_8dp"
-            android:layout_marginTop="@dimen/material_8dp"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_date1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_temp1"
@@ -41,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_app_notification_big_forecast_date1"
                 android:layout_alignLeft="@id/tv_app_notification_big_forecast_date1"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <ImageView
                 android:id="@+id/iv_app_notification_big_forecast_icon1"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_app_notification_big_forecast_temp1"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/material_16dp"/>
+                android:layout_marginLeft="@dimen/material_8dp"/>
 
         </RelativeLayout>
 
@@ -62,15 +62,14 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/material_8dp"
-            android:layout_marginTop="@dimen/material_8dp"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_date2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_temp2"
@@ -78,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_app_notification_big_forecast_date2"
                 android:layout_alignLeft="@id/tv_app_notification_big_forecast_date2"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <ImageView
                 android:id="@+id/iv_app_notification_big_forecast_icon2"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_app_notification_big_forecast_temp2"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/material_16dp"/>
+                android:layout_marginLeft="@dimen/material_8dp"/>
 
         </RelativeLayout>
 
@@ -99,15 +99,14 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/material_8dp"
-            android:layout_marginTop="@dimen/material_8dp"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_date3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <TextView
                 android:id="@+id/tv_app_notification_big_forecast_temp3"
@@ -115,7 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_app_notification_big_forecast_date3"
                 android:layout_alignLeft="@id/tv_app_notification_big_forecast_date3"
-                android:textColor="@color/colorLightGray" />
+                android:textColor="@color/colorLightGray"
+                android:textSize="@dimen/material_12dp"/>
 
             <ImageView
                 android:id="@+id/iv_app_notification_big_forecast_icon3"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_app_notification_big_forecast_temp3"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/material_16dp"/>
+                android:layout_marginLeft="@dimen/material_8dp"/>
 
         </RelativeLayout>
 

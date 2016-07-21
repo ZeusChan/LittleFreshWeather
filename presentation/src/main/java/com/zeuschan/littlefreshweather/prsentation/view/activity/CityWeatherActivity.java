@@ -284,12 +284,12 @@ public class CityWeatherActivity extends BaseActivity implements CityWeatherView
 
     @Override
     public void showLoading() {
-        //rlLoadingProgress.setVisibility(View.VISIBLE);
+        rlLoadingProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        //rlLoadingProgress.setVisibility(View.GONE);
+        rlLoadingProgress.setVisibility(View.GONE);
     }
 
     @Override

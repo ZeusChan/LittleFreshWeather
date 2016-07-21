@@ -11,7 +11,10 @@
     <dimen name="material_4dp">4dip</dimen>
     <dimen name="material_6dp">6dip</dimen>
     <dimen name="material_8dp">8dip</dimen>
+    <dimen name="material_12dp">12dip</dimen>
+    <dimen name="material_14dp">14dip</dimen>
     <dimen name="material_16dp">16dip</dimen>
+    <dimen name="material_20dp">20dip</dimen>
     <dimen name="material_24dp">24dip</dimen>
     <dimen name="material_32dp">32dip</dimen>
     <dimen name="material_40dp">40dip</dimen>

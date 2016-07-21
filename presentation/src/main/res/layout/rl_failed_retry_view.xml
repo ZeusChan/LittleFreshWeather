@@ -14,7 +14,6 @@
         android:layout_marginTop="@dimen/material_4dp"
         android:layout_centerHorizontal="true"
         android:text="@string/retry"
-        android:textColor="@color/colorLightGray"
         android:background="@drawable/selector_button_round_rect_semitrans"/>
 
     <TextView
@@ -24,7 +23,6 @@
         android:layout_above="@id/bt_failed_retry"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/material_4dp"
-        android:text="@string/load_failed"
-        android:textColor="@color/colorLightGray"/>
+        android:text="@string/load_failed" />
 
 </RelativeLayout>

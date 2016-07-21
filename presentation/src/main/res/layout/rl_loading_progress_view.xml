@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/material_4dp"
-        android:text="@string/loading"
-        android:textColor="@color/colorLightGray"/>
+        android:text="@string/loading" />
 
     <ProgressBar
         android:id="@+id/pb_loading_progress"

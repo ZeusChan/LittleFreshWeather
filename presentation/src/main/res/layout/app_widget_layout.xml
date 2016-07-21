@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_app_widget_weather_icon"
-            android:textColor="@color/colorLightGray" />
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_12dp"/>
 
         <TextView
             android:id="@+id/tv_app_widget_city_name"
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_app_widget_weather_desc"
             android:layout_toRightOf="@id/iv_app_widget_weather_icon"
-            android:textColor="@color/colorLightGray" />
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_12dp"/>
 
         <TextView
             android:id="@+id/tv_app_widget_temp"
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_app_widget_weather_desc"
             android:layout_toRightOf="@id/iv_app_widget_weather_icon"
-            android:textColor="@color/colorLightGray" />
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_12dp"/>
 
     </RelativeLayout>
 
@@ -69,7 +72,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/material_16dp"
             android:textColor="@color/colorLightGray"
-            android:textSize="@dimen/material_40sp" />
+            android:textSize="@dimen/material_40dp" />
 
         <TextView
             android:id="@+id/tv_app_widget_update_time"
@@ -78,7 +81,7 @@
             android:layout_below="@id/tv_app_widget_time"
             android:layout_alignRight="@id/tv_app_widget_time"
             android:textColor="@color/colorLightGray"
-            android:textSize="@dimen/material_8sp" />
+            android:textSize="@dimen/material_8dp" />
 
         <TextView
             android:id="@+id/tv_app_widget_dayofweek"
@@ -86,7 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
             android:layout_centerVertical="true"
-            android:textColor="@color/colorLightGray" />
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_12dp"/>
 
         <TextView
             android:id="@+id/tv_app_widget_date"
@@ -94,7 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
             android:layout_above="@id/tv_app_widget_dayofweek"
-            android:textColor="@color/colorLightGray" />
+            android:textColor="@color/colorLightGray"
+            android:textSize="@dimen/material_12dp"/>
 
         <TextView
             android:id="@+id/tv_app_widget_air"
@@ -102,8 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_app_widget_time"
             android:layout_below="@id/tv_app_widget_dayofweek"
+            android:background="@drawable/shape_round_rect_semitrans_gray"
             android:textColor="@color/colorLightGray"
-            android:background="@drawable/shape_round_rect_semitrans_gray" />
+            android:textSize="@dimen/material_12dp"/>
 
     </RelativeLayout>
 

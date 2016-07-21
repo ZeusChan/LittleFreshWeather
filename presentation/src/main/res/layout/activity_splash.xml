@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zeuschan.littlefreshweather.prsentation.view.activity.SplashActivity">
 
-
     <TextView
         android:id="@+id/tv_splash_title"
         android:layout_width="wrap_content"
@@ -18,7 +17,8 @@
         android:layout_margin="@dimen/material_8dp"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textSize="@dimen/material_12sp"/>
+        android:textSize="@dimen/material_12dp"
+        android:textColor="@color/colorDarkGray700"/>
 
     <ImageView
         android:id="@+id/iv_splash_icon"

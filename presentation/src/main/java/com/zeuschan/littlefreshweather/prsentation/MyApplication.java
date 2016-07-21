@@ -1,6 +1,8 @@
 package com.zeuschan.littlefreshweather.prsentation;
 
 import android.app.Application;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 import com.zeuschan.littlefreshweather.common.util.LogUtil;
 
@@ -9,10 +11,11 @@ import com.zeuschan.littlefreshweather.common.util.LogUtil;
  */
 public class MyApplication extends Application {
 
-    private void initLeakCheck() {
-        if (BuildConfig.DEBUG) {
-            //LeakCanary.install(this);
-        }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initLeakCheck();
+        initLogUtil();
     }
 
     private void initLogUtil() {
@@ -24,10 +27,9 @@ public class MyApplication extends Application {
         }
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        initLeakCheck();
-        initLogUtil();
+    private void initLeakCheck() {
+        if (BuildConfig.DEBUG) {
+            //LeakCanary.install(this);
+        }
     }
 }
