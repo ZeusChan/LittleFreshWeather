@@ -17,11 +17,23 @@ public class DensityUtil {
 
     public static int dp2px(Context context, float dpValue) {
         DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
-        return (int)(dpValue * dm.density + 0.5f);
+        return (int) (dpValue * dm.density + 0.5f);
     }
 
     public static int px2dp(Context context, float pxValue) {
         DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
-        return (int)(pxValue / dm.density + 0.5f);
+        return (int) (pxValue / dm.density + 0.5f);
+    }
+
+    public static int sp2px(Context context, float spValue)
+    {
+        DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
+        return (int) (spValue * dm.scaledDensity + 0.5f);
+    }
+
+    public static int px2sp(Context context, float pxValue)
+    {
+        DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
+        return (int) (pxValue / dm.scaledDensity + 0.5f);
     }
 }
