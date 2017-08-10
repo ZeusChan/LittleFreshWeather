@@ -8,11 +8,20 @@ public class Constants {
     public static final String WEATHER_KEY = "035591c2b70c45fa9b4dd2bcabce13fe";
 
     // Urls
-    public static final String WEATHER_BASE_URL = "https://api.heweather.com";
+    public static final String WEATHER_BASE_URL = "https://free-api.heweather.com";
+    public static final String CITY_LIST_URL = "https://cdn.heweather.com/china-city-list.txt";
 
     // Query Params
     public static final String SEARCH_ALL_CITY = "allchina";
     public static final String SEARCH_ALL_COND = "allcond";
+
+    // Const flags
+    public static final String CITY_LIST_LINE_HEADER = "CN101";
+    public static final int CITY_LIST_FIELD_NUM = 12;
+    public static final int CITY_LIST_FIELD_ID = 0;
+    public static final int CITY_LIST_FIELD_CITY = 2;
+    public static final int CITY_LIST_FIELD_COUNTY = 5;
+    public static final int CITY_LIST_FIELD_PROVINCE = 7;
 
     // Failure Descriptions
     public static final String OK = "ok";

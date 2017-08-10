@@ -9,7 +9,7 @@ import java.util.List;
  * Created by chenxiong on 2016/5/30.
  */
 public class CityWeatherResponse {
-    @Expose @SerializedName("HeWeather data service 3.0") private List<CityWeatherInfo> cityWeatherInfos;
+    @Expose @SerializedName("HeWeather5") private List<CityWeatherInfo> cityWeatherInfos;
 
     public List<CityWeatherInfo> getCityWeatherInfos() {
         return cityWeatherInfos;

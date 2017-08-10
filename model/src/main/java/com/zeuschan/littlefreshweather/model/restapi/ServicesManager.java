@@ -2,6 +2,7 @@ package com.zeuschan.littlefreshweather.model.restapi;
 
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.view.TextureView;
 
 import com.zeuschan.littlefreshweather.common.util.Constants;
 import com.zeuschan.littlefreshweather.model.datasource.DataSource;
@@ -13,6 +14,9 @@ import com.zeuschan.littlefreshweather.model.response.CityWeatherResponse;
 import com.zeuschan.littlefreshweather.model.response.CitysResponse;
 import com.zeuschan.littlefreshweather.model.response.ConditionsResponse;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -52,6 +57,7 @@ public class ServicesManager implements DataSource {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.WEATHER_BASE_URL)
                 .client(builder.build())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -74,18 +80,53 @@ public class ServicesManager implements DataSource {
 
     @Override
     public Observable<List<CityEntity>> getCityEntities() {
-        Map<String, String> params = new android.support.v4.util.ArrayMap<>(2);
-        params.put("search", Constants.SEARCH_ALL_CITY);
-        params.put("key", Constants.WEATHER_KEY);
 
-        return weatherInfoService.getCityInfos(params)
-                .map(new Func1<CitysResponse, List<CityEntity>>() {
+        return weatherInfoService.getCityInfos(Constants.CITY_LIST_URL)
+                .map(new Func1<String, List<CityEntity>>() {
                     @Override
-                    public List<CityEntity> call(CitysResponse citysResponse) {
-                        if (null == citysResponse) {
+                    public List<CityEntity> call(String citysResponse) {
+                        /*
+                        城市/地区编码	    英文	        中文	  国家代码	国家英文	    国家中文	省英文	省中文	所属上级市英文    所属上级市中文	纬度   	经度
+                        CN101010100	    beijing	    北京	     CN	     China	     中国	beijing	北京	       beijing	          北京	39.904989	116.405285
+                        CN101010200	    haidian	    海淀	     CN	     China	     中国	beijing	北京	       beijing	          北京	39.956074	116.310316
+                        CN101010300	    chaoyang	朝阳	     CN	     China	     中国	beijing	北京	       beijing	          北京	39.921489	116.486409
+                        */
+
+                        if (TextUtils.isEmpty(citysResponse)) {
                             throw new WeatherServiceException("no data");
                         }
-                        if (!citysResponse.getResultCode().equals(Constants.OK)) {
+
+                        mCityEntities.clear();
+                        BufferedReader reader = null;
+                        try {
+                            reader = new BufferedReader(new StringReader(citysResponse));
+                            String tempString;
+                            while ((tempString = reader.readLine()) != null) {
+                                if (tempString.startsWith(Constants.CITY_LIST_LINE_HEADER)) {
+                                    String [] cityFileds = tempString.split("\\s+");
+                                    if (cityFileds.length == Constants.CITY_LIST_FIELD_NUM) {
+                                        CityEntity cityEntity = new CityEntity();
+                                        cityEntity.setCityId(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_ID]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_ID]);
+                                        cityEntity.setCountry(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_COUNTY]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_COUNTY]);
+                                        cityEntity.setProvince(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_PROVINCE]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_PROVINCE]);
+                                        cityEntity.setCity(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_CITY]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_CITY]);
+                                        mCityEntities.add(cityEntity);
+                                    }
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (reader != null) {
+                                try {
+                                    reader.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        /*if (!citysResponse.getResultCode().equals(Constants.OK)) {
                             throw new WeatherServiceException("error code: " + citysResponse.getResultCode());
                         }
 
@@ -105,7 +146,7 @@ public class ServicesManager implements DataSource {
                                     mCityEntities.add(cityEntity);
                                 }
                             }
-                        }
+                        }*/
                         return mCityEntities;
                     }
                 });
@@ -149,7 +190,7 @@ public class ServicesManager implements DataSource {
     @Override
     public Observable<WeatherEntity> getCityWeather(String cityId, boolean fromCache) {
         Map<String, String> params = new android.support.v4.util.ArrayMap<>(2);
-        params.put("cityid", cityId);
+        params.put("city", cityId);
         params.put("key", Constants.WEATHER_KEY);
 
         return weatherInfoService.getCityWeatherInfo(params)
