@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import com.zeuschan.littlefreshweather.common.util.CrashHandler;
 import com.zeuschan.littlefreshweather.common.util.LogUtil;
 
 /**
@@ -14,6 +15,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler.getInstance(this.getApplicationContext()).init();
         initLeakCheck();
         initLogUtil();
     }

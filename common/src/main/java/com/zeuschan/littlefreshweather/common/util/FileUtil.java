@@ -19,7 +19,16 @@ public class FileUtil {
             cacheDir = context.getCacheDir().getPath();
         }
 
-        return  new File(cacheDir + File.separator + dirName);
+        return new File(cacheDir + File.separator + dirName);
+    }
+
+    public static File getSDCardDir(Context context, String dirName) {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            return new File(context.getExternalCacheDir().getPath() + File.separator + dirName);
+        }
+
+        return null;
     }
 
     public static void putStringToPreferences(Context context, String prefName, String key, String value) {
