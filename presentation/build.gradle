@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     signingConfigs {
     }
     compileSdkVersion 23
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.zeuschan.littlefreshweather.prsentation"
         minSdkVersion 16
@@ -19,15 +19,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
         }
-        debug {
-            debuggable true
-            jniDebuggable true
-            minifyEnabled false
-        }
-    }
-    productFlavors {
     }
 }
 
