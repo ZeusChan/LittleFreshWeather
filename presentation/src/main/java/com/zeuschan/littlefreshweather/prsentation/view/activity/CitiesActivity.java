@@ -133,7 +133,6 @@ public class CitiesActivity extends BaseActivity implements CitiesView, View.OnC
 
         uninitView();
         //mUnbinder.unbind();
-        //setContentView(new FrameLayout(this));
     }
 
     @Override

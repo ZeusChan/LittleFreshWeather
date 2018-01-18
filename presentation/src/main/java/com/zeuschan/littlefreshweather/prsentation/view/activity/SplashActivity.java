@@ -78,7 +78,6 @@ public class SplashActivity extends BaseActivity implements SplashView {
         mHandler.removeCallbacks(delayStartProc);
         uninitView();
         //mUnbinder.unbind();
-        //setContentView(new FrameLayout(this));
     }
 
     @Override
