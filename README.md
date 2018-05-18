@@ -1,6 +1,7 @@
-#LittleFreshWeather
-
-##注意咯~~ 已适配最新和风天气接口，可以接着用啦 ^^<br>
+LittleFreshWeather
+===================
+注意咯~~ 已适配最新和风天气接口，可以接着用啦 ^^<br>
+-----------------------------------------------------
 这是一款简洁的天气预报app--**`清新小天气`**，它能够支持国内绝大多数城市，提供包含实时天气、七天预报、实时气象信息及生活指数等预报信息。。。广告编不下去了-_-!!。。。直接上图：<br><br>
 
 *   启动画面<br>
@@ -28,12 +29,14 @@
 ![capture_app_notification](capture_app_notification.png "通知栏")
 
 
-##UI（No Material Design）
+UI（No Material Design）
+=======================
 
 由于没有设计天分，又因为本人比较喜欢360系的UI，所以暂时借鉴了360天气的设计风格。火热的Material Design神马的，好是好，但是没有时间一点点弄，以后版本再说吧。。。
 
 
-##整洁架构（The Clean Architecture）
+整洁架构（The Clean Architecture）
+=================================
 
 采用了Bob蜀黍的[**The Clean Architecture**](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)(整洁架构)，架构的具体实现方案也是在拜读了诸多前辈文章的基础上完成的，此处表示感谢：
 *	[Architecting Android…The clean way? – Fernando Cejas](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
@@ -41,13 +44,15 @@
 *	[A useful stack on android #1, architecture · Saúl Molinero](http://saulmm.github.io/2015/02/02/A-useful-stack-on-android-1,-architecture/)
 
 
-##数据来源
+数据来源
+========
 
 *	定位采用[高德地图定位SDK](http://lbs.amap.com/api/android-location-sdk/locationsummary/)
 *	天气预报数据来源于[和风天气](http://www.heweather.com/)
 
 
-##依赖的开源技术
+依赖的开源技术
+==============
 
 *	[Butterknife](http://jakewharton.github.io/butterknife/)
 *	[DiskLruCache](https://github.com/JakeWharton/DiskLruCache)
@@ -56,7 +61,8 @@
 *	[RxJava](https://github.com/ReactiveX/RxJava/wiki)
 
 
-##License
+License
+=======
 
     Copyright 2014 zeuschan@126.com All rights reserved.
 
