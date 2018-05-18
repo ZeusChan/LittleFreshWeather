@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,8 +52,13 @@ public class ServicesManager implements DataSource {
     private List<WeatherEntity.Forecast> mForecasts = new ArrayList<>();
 
     private ServicesManager() {
+        List<Protocol> protocols = new ArrayList<Protocol>();
+        protocols.add(Protocol.HTTP_1_1);
+        protocols.add(Protocol.HTTP_2);
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        builder.protocols(protocols);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.WEATHER_BASE_URL)
@@ -104,7 +110,7 @@ public class ServicesManager implements DataSource {
                             while ((tempString = reader.readLine()) != null) {
                                 if (tempString.startsWith(Constants.CITY_LIST_LINE_HEADER)) {
                                     String [] cityFileds = tempString.split("\\s+");
-                                    if (cityFileds.length == Constants.CITY_LIST_FIELD_NUM) {
+                                    if (cityFileds.length >= Constants.CITY_LIST_FIELD_NUM) {
                                         CityEntity cityEntity = new CityEntity();
                                         cityEntity.setCityId(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_ID]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_ID]);
                                         cityEntity.setCountry(TextUtils.isEmpty(cityFileds[Constants.CITY_LIST_FIELD_COUNTY]) ? CityEntity.DEFAULT_VALUE : cityFileds[Constants.CITY_LIST_FIELD_COUNTY]);
