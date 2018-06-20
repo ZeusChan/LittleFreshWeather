@@ -108,7 +108,9 @@ public class ServicesManager implements DataSource {
                             reader = new BufferedReader(new StringReader(citysResponse));
                             String tempString;
                             while ((tempString = reader.readLine()) != null) {
-                                if (tempString.startsWith(Constants.CITY_LIST_LINE_HEADER)) {
+                                if (tempString.startsWith(Constants.CITY_LIST_LINE_HEADER) || tempString.startsWith(Constants.CITY_LIST_LINE_HEADER_1)) {
+                                    tempString = tempString.replace("|", "");
+                                    tempString = tempString.trim();
                                     String [] cityFileds = tempString.split("\\s+");
                                     if (cityFileds.length >= Constants.CITY_LIST_FIELD_NUM) {
                                         CityEntity cityEntity = new CityEntity();

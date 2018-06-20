@@ -17,6 +17,7 @@ public class Constants {
 
     // Const flags
     public static final String CITY_LIST_LINE_HEADER = "CN101";
+    public static final String CITY_LIST_LINE_HEADER_1 = "| CN101";
     public static final int CITY_LIST_FIELD_NUM = 12;
     public static final int CITY_LIST_FIELD_ID = 0;
     public static final int CITY_LIST_FIELD_CITY = 2;
